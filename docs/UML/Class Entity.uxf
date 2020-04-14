@@ -111,7 +111,7 @@ quantity: Number
       <w>50</w>
       <h>160</h>
     </coordinates>
-    <panel_attributes>lt=-
+    <panel_attributes>lt=&lt;-
 m1=1..n
 m2=1</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
@@ -124,7 +124,7 @@ m2=1</panel_attributes>
       <w>180</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>lt=-
+    <panel_attributes>lt=-&gt;
 m1=0..n
 m2=1..n</panel_attributes>
     <additional_attributes>10.0;10.0;160.0;10.0</additional_attributes>
@@ -137,7 +137,7 @@ m2=1..n</panel_attributes>
       <w>160</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>lt=-
+    <panel_attributes>lt=&lt;-
 m1=1..n
 m2=1</panel_attributes>
     <additional_attributes>10.0;10.0;140.0;10.0</additional_attributes>
@@ -150,7 +150,7 @@ m2=1</panel_attributes>
       <w>180</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>lt=-
+    <panel_attributes>lt=-&gt;
 m1=0..n
 m2=1</panel_attributes>
     <additional_attributes>10.0;10.0;160.0;10.0</additional_attributes>
@@ -213,7 +213,7 @@ zip: String</panel_attributes>
       <w>180</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>lt=-
+    <panel_attributes>lt=-&gt;
 m1=0..n
 m2=1</panel_attributes>
     <additional_attributes>10.0;10.0;160.0;10.0</additional_attributes>
