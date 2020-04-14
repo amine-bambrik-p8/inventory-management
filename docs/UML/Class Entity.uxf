@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>710</x>
-      <y>430</y>
+      <x>670</x>
+      <y>470</y>
       <w>140</w>
       <h>110</h>
     </coordinates>
@@ -150,8 +150,8 @@ quantity: Number
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>880</x>
-      <y>430</y>
+      <x>870</x>
+      <y>480</y>
       <w>100</w>
       <h>110</h>
     </coordinates>
@@ -176,5 +176,36 @@ INVENTORY</panel_attributes>
 1. The Underline is the denote that the field is the primary key
 </panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>840</x>
+      <y>270</y>
+      <w>100</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Supplier
+--
+__id: Number__
+name: String
+contactName: String
+phoneNumber: String
+email: String
+address: String
+city: String
+zip: String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>320</y>
+      <w>180</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;160.0;10.0</additional_attributes>
   </element>
 </diagram>
