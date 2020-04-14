@@ -12,6 +12,8 @@
     <panel_attributes>User
 --
 __username: String__
+firstName: String
+lastName: String
 password: String
 role: UserRole
 </panel_attributes>
@@ -38,7 +40,7 @@ thumbnail: String</panel_attributes>
       <x>380</x>
       <y>160</y>
       <w>180</w>
-      <h>160</h>
+      <h>200</h>
     </coordinates>
     <panel_attributes>ProductEntry
 --
@@ -47,6 +49,7 @@ codebar: String
 dateOfManufacturing: Date
 dateOfExpiration: Date
 checkedInQuantity: Number
+boughtPrice: Number
 minQuantity: Number
 price: Number
 discount: Number
@@ -59,7 +62,7 @@ soldQuantity: Number</panel_attributes>
       <x>380</x>
       <y>410</y>
       <w>170</w>
-      <h>140</h>
+      <h>210</h>
     </coordinates>
     <panel_attributes>Client
 --
@@ -68,6 +71,9 @@ firstName: String
 lastName: String
 phoneNumber: String
 email: String
+address: String
+city: String
+zip: String
 dateOfSubscription: Date
 picture: String
 </panel_attributes>
@@ -197,7 +203,8 @@ INVENTORY</panel_attributes>
 --
 __id: Number__
 name: String
-contactName: String
+firstName: String
+lastName: String
 phoneNumber: String
 email: String
 address: String
