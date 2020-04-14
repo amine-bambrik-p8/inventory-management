@@ -90,7 +90,8 @@ picture: String
     <panel_attributes>Order
 --
 __id: Number__
-dateAndTimeOfOrder: Date</panel_attributes>
+dateAndTimeOfOrder: Date
+orderStatus: OrderStatus</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -224,5 +225,20 @@ zip: String</panel_attributes>
 m1=0..n
 m2=1</panel_attributes>
     <additional_attributes>10.0;10.0;160.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>90</x>
+      <y>580</y>
+      <w>100</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+OrderStatus
+--
+DELIVERED
+PENDING</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
