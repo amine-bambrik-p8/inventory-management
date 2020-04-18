@@ -31,6 +31,8 @@ role: UserRole
 --
 __codebar: String__
 name: String
+minQuantity: Number
+maxQuantity: Number
 thumbnail: String</panel_attributes>
     <additional_attributes/>
   </element>
@@ -50,7 +52,6 @@ dateOfManufacturing: Date
 dateOfExpiration: Date
 checkedInQuantity: Number
 boughtPrice: Number
-minQuantity: Number
 price: Number
 discount: Number
 soldQuantity: Number</panel_attributes>
