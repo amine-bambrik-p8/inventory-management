@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "projects": {
+    "express-backend": {
+      "root": "apps/express-backend",
+      "sourceRoot": "apps/express-backend/src",
+      "projectType": "application",
+      "prefix": "express-backend",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/express-backend",
+            "main": "apps/express-backend/src/main.ts",
+            "tsConfig": "apps/express-backend/tsconfig.app.json",
+            "assets": ["apps/express-backend/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/express-backend/src/environments/environment.ts",
+                  "with": "apps/express-backend/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "express-backend:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/express-backend/tsconfig.app.json",
+              "apps/express-backend/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/express-backend/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/express-backend/jest.config.js",
+            "tsConfig": "apps/express-backend/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "express-backend"
+}
