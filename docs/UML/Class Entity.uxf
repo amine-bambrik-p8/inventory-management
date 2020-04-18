@@ -92,7 +92,10 @@ picture: String
 --
 __id: Number__
 dateAndTimeOfOrder: Date
-orderStatus: OrderStatus</panel_attributes>
+orderStatus: OrderStatus
+city: String
+address: String
+zip: String</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
