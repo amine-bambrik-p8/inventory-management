@@ -207,6 +207,7 @@ __id: Number__
 name: String
 firstName: String
 lastName: String
+picture: String
 phoneNumber: String
 email: String
 address: String
