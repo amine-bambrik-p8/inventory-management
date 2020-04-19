@@ -1,12 +1,12 @@
-import { OrderEntry } from "./order-entry.entity";
+import { OrderEntry } from "./order-entry.schema";
 import { Schema } from 'mongoose';
 
-describe("OrderEntity schema",()=>{
+describe("OrderEntry schema",()=>{
     test("fields",()=>{
         const fields = OrderEntry.obj;
         const expectedFields: String[]= [
             "quantity",
-            "productEntryId",
+            "productEntry",
         ]
         const fieldsAsString = Object.keys(fields).sort().join(",");
         const expectedFieldsAsString = expectedFields.sort().join(",");
@@ -19,9 +19,9 @@ describe("OrderEntity schema",()=>{
                 
         });
     });
-    test("productEntryId", () => {
-        const productEntryId = OrderEntry.obj.productEntryId;
-            expect(productEntryId).toEqual({
+    test("productEntry", () => {
+        const productEntry = OrderEntry.obj.productEntry;
+            expect(productEntry).toEqual({
                 type: Schema.Types.ObjectId,
                 
         });

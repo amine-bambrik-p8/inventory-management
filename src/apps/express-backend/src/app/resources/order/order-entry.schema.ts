@@ -5,7 +5,7 @@ const schema = new Schema({
     quantity: {
         type: Number,
     },
-    productEntryId:{
+    productEntry:{
         type: Schema.Types.ObjectId,
     }
 },

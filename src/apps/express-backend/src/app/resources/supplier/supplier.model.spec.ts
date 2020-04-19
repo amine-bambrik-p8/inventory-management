@@ -1,5 +1,6 @@
 import { Supplier } from "./supplier.model";
 import { Address } from '../common/address.entity';
+import { Contact } from './contact.schema';
 
 describe("Supplier model",()=>{
     describe("schema",()=>{
@@ -7,11 +8,8 @@ describe("Supplier model",()=>{
             const fields = Supplier.schema.obj;
             const expectedFields: String[]= [
                 "name",
-                "firstName",
-                "lastName",
+                "contact",
                 "picture",
-                "phoneNumber",
-                "email",
                 "address"
             ]
             const fieldsAsString = Object.keys(fields).sort().join(",");
@@ -25,37 +23,9 @@ describe("Supplier model",()=>{
                     
             });
         });
-        test("firstName", () => {
-            const firstName = Supplier.schema.obj.firstName;
-                expect(firstName).toEqual({
-                    type: String,
-                    
-            });
-        });
-        test("lastName", () => {
-            const lastName = Supplier.schema.obj.lastName;
-                expect(lastName).toEqual({
-                    type: String,
-                    
-            });
-        });
         test("picture", () => {
             const picture = Supplier.schema.obj.picture;
                 expect(picture).toEqual({
-                    type: String,
-                    
-            });
-        });
-        test("phoneNumber", () => {
-            const phoneNumber = Supplier.schema.obj.phoneNumber;
-                expect(phoneNumber).toEqual({
-                    type: String,
-                    
-            });
-        });
-        test("email", () => {
-            const email = Supplier.schema.obj.email;
-                expect(email).toEqual({
                     type: String,
                     
             });
@@ -67,6 +37,14 @@ describe("Supplier model",()=>{
                     
             });
         });
+        test("contact", () => {
+            const contact = Supplier.schema.obj.contact;
+                expect(contact).toEqual({
+                    type: Contact
+                    
+            });
+        });
+        
         
     });
 });

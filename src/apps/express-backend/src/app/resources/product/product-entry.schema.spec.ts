@@ -1,4 +1,4 @@
-import { ProductEntry } from './product-entry.entity';
+import { ProductEntry } from './product-entry.schema';
 describe("ProductEntry schema",()=>{
     test("fields",()=>{
         const fields = ProductEntry.obj;
@@ -64,5 +64,23 @@ describe("ProductEntry schema",()=>{
                 
         });
     });
+    
+    describe("quantity",()=>{
+        it("should exist", () => {
+            const quantity = ProductEntry.virtualpath("quantity");
+            expect(quantity).toBeTruthy();
+        });
+        it("should return the calculated quantity",() => {
+            const checkedInQuantity = 50;
+            const soldQuantity = 2;
+            const expected = checkedInQuantity - soldQuantity;
+            const value = {
+                checkedInQuantity,
+                soldQuantity,
+            };
+            const result = ProductEntry.virtualpath("quantity").applyGetters(value,value);
+            expect(result).toEqual(expected);
+        })
+    })
     
 });

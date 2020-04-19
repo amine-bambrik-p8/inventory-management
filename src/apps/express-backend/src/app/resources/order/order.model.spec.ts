@@ -1,4 +1,4 @@
-import { OrderEntry } from './order-entry.entity';
+import { OrderEntry } from './order-entry.schema';
 import { Address } from './../common/address.entity';
 import { orderStatus as orderStatusEnum } from './order-status';
 import { Order } from "./order.model";
@@ -11,7 +11,7 @@ describe("Order model",()=>{
                 "dateAndTimeOfOrder",
                 "orderStatus",
                 "address",
-                "clientId",
+                "client",
                 "entries"
             ]
             const fieldsAsString = Object.keys(fields).sort().join(",");
@@ -46,9 +46,9 @@ describe("Order model",()=>{
                     
             });
         });
-        test("clientId", () => {
-            const clientId = Order.schema.obj.clientId;
-                expect(clientId).toEqual({
+        test("client", () => {
+            const client = Order.schema.obj.client;
+                expect(client).toEqual({
                     type: Schema.Types.ObjectId,
                     ref: "client",
             });

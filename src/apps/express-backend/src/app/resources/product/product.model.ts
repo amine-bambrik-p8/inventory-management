@@ -1,6 +1,6 @@
 import * as mongoose from "mongoose";
 import { Schema, model} from 'mongoose';
-import { ProductEntry } from './product-entry.entity';
+import { ProductEntry } from './product-entry.schema';
 
 const schema = new Schema({
     codebar: {
@@ -29,6 +29,12 @@ const schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "supplier",
     },
+    thumbnails: {
+        type: [String],
+    },
+    description: {
+        type: String,
+    }
 },
 {
 

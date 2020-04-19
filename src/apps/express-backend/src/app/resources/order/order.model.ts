@@ -1,5 +1,5 @@
 import { Client } from './../client/client.model';
-import { OrderEntry } from './order-entry.entity';
+import { OrderEntry } from './order-entry.schema';
 import { Address } from './../common/address.entity';
 import { orderStatus } from './order-status';
 import * as mongoose from "mongoose";
@@ -19,7 +19,7 @@ const schema = new Schema({
     entries: {
         type: [ OrderEntry ]
     },
-    clientId: {
+    client: {
         type: Schema.Types.ObjectId,
         ref: "client"
     }

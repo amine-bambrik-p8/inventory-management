@@ -1,4 +1,4 @@
-import { ProductEntry } from './product-entry.entity';
+import { ProductEntry } from './product-entry.schema';
 import { Product } from "./product.model";
 import { Schema } from 'mongoose';
 
@@ -14,7 +14,9 @@ describe("Product model",()=>{
                 "maxQuantity",
                 "entries",
                 "category",
-                "supplier"
+                "supplier",
+                'thumbnails',
+                "description",
             ]
             const fieldsAsString = Object.keys(fields).sort().join(",");
             const expectedFieldsAsString = expectedFields.sort().join(",");
@@ -67,6 +69,20 @@ describe("Product model",()=>{
             const entries = Product.schema.obj.entries;
                 expect(entries).toEqual({
                     type: [ProductEntry],
+                    
+            });
+        });
+        test("thumbnails", () => {
+            const thumbnails = Product.schema.obj.thumbnails;
+                expect(thumbnails).toEqual({
+                    type: [String]
+                    
+            });
+        });
+        test("description", () => {
+            const description = Product.schema.obj.description;
+                expect(description).toEqual({
+                    type: String,
                     
             });
         });

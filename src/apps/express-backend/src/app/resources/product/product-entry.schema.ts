@@ -25,7 +25,13 @@ const schema = new Schema({
     },
 },
 {
+    toJSON: {
+        virtuals: true,
+    },
+});
 
+schema.virtual("quantity").get(function (){
+    return this.checkedInQuantity - this.soldQuantity;
 });
 
 export const ProductEntry = schema;
