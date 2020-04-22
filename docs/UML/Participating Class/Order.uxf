@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>220</x>
+      <y>220</y>
+      <w>130</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;View&gt;&gt;
+OrderView
+--
+showOrders()
+showOrder(id)
+createNewOrder()
+removeOrder(id)
+search(name)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>570</x>
+      <y>230</y>
+      <w>140</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Controller&gt;&gt;
+OrderController
+--
+getAll(filters)
+getAllByName(name)
+getOne(id)
+createOne(order)
+deleteOne(id)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>340</x>
+      <y>280</y>
+      <w>250</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>230.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>890</x>
+      <y>200</y>
+      <w>100</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Model&gt;&gt;
+Orders
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>700</x>
+      <y>290</y>
+      <w>210</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>190.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
