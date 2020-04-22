@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>160</x>
+      <y>240</y>
+      <w>150</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;View&gt;&gt;
+SupplierListView
+--
+showSuppliers()
+showSupplier(id)
+showCreateNewSupplier()
+removeSupplier(id)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>550</x>
+      <y>240</y>
+      <w>160</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Controller&gt;&gt;
+SupplierContorller
+--
+getAll(filters)
+deleteOne(id)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>300</x>
+      <y>300</y>
+      <w>270</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>250.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>890</x>
+      <y>240</y>
+      <w>100</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Model&gt;&gt;
+Supplier
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>700</x>
+      <y>310</y>
+      <w>210</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>190.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
