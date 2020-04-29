@@ -1,4 +1,4 @@
-import { Contact } from "./contact.schema";
+import { Contact } from "../model/contact.schema"
 
 describe("Contact schema",()=>{
     test("fields",()=>{
@@ -17,28 +17,32 @@ describe("Contact schema",()=>{
         const firstName = Contact.obj.firstName;
             expect(firstName).toEqual({
                 type: String,
-                
+                required:true,
+                maxlength:60
         });
     });
     test("lastName", () => {
         const lastName = Contact.obj.lastName;
             expect(lastName).toEqual({
                 type: String,
-                
+                required:true,
+                maxlength:60
         });
     });
     test("phoneNumber", () => {
         const phoneNumber = Contact.obj.phoneNumber;
             expect(phoneNumber).toEqual({
                 type: String,
-                
+                required:true,
+                maxlength:10
         });
     });
     test("email", () => {
         const email = Contact.obj.email;
             expect(email).toEqual({
                 type: String,
-                
+                required:true,
+                maxlength:321
         });
     });
 })

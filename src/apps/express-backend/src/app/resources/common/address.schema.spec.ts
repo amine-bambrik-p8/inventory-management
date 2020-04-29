@@ -1,4 +1,4 @@
-import { Address } from "./address.entity";
+import { Address } from "./address.schema";
 
 describe("Address schema",()=>{
     test("fields",()=>{
@@ -16,21 +16,24 @@ describe("Address schema",()=>{
         const city = Address.obj.city;
             expect(city).toEqual({
                 type: String,
-                
+                required:true,
+                maxlength:60
         });
     });
     test("address", () => {
         const address = Address.obj.address;
             expect(address).toEqual({
                 type: String,
-                
+                required:true,
+                maxlength:60
         });
     });
     test("zip", () => {
         const zip = Address.obj.zip;
             expect(zip).toEqual({
                 type: String,
-                
+                required:true,
+                maxlength:12
         });
     });
     
