@@ -9,15 +9,15 @@ describe("Product model",()=>{
             const expectedFields: String[]= [
                 "codebar",
                 "name",
-                "mainEntry",
+                "mainEntryId",
                 "minQuantity",
                 "maxQuantity",
                 "entries",
-                "category",
-                "supplier",
+                "categoryId",
+                "supplierId",
                 'thumbnails',
                 "description",
-            ]
+            ];
             const fieldsAsString = Object.keys(fields).sort().join(",");
             const expectedFieldsAsString = expectedFields.sort().join(",");
             expect(fieldsAsString).toBe(expectedFieldsAsString);
@@ -26,27 +26,29 @@ describe("Product model",()=>{
             const name = Product.schema.obj.name;
                 expect(name).toEqual({
                     type: String,
-                    
+                    required:true,
+                    maxlength:60
             });
         });
         test("codebar", () => {
             const codebar = Product.schema.obj.codebar;
                 expect(codebar).toEqual({
                     type: String,
-                    
+                    unique:true,
+                    maxlength:128
             });
         });
-        test("mainEntry", () => {
-            const mainEntry = Product.schema.obj.mainEntry;
-                expect(mainEntry).toEqual({
+        test("mainEntryId", () => {
+            const mainEntryId = Product.schema.obj.mainEntryId;
+                expect(mainEntryId).toEqual({
                     type: Schema.Types.ObjectId,
-                    
             });
         });
         test("minQuantity", () => {
             const minQuantity = Product.schema.obj.minQuantity;
                 expect(minQuantity).toEqual({
                     type: Number,
+                    min:0,
                     
             });
         });
@@ -57,20 +59,19 @@ describe("Product model",()=>{
                     
             });
         });
-        test("category", () => {
-            const category = Product.schema.obj.category;
-                expect(category).toEqual({
+        test("categoryId", () => {
+            const categoryId = Product.schema.obj.categoryId;
+                expect(categoryId).toEqual({
                     type: Schema.Types.ObjectId,
                     ref: "category",
-                    
+                    required:true,
             });
         });
         test("entries", () => {
             const entries = Product.schema.obj.entries;
-                expect(entries).toEqual({
-                    type: [ProductEntry],
-                    
-            });
+                expect(entries.type).toEqual(
+                    [ProductEntry],
+             );
         });
         test("thumbnails", () => {
             const thumbnails = Product.schema.obj.thumbnails;
@@ -83,10 +84,17 @@ describe("Product model",()=>{
             const description = Product.schema.obj.description;
                 expect(description).toEqual({
                     type: String,
-                    
+                    maxlength:500,
             });
         });
-        
+        test("supplierId", () => {
+            const supplierId = Product.schema.obj.supplierId;
+                expect(supplierId).toEqual({
+                    type: Schema.Types.ObjectId,
+                    ref:"supplier",
+                    required:true,
+            });
+        });
         
     });
 });

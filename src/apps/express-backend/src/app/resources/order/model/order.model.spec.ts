@@ -1,5 +1,6 @@
+import { IOrderEntry,OrderStatus } from '@workspace/interfaces';
 import { OrderEntry } from './order-entry.schema';
-import { Address } from './../common/address.entity';
+import { Address } from '../../common/address.schema';
 import { orderStatus as orderStatusEnum } from './order-status';
 import { Order } from "./order.model";
 import { Schema } from 'mongoose';
@@ -11,7 +12,7 @@ describe("Order model",()=>{
                 "dateAndTimeOfOrder",
                 "orderStatus",
                 "address",
-                "client",
+                "clientId",
                 "entries"
             ]
             const fieldsAsString = Object.keys(fields).sort().join(",");
@@ -21,7 +22,8 @@ describe("Order model",()=>{
         test("dateAndTimeOfOrder", () => {
             const dateAndTimeOfOrder = Order.schema.obj.dateAndTimeOfOrder;
                 expect(dateAndTimeOfOrder).toEqual({
-                    type: Date
+                    type: Date,
+                    default:Date.now,
                     
             });
         });
@@ -29,7 +31,9 @@ describe("Order model",()=>{
             const orderStatus = Order.schema.obj.orderStatus;
                 expect(orderStatus).toEqual({
                     type: String,
-                    enum: [ ...orderStatusEnum]
+                    enum: [ ...orderStatusEnum],
+                    required:true,
+                    default:OrderStatus.DELIVERED,
             });
         });
         test("address", () => {
@@ -39,16 +43,28 @@ describe("Order model",()=>{
                     
             });
         });
-        test("entries", () => {
-            const entries = Order.schema.obj.entries;
-                expect(entries).toEqual({
-                    type: [OrderEntry],
-                    
+        describe("entries",()=>{
+            test("type", () => {
+                const entries = Order.schema.obj.entries;
+                    expect(entries.type).toEqual(
+                        [OrderEntry],
+                        );
             });
+            it("should have validation and returns false when there's no entries",()=>{
+                const emptyEntries: Partial<IOrderEntry>[]= [];
+                const result = Order.schema.obj.entries.validate.validator(emptyEntries);
+                expect(result).toBeFalsy();
+            });
+            it("should have validation and returns true when there's atleast one entry",()=>{
+                const someEntry: Partial<IOrderEntry> = {}
+                const someEntries: Partial<IOrderEntry>[] = [someEntry];
+                const result =  Order.schema.obj.entries.validate.validator(someEntries);
+                expect(result).toBeTruthy();
+            })
         });
-        test("client", () => {
-            const client = Order.schema.obj.client;
-                expect(client).toEqual({
+        test("clientId", () => {
+            const clientId = Order.schema.obj.clientId;
+                expect(clientId).toEqual({
                     type: Schema.Types.ObjectId,
                     ref: "client",
             });

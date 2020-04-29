@@ -14,6 +14,9 @@ describe("Category model",()=>{
             const name = Category.schema.obj.name;
                 expect(name).toEqual({
                     type: String,
+                    required:true,
+                    unique:true,
+                    maxlength:60,
                     
             });
         });
