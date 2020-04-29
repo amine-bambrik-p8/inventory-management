@@ -36,39 +36,40 @@ const schema = new Schema({
     }
 },
 {
-    toJSON:{
-        transform(doc,ret){
-            delete ret.password;
-        }
-    },
+    
+toJSON:{
+    transform(doc,ret){
+        delete ret.password;
+    }
+},
 });
 schema.pre("save",async function(next){
-    if(!this.isModified("password")){
-        return next();
-    }
-    try {
-        (this as any).password = await bcrypt.hash((this as any).password,8);
-    } catch (error) {
-        next(error);
-    }
+if(!this.isModified("password")){
+    return next();
+}
+try {
+    (this as any).password = await bcrypt.hash((this as any).password,8);
+} catch (error) {
+    next(error);
+}
 });
 schema.virtual("jwtToken").get(function(){
-    return jwt.sign({_id:this._id,role:this.role},environment.jwt.secret,environment.jwt.options);
+return jwt.sign({_id:this._id,role:this.role},environment.jwt.secret,environment.jwt.options);
 });
 schema.statics.isValidToken = async (token)=>{
-    try {
-        return await jwt.verify(token,environment.jwt.secret);
-        
-    } catch (error) {
-        return false;
-    }
+try {
+    return await jwt.verify(token,environment.jwt.secret);
+    
+} catch (error) {
+    return false;
+}
 };
 schema.methods.isValidPassword = async function (password){
-    try {
-        return await bcrypt.compare(password,this.password);
-    } catch (error) {
-        return false;
-    }
+try {
+    return await bcrypt.compare(password,this.password);
+} catch (error) {
+    return false;
+}
 };
 
-export const User = model<IUserDocument>("user",schema);
+export const User = model<IUserDocument>(".*mouser",schema);
