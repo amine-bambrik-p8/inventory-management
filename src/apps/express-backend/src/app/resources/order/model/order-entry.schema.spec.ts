@@ -14,8 +14,8 @@ describe("OrderEntry schema",()=>{
     });
     describe("quantity", () => {
         test("type",()=>{
-            const quantity = OrderEntry.obj.quantity;
-                expect(quantity.type).toEqual({
+            const {validate,...quantity} = OrderEntry.obj.quantity;
+                expect(quantity).toEqual({
                     type: Number,
                     required:true,
             });

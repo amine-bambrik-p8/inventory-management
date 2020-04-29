@@ -102,7 +102,7 @@ describe("ProductEntry schema",()=>{
                 soldQuantity:20,
                 checkedInQuantity:40
             });
-            expect(result).toBeFalsy();
+            expect(result).toBeTruthy();
         });
         describe("soldQuantity",()=>{
             test("validation fail when it is equal to 0",()=>{
@@ -111,7 +111,7 @@ describe("ProductEntry schema",()=>{
             });
             test("validation successful it is less than 0",()=>{
                 const result = ProductEntry.obj.quantityInfo.type.soldQuantity.validate.validator(-1);
-                expect(result).toBeTruthy();
+                expect(result).toBeFalsy();
             });
         })
         

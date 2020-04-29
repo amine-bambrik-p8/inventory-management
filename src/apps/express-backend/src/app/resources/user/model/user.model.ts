@@ -72,4 +72,4 @@ try {
 }
 };
 
-export const User = model<IUserDocument>(".*mouser",schema);
+export const User = model<IUserDocument>("user",schema);

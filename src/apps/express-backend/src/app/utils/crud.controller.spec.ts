@@ -28,7 +28,7 @@ describe("CRUDController ", () => {
   })
   describe("createOne", () => {
     it("should call create on model", async () => {
-      expect.assertions(2);
+      expect.assertions(1);
       const req:Partial<Request> = {
         body: {
           data: someValidCategory,
@@ -116,7 +116,7 @@ describe("CRUDController ", () => {
     });
 
     it("should call findById on model", async () => {
-      expect.assertions(2);
+      expect.assertions(1);
       const someId = mongoose.Types.ObjectId().toHexString();
       const req: Partial<Request> = {
           params: {

@@ -215,7 +215,6 @@ describe("ProductEntry controller",()=>{
             };
             const res: Partial<Response>={
                 json(document){
-                    console.log(JSON.stringify(document,null,2));
                     expect(document).toHaveProperty("data");
                     const {__v,...expectedRes} = someProductDocument.toJSON();
                     expectedRes.entries[0]={...expectedRes.entries[0],...someUpdate};
