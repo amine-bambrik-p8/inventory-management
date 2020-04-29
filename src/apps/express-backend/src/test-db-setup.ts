@@ -1,3 +1,4 @@
+import { environment } from './environments/environment';
 import * as mongoose from "mongoose";
 import {MongoMemoryServer} from "mongodb-memory-server";
 
@@ -5,12 +6,7 @@ export const mongoServer = new MongoMemoryServer();
 
 export async function connect() {
     const uri = await mongoServer.getUri();
-    const mongooseOpts = {
-        useNewUrlParser: true,
-        autoReconnect: true,
-        reconnectTries: Number.MAX_VALUE,
-        reconnectInterval: 1000
-    };
+    const mongooseOpts = environment.mongoose.options;
     await mongoose.connect(uri,mongooseOpts);
 }
 
