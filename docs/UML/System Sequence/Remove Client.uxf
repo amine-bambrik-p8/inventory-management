@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
-  <zoom_level>9</zoom_level>
+  <zoom_level>10</zoom_level>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>567</x>
-      <y>198</y>
-      <w>162</w>
-      <h>27</h>
+      <x>360</x>
+      <y>90</y>
+      <w>180</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>_:InventoryManagement_</panel_attributes>
     <additional_attributes/>
@@ -15,10 +15,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>639</x>
-      <y>216</y>
-      <w>27</w>
-      <h>63</h>
+      <x>440</x>
+      <y>110</y>
+      <w>30</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
@@ -26,21 +26,21 @@
   <element>
     <id>UMLActor</id>
     <coordinates>
-      <x>243</x>
-      <y>135</y>
-      <w>126</w>
-      <h>99</h>
+      <x>10</x>
+      <y>20</y>
+      <w>120</w>
+      <h>110</h>
     </coordinates>
-    <panel_attributes>Inventory Manager</panel_attributes>
+    <panel_attributes>Shop Manager</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>297</x>
-      <y>216</y>
-      <w>27</w>
-      <h>54</h>
+      <x>60</x>
+      <y>110</y>
+      <w>30</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
@@ -48,10 +48,10 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>297</x>
-      <y>252</y>
-      <w>18</w>
-      <h>225</h>
+      <x>60</x>
+      <y>150</y>
+      <w>20</w>
+      <h>250</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -59,10 +59,10 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>639</x>
-      <y>261</y>
-      <w>18</w>
-      <h>225</h>
+      <x>440</x>
+      <y>160</y>
+      <w>20</w>
+      <h>250</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -70,10 +70,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>306</x>
-      <y>369</y>
-      <w>351</w>
-      <h>36</h>
+      <x>70</x>
+      <y>280</y>
+      <w>390</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
 confirm()</panel_attributes>
@@ -82,22 +82,22 @@ confirm()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>306</x>
-      <y>261</y>
-      <w>351</w>
-      <h>36</h>
+      <x>70</x>
+      <y>160</y>
+      <w>390</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-removeProduct</panel_attributes>
+removeClient</panel_attributes>
     <additional_attributes>370.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>306</x>
-      <y>306</y>
-      <w>351</w>
-      <h>36</h>
+      <x>70</x>
+      <y>210</y>
+      <w>390</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 promptConfirmation</panel_attributes>
@@ -106,10 +106,10 @@ promptConfirmation</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>306</x>
-      <y>423</y>
-      <w>351</w>
-      <h>36</h>
+      <x>70</x>
+      <y>340</y>
+      <w>390</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 success</panel_attributes>
@@ -118,10 +118,10 @@ success</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>297</x>
-      <y>468</y>
-      <w>27</w>
-      <h>108</h>
+      <x>60</x>
+      <y>390</y>
+      <w>30</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
@@ -129,10 +129,10 @@ success</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>639</x>
-      <y>477</y>
-      <w>27</w>
-      <h>108</h>
+      <x>440</x>
+      <y>400</y>
+      <w>30</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
