@@ -11,6 +11,7 @@ export function setup (app: Application){
     app.use("/clients",clientRouter);
     app.use("/orders",orderRouter);
     app.use("/products",productRouter);
+    app.use("/products/:productId",productRouter);
     app.use("/suppliers",supplierRouter);
     app.use("/users",userRouter);
 }
