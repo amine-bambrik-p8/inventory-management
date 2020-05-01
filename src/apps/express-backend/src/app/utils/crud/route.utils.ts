@@ -6,7 +6,7 @@ export function mount(controller,routes:Route[],router: Router,pipes={}){
     routes.forEach((route:Route)=>{
         router[route.method.toLowerCase()](
             route.path,
-            ...(pipes[route.controllerFunctionName]),
+            ...(pipes[route.controllerFunctionName]||[]),
             controller[route.controllerFunctionName].bind(controller)
             )
     });

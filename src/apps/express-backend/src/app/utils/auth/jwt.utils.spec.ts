@@ -1,10 +1,9 @@
-import { IUser } from './../../../../../../libs/interfaces/src/lib/user.interface';
 import { IUserDocument } from './../../resources/user/model/user.model';
 import { JwtAuth } from './jwt.auth.';
 import { connect,clearDatabase,closeDatabase } from '../../../test-db-setup';
 import { User } from '../../resources/user/model/user.model';
 import * as jwt from 'jsonwebtoken';
-import { Role } from '@workspace/interfaces';
+import { Role,IUser } from '@workspace/interfaces';
 import { Request,Response } from "express";
 describe("JwtAuth",()=>{
     let controller: JwtAuth;
@@ -180,7 +179,7 @@ describe("JwtAuth",()=>{
             expect.assertions(3);
             const req: Partial<Request> = {
                 headers:{
-                    Authorization:"something"
+                    authorization:"something"
                 }
             };
             const res: Partial<Response> = {
@@ -207,7 +206,7 @@ describe("JwtAuth",()=>{
             });
             const req: Partial<Request> = {
                 headers:{
-                    Authorization:`Bearer ${someUser.jwtToken}`
+                    authorization:`Bearer ${someUser.jwtToken}`
                 }
             };
             
