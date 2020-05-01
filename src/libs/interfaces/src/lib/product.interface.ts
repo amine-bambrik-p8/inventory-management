@@ -7,10 +7,13 @@ export interface IProduct{
     codebar?: string;
     name: string;
     readonly mainEntryId?: string;
-    minQuantity?: Number;
-    maxQuantity?: Number;
-    entries: IProductEntry[];
+    quantityAlert?:{
+        minQuantity?: Number;
+        maxQuantity?: Number;
+    },
+    entries?: IProductEntry[];
     categoryId: string;
     supplierId: string;
-    thumbnails?: [string]
+    thumbnails?: [string],
+    description?:string
 }

@@ -8,7 +8,7 @@ export interface IProductEntry {
     price: Number;
     discount?: Number;
     quantityInfo:{
-        readonly soldQuantity: Number;
+        readonly soldQuantity?: Number;
         checkedInQuantity: Number;
     },
     readonly quantity?:Number
