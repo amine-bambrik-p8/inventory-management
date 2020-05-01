@@ -2,7 +2,7 @@ import { Product } from '../../product/model/product.model';
 import { IOrder } from '@workspace/interfaces';
 import { Request, Response, NextFunction } from 'express';
 import { Order } from '../model/order.model';
-import { CRUDController } from '../../../utils/crud.controller';
+import { CRUDController } from '../../../utils/crud/controller/crud.controller';
 import * as mongoose from "mongoose";
 export class OrderController extends CRUDController{
     constructor(){

@@ -1,9 +1,9 @@
-import { ICategoryDocument } from './../resources/category/model/category.model';
+import { ICategoryDocument } from '../../../resources/category/model/category.model';
 import { Request,Response } from 'express';
-import { Category } from '../resources/category/model/category.model';
+import { Category } from '../../../resources/category/model/category.model';
 import {CRUDController} from "./crud.controller";
 import {ICategory,Role} from "@workspace/interfaces";
-import {connect,clearDatabase, closeDatabase} from '../../test-db-setup';
+import {connect,clearDatabase, closeDatabase} from '../../../../test-db-setup';
 import * as mongoose from 'mongoose';
 
 describe("CRUDController ", () => {

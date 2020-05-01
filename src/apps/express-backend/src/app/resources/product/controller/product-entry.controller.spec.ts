@@ -29,7 +29,7 @@ describe("ProductEntry controller",()=>{
         const someObjectId = mongoose.Types.ObjectId();
         const anotherObjectId = mongoose.Types.ObjectId();
         someValidProduct= {
-            codebar:"somecodebar",
+            codebar:"12354865",
             name:"somename",
             entries:[
             ],

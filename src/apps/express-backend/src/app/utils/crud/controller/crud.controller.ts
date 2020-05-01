@@ -1,4 +1,4 @@
-import { environment } from './../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { Model,Document,Error } from 'mongoose';
 import { Request, Response, NextFunction} from "express";
 

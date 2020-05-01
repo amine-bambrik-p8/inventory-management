@@ -1,4 +1,4 @@
-import { mongoServer } from './../../test-db-setup';
+import { mongoServer } from '../../../test-db-setup';
 import * as db from "./db"
 import * as mongoose from "mongoose"
 describe("db connect function",()=>{
