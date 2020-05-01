@@ -1,3 +1,4 @@
+import { regex } from './../../../utils/regex.utils';
 import { Address } from '../../common/address.schema';
 import { Schema, model,Document} from 'mongoose';
 import { Contact } from './contact.schema';
@@ -9,7 +10,8 @@ const schema = new Schema({
     name: {
         type: String,
         required:true,
-        maxlength:60
+        maxlength:60,
+        match:regex.alphanum,
     },
     contact: {
         type: Contact,
@@ -17,7 +19,8 @@ const schema = new Schema({
     },
     picture: {
         type: String,
-        maxlength:2000
+        maxlength:2000,
+        match:regex.uri,
     },
     address: {
         type: Address,

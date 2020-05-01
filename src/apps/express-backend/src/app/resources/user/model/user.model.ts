@@ -1,3 +1,4 @@
+import { regex } from './../../../utils/regex.utils';
 import { environment } from '../../../../environments/environment';
 import { roles } from './role';
 import { Schema, model,Document} from 'mongoose';
@@ -14,6 +15,7 @@ const schema = new Schema({
         required:true,
         unique:true,
         maxlength:16,
+        match:regex.username,
     },
     password: {
         type: String,
@@ -22,12 +24,14 @@ const schema = new Schema({
     firstName: {
         type: String,
         required:true,
-        maxlength:60
+        maxlength:60,
+        match:regex.name,
     },
     lastName: {
         type: String,
         required:true,
-        maxlength:60
+        maxlength:60,
+        match:regex.name
     },
     role: {
         type: String,

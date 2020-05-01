@@ -1,3 +1,4 @@
+import { regex } from './../../../utils/regex.utils';
 import * as mongoose from "mongoose";
 import { Schema, model,Document} from 'mongoose';
 import { ProductEntry } from './product-entry.schema';
@@ -9,22 +10,34 @@ const schema = new Schema({
     codebar: {
         type: String,
         unique:true,
-        maxlength:128
+        maxlength:regex.codebar.ean8.validLength,
+        match:regex.codebar.ean8.validChars,
     },
     name: {
         type: String,
         required:true,
-        maxlength:60
+        maxlength:60,
+        match:regex.alphanum,
     },
     mainEntryId: {
         type: Schema.Types.ObjectId,
     },
-    minQuantity: {
-        type: Number,
-        min:0
-    },
-    maxQuantity: {
-        type: Number,
+    quantityAlert:{
+        type:{
+            minQuantity: {
+                type: Number,
+                min:0
+            },
+            maxQuantity: {
+                type: Number,
+                min:0,
+            },
+        },
+        validate:{
+            validator(val){
+                return (val.minQuantity && !val.maxQuantity) || (!val.minQuantity && val.maxQuantity) || (val.minQuantity && val.maxQuantity && val.maxQuantity > val.minQuantity);
+            }
+        }
     },
     entries: {
         type: [ProductEntry],

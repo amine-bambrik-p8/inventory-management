@@ -1,3 +1,4 @@
+import { regex } from './../../../utils/regex.utils';
 import { environment } from '../../../../environments/environment';
 import { roles } from './role';
 import {
@@ -38,7 +39,8 @@ describe("User model", () => {
                 type: String,
                 required:true,
                 unique:true,
-                maxlength:16
+                maxlength:16,
+                match:regex.username,
         });
     });
     test("firstName", () => {
@@ -46,7 +48,8 @@ describe("User model", () => {
             expect(firstName).toEqual({
                 type: String,
                 required:true,
-                maxlength:60
+                maxlength:60,
+                match:regex.name,
         });
     });
     test("lastName", () => {
@@ -54,7 +57,8 @@ describe("User model", () => {
             expect(lastName).toEqual({
                 type: String,
                 required:true,
-                maxlength:60
+                maxlength:60,
+                match:regex.name,
         });
     });
     test("password",()=>{

@@ -1,3 +1,4 @@
+import { regex } from './../../../utils/regex.utils';
 import { Contact } from "../model/contact.schema"
 
 describe("Contact schema",()=>{
@@ -18,7 +19,8 @@ describe("Contact schema",()=>{
             expect(firstName).toEqual({
                 type: String,
                 required:true,
-                maxlength:60
+                maxlength:60,
+                match:regex.name,
         });
     });
     test("lastName", () => {
@@ -26,7 +28,8 @@ describe("Contact schema",()=>{
             expect(lastName).toEqual({
                 type: String,
                 required:true,
-                maxlength:60
+                maxlength:60,
+                match:regex.name,
         });
     });
     test("phoneNumber", () => {
@@ -34,7 +37,8 @@ describe("Contact schema",()=>{
             expect(phoneNumber).toEqual({
                 type: String,
                 required:true,
-                maxlength:10
+                maxlength:10,
+                match:regex.phone,
         });
     });
     test("email", () => {
@@ -42,7 +46,8 @@ describe("Contact schema",()=>{
             expect(email).toEqual({
                 type: String,
                 required:true,
-                maxlength:321
+                maxlength:321,
+                match:regex.email,
         });
     });
 })

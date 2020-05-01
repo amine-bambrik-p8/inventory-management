@@ -1,3 +1,4 @@
+import { regex } from './../../../utils/regex.utils';
 import { Supplier } from "./supplier.model";
 import { Address } from '../../common/address.schema';
 import { Contact } from '../model/contact.schema'
@@ -21,15 +22,16 @@ describe("Supplier model",()=>{
                 expect(name).toEqual({
                     type: String,
                     required:true,
-                    maxlength:60
-                    
+                    maxlength:60,
+                    match:regex.alphanum,
             });
         });
         test("picture", () => {
             const picture = Supplier.schema.obj.picture;
                 expect(picture).toEqual({
                     type: String,
-                    maxlength:2000,                    
+                    maxlength:2000,
+                    match:regex.uri,     
             });
         });
         test("address", () => {

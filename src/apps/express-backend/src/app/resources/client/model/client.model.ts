@@ -1,3 +1,4 @@
+import { regex } from './../../../utils/regex.utils';
 import { Address } from '../../common/address.schema';
 import { Schema, model,Document} from 'mongoose';
 import { IClient } from '@workspace/interfaces';
@@ -8,23 +9,28 @@ const schema = new Schema({
     firstName: {
         type: String,
         required:true,
-        maxlength:60
+        maxlength:60,
+        match:regex.name,
     },
     lastName: {
         type: String,
         required:true,
         maxlength:60,
+        match:regex.name,
     },
     phoneNumber: {
         type: String,
         required:true,
-        maxlength:10
+        maxlength:12,
+        minlength:12,
+        match:regex.phone,
     },
     email: {
         type: String,
         required:true,
         unique:true,
-        maxlength:321
+        maxlength:321,
+        match:regex.email,
     },
     address: {
         type: Address,
@@ -36,7 +42,8 @@ const schema = new Schema({
     },
     picture: {
         type: String,
-        maxlength:2000
+        maxlength:2000,
+        match:regex.uri,
     }
 },
 {

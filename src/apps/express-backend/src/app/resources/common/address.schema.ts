@@ -1,3 +1,4 @@
+import { regex } from './../../utils/regex.utils';
 import { Schema } from 'mongoose';
 
 const schema = new Schema({
@@ -5,16 +6,19 @@ const schema = new Schema({
         type: String,
         required:true,
         maxlength:60,
+        match:regex.address,
     },
     address: {
         type: String,
         required:true,
-        maxlength:60
+        maxlength:60,
+        match:regex.address,
     },
     zip: {
         type: String,
         required:true,
-        maxlength:12
+        maxlength:12,
+        match:regex.zip
     }
 },
 {

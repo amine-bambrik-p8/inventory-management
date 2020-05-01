@@ -1,3 +1,4 @@
+import { regex } from './../../../utils/regex.utils';
 import { Client } from "./client.model";
 import { Address } from '../../common/address.schema';
 
@@ -24,6 +25,7 @@ describe("Client model",()=>{
                     type: String,
                     required:true,
                     maxlength:60,
+                    match:regex.name,
             });
         });
         test("lastName", () => {
@@ -32,6 +34,7 @@ describe("Client model",()=>{
                     type: String,
                     required:true,
                     maxlength:60,
+                    match:regex.name,
             });
         });
         test("phoneNumber", () => {
@@ -39,7 +42,9 @@ describe("Client model",()=>{
                 expect(phoneNumber).toEqual({
                     type: String,
                     required:true,
-                    maxlength:10,
+                    maxlength:12,
+                    minlength:12,
+                    match:regex.phone,
             });
         });
         test("email", () => {
@@ -49,6 +54,7 @@ describe("Client model",()=>{
                     required:true,
                     unique:true,
                     maxlength:321,
+                    match:regex.email,
             });
         });
         test("address", () => {
@@ -69,7 +75,8 @@ describe("Client model",()=>{
             const picture = Client.schema.obj.picture;
                 expect(picture).toEqual({
                     type: String,
-                    maxlength:2000
+                    maxlength:2000,
+                    match:regex.uri,
             });
         });
         

@@ -1,3 +1,4 @@
+import { regex } from './../../../utils/regex.utils';
 import { ProductEntry } from './product-entry.schema';
 import { Product } from "./product.model";
 import { Schema } from 'mongoose';
@@ -10,8 +11,7 @@ describe("Product model",()=>{
                 "codebar",
                 "name",
                 "mainEntryId",
-                "minQuantity",
-                "maxQuantity",
+                "quantityAlert",
                 "entries",
                 "categoryId",
                 "supplierId",
@@ -27,7 +27,8 @@ describe("Product model",()=>{
                 expect(name).toEqual({
                     type: String,
                     required:true,
-                    maxlength:60
+                    maxlength:60,
+                    match:regex.alphanum,
             });
         });
         test("codebar", () => {
@@ -35,7 +36,8 @@ describe("Product model",()=>{
                 expect(codebar).toEqual({
                     type: String,
                     unique:true,
-                    maxlength:128
+                    maxlength:regex.codebar.ean8.validLength,
+                    match:regex.codebar.ean8.validChars,
             });
         });
         test("mainEntryId", () => {
@@ -44,21 +46,43 @@ describe("Product model",()=>{
                     type: Schema.Types.ObjectId,
             });
         });
-        test("minQuantity", () => {
-            const minQuantity = Product.schema.obj.minQuantity;
-                expect(minQuantity).toEqual({
-                    type: Number,
-                    min:0,
-                    
+        describe("quantityAlert",()=>{
+            test("minQuantity", () => {
+                const minQuantity = Product.schema.obj.quantityAlert.type.minQuantity;
+                    expect(minQuantity).toEqual({
+                        type: Number,
+                        min:0,
+                        
+                });
             });
-        });
-        test("maxQuantity", () => {
-            const maxQuantity = Product.schema.obj.maxQuantity;
-                expect(maxQuantity).toEqual({
-                    type: Number,
-                    
+            test("maxQuantity", () => {
+                const maxQuantity = Product.schema.obj.quantityAlert.type.maxQuantity;
+                    expect(maxQuantity).toEqual({
+                        type: Number,
+                        min:0,
+                        
+                });
             });
-        });
+            test("validation should fail when minQuantity is greater than maxQuantity",()=>{
+                const result = Product.schema.obj.quantityAlert.validate.validator({
+                    minQuantity:6,
+                    maxQuantity:2,
+                });
+                expect(result).toBeFalsy();
+            });
+            test("validation should succeed when minQuantity is missing",()=>{
+                const result = Product.schema.obj.quantityAlert.validate.validator({
+                    maxQuantity:2,
+                });
+                expect(result).toBeTruthy();
+            });
+            test("validation should succeed when maxQuantity is missing",()=>{
+                const result = Product.schema.obj.quantityAlert.validate.validator({
+                    minQuantity:2,
+                });
+                expect(result).toBeTruthy();
+            });
+        })
         test("categoryId", () => {
             const categoryId = Product.schema.obj.categoryId;
                 expect(categoryId).toEqual({

@@ -1,3 +1,4 @@
+import { regex } from './../../../utils/regex.utils';
 import { Category } from './category.model';
 describe("Category model",()=>{
     describe("schema",()=>{
@@ -17,6 +18,7 @@ describe("Category model",()=>{
                     required:true,
                     unique:true,
                     maxlength:60,
+                    match:regex.alphanum
                     
             });
         });

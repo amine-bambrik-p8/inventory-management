@@ -1,3 +1,4 @@
+import { regex } from './../../utils/regex.utils';
 import { Address } from "./address.schema";
 
 describe("Address schema",()=>{
@@ -17,7 +18,8 @@ describe("Address schema",()=>{
             expect(city).toEqual({
                 type: String,
                 required:true,
-                maxlength:60
+                maxlength:60,
+                match:regex.address,
         });
     });
     test("address", () => {
@@ -25,7 +27,8 @@ describe("Address schema",()=>{
             expect(address).toEqual({
                 type: String,
                 required:true,
-                maxlength:60
+                maxlength:60,
+                match:regex.address,
         });
     });
     test("zip", () => {
@@ -33,7 +36,8 @@ describe("Address schema",()=>{
             expect(zip).toEqual({
                 type: String,
                 required:true,
-                maxlength:12
+                maxlength:12,
+                match:regex.zip
         });
     });
     
