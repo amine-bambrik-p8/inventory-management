@@ -1,4 +1,4 @@
-import { Route } from '../../utils/route.interface';
+import { Route } from '../../utils/crud/route.interface';
 
 export const productEntryRoutes: Route[]=[
     {
