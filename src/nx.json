@@ -24,6 +24,13 @@
     },
     "interfaces": {
       "tags": []
+    },
+    "angular-web-client": {
+      "tags": []
+    },
+    "angular-web-client-e2e": {
+      "tags": [],
+      "implicitDependencies": ["angular-web-client"]
     }
   }
 }
