@@ -31,6 +31,9 @@
     "angular-web-client-e2e": {
       "tags": [],
       "implicitDependencies": ["angular-web-client"]
+    },
+    "core-data": {
+      "tags": []
     }
   }
 }

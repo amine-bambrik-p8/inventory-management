@@ -16,7 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@workspace/interfaces": ["libs/interfaces/src/index.ts"]
+      "@workspace/interfaces": ["libs/interfaces/src/index.ts"],
+      "@workspace/core-data": ["libs/core-data/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
