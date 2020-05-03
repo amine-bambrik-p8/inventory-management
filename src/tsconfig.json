@@ -17,7 +17,10 @@
     "baseUrl": ".",
     "paths": {
       "@workspace/interfaces": ["libs/interfaces/src/index.ts"],
-      "@workspace/core-data": ["libs/core-data/src/index.ts"]
+      "@workspace/core-data": ["libs/core-data/src/index.ts"],
+      "@workspace/auth": ["libs/auth/src/index.ts"],
+      "@workspace/common": ["libs/common/src/index.ts"],
+      "@environments/client": ["apps/angular-web-client/src/environments/*"],
     }
   },
   "exclude": ["node_modules", "tmp"]

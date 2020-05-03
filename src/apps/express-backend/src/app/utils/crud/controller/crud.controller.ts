@@ -44,11 +44,12 @@ export class CRUDController{
     async readMany(req: Partial<Request>,res: Partial<Response>,next?: NextFunction){
         try {
             let mongooseDocuments:Document[];
-            if(req.body && req.body.filter){
-                const pagination={ page:0,...environment.pagination,...req.body.filter.pagination};
+            const filter:any = req.query;
+            if(filter){
+                const pagination={ page:0,...environment.pagination,...filter.pagination};
 
-                const query=req.body.filter.query;
-                const populate=req.body.filter.populate;
+                const query=filter.query;
+                const populate=filter.populate;
                 let queryObject = this.model.find({...query});
                 if(pagination){
                     queryObject = queryObject.skip(pagination.skip*pagination.page).limit(pagination.limit);
