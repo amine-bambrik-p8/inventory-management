@@ -20,7 +20,7 @@
       "@workspace/core-data": ["libs/core-data/src/index.ts"],
       "@workspace/auth": ["libs/auth/src/index.ts"],
       "@workspace/common": ["libs/common/src/index.ts"],
-      "@environments/client": ["apps/angular-web-client/src/environments/*"],
+      "@workspace/environments": ["libs/environments/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -2,8 +2,7 @@ import { Observable } from 'rxjs';
 import { IProductEntry } from '@workspace/interfaces';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '@environments/client';
-
+import { sharedEnvironment as environment } from '@workspace/environments';
 @Injectable({
   providedIn: 'root'
 })

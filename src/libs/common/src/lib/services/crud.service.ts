@@ -1,6 +1,7 @@
+import { sharedEnvironment as environment } from '@workspace/environments';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '@environment/environment';
+
 
 export abstract class CrudService<T> {
   
