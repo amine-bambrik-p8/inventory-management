@@ -10,7 +10,7 @@ describe("Product validation",()=>{
             name:faker.commerce.product(),
             supplierId:mongoose.Types.ObjectId().toHexString(),
             codebar:faker.random.number({
-                min:0,
+                min:Number.parseInt("1"+"0".repeat(7)),
                 max:Number.parseInt("9".repeat(8)),
             }).toString(),
             quantityAlert:{
