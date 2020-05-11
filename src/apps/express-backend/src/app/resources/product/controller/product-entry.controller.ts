@@ -3,6 +3,66 @@ import { IProductEntry } from '@workspace/interfaces';
 import { Request,Response,NextFunction } from 'express';
 import { Document } from 'mongoose';
 export class ProductEntryController {
+    async setMainEntry(req:Partial<Request>,res:Partial<Response>,next?:NextFunction){
+        const {productId,id:productEntryId} = req.params;
+        let product: IProductDocument;
+        try {
+            product = await Product.findOneAndUpdate({
+                _id:productId,
+                entries:{
+                    $elemMatch:{
+                        _id:productEntryId,
+                    }
+                }
+            },{
+                $set:{
+                    mainEntryId:productEntryId,
+                }
+            },{
+                new:true,
+            });
+            if(!product){
+                res.status(400);
+                res.json({
+                    error:{
+                        message:"400 - Bad Request"
+                    }
+                });
+                return;
+            }
+        } catch (error) {
+            next(error);
+            return;
+        }
+        res.status(200);
+        res.json({
+            data:(product.entries as any).id(product.mainEntryId),
+        });
+    }
+    async readMany(req:Partial<Request>,res:Partial<Response>,next?:NextFunction){
+        const {productId} = req.params;
+        let product: IProductDocument;
+        try {
+            product = await Product.findById(productId);
+            if(!product){
+                res.status(400);
+                res.json({
+                    error:{
+                        message:"400 - Bad Request",
+                    },
+                });
+                return;
+            }
+        } catch (error) {
+            next(error);
+            return;
+        }
+        res.status(200);
+        res.json({
+            data:product.entries
+        });
+         
+    }
     async createOne(req: Partial<Request>,res: Partial<Response>,next?:NextFunction){
         const productEntry: IProductEntry = req.body.data;
         const productId: string = req.params.productId;

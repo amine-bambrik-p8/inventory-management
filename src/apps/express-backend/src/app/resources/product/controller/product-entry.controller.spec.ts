@@ -41,6 +41,125 @@ describe("ProductEntry controller",()=>{
     afterEach(()=>{
         return clearDatabase();
     })
+    describe("readMany",()=>{
+        it("should return 400 and error with message if product doesn't exist",async ()=>{
+            const someProductId: string = mongoose.Types.ObjectId().toHexString();
+            const req: Partial<Request> = {
+                params:{
+                    productId:someProductId,
+                },
+            }
+            const res:Partial<Response> = {
+                status(code){
+                    expect(code).toBe(400);
+                    return this;
+                },
+                json(document){
+                    expect(document).toHaveProperty("error");
+                    expect(document.error).toHaveProperty("message");
+                    return this;
+                },
+            };
+            await controller.readMany(req,res,console.error);
+
+        });
+        it("should return 200 with productEntries as data",async ()=>{
+            expect.assertions(3);
+            const someValidProductWithEntry: IProduct = {...someValidProduct,entries:[someValidEntry]};
+            const someProductDocument: IProductDocument = (await Product.create(someValidProductWithEntry)).toJSON();
+            const req: Partial<Request> = {
+                params:{
+                    productId: someProductDocument._id,
+                },
+            };
+            const res: Partial<Response> = {
+                status(code){
+                    expect(code).toBe(200);
+                    return this;
+                },
+                json(document){
+                    expect(document).toHaveProperty("data");
+                    expect(document.data[0].toJSON()).toEqual(someProductDocument.entries[0]);
+                    return this;
+                }
+            };
+            await controller.readMany(req,res,console.error);
+        });
+    })
+    describe("setMainEntry",()=>{
+        it("should return 400 and error with message if the product doesn't exist",async ()=>{
+            expect.assertions(3);
+            const someProductId: string = mongoose.Types.ObjectId().toHexString();
+            const someValidProductWithEntry:IProduct = {...someValidProduct};
+            someValidProductWithEntry.entries.push(someValidEntry);
+            const someValidProductDocument:IProductDocument =  (await Product.create(someValidProductWithEntry)).toJSON();
+            const req:Partial<Request> = {
+                params:{
+                    productId:someProductId,
+                    id:someValidProductDocument.entries.pop()._id,
+                }
+            };
+            const res:Partial<Response> = {
+                status(code){
+                    expect(code).toBe(400);
+                    return this;
+                },
+                json(document){
+                    expect(document).toHaveProperty("error");
+                    expect(document.error).toHaveProperty("message");
+                    return this;
+                }
+            };
+            await controller.setMainEntry(req,res,console.error);
+        });
+        it("should return 400 and error with message if entry doesn't exist",async ()=>{
+            expect.assertions(3);
+            const someProductEntryId: string = mongoose.Types.ObjectId().toHexString();
+            const someValidProductDocument: IProductDocument = await Product.create(someValidProduct);
+            const req: Partial<Request> = {
+                params:{
+                    productId:someValidProductDocument._id,
+                    id:someProductEntryId
+                }
+            };
+            const res:Partial<Response> = {
+                status(code){
+                    expect(code).toBe(400);
+                    return this;
+                },
+                json(document){
+                    expect(document).toHaveProperty("error");
+                    expect(document.error).toHaveProperty("message");
+                    return this;
+                }
+            };
+            await controller.setMainEntry(req,res,console.error)
+        });
+        it("should set the mainEntryId to the passed id return 200 and the mainentry document as data",async ()=>{
+            expect.assertions(3);
+            const someValidProductWithEntry = {...someValidProduct};
+            someValidProductWithEntry.entries.push(someValidEntry);
+            const someValidProductDocument = (await Product.create(someValidProductWithEntry)).toJSON();
+            const req: Partial<Request> = {
+                params:{
+                    productId:someValidProductDocument._id,
+                    id:someValidProductDocument.entries[0]._id
+                }
+            };
+            const res:Partial<Response> = {
+                status(code){
+                    expect(code).toBe(200);
+                    return this;
+                },
+                json(document){
+                    expect(document).toHaveProperty("data");
+                    expect(document.data.toJSON()).toEqual(someValidProductDocument.entries[0]);
+                    return this;
+                }
+            }
+            await controller.setMainEntry(req,res,console.error);
+        });
+    });
     describe("createOne", ()=>{
         it("should return 400 and error with message when product doesn't exist",async()=>{
             expect.assertions(3);
