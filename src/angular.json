@@ -12,7 +12,7 @@
           "builder": "@nrwl/node:build",
           "options": {
             "outputPath": "dist/apps/express-backend",
-            "main": "apps/express-backend/src/main.ts",
+            "main": "apps/express-backend/src/index.ts",
             "tsConfig": "apps/express-backend/tsconfig.app.json",
             "assets": ["apps/express-backend/src/assets"]
           },
