@@ -38,14 +38,12 @@ import { Request, Response, NextFunction } from 'express';
                 }
             });
         } catch (error) {
-            console.error(error);
             next(error);
         }
      }
      async authenticate(req:Partial<Request> | any,res: Partial<Response>,next?: NextFunction){
          const bearer: string = (req.headers.authorization as string);
          if(!bearer || !bearer.startsWith("Bearer ")){
-             console.log(req.headers)
              res.status(401);
              res.json({
                  error:{

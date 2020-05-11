@@ -1,5 +1,5 @@
 import { IUserDocument } from './../../resources/user/model/user.model';
-import { JwtAuth } from './jwt.auth.';
+import { JwtAuth } from './jwt.auth';
 import { connect,clearDatabase,closeDatabase } from '../../../test-db-setup';
 import { User } from '../../resources/user/model/user.model';
 import * as jwt from 'jsonwebtoken';
