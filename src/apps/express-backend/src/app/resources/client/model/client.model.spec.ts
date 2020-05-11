@@ -42,8 +42,6 @@ describe("Client model",()=>{
                 expect(phoneNumber).toEqual({
                     type: String,
                     required:true,
-                    maxlength:12,
-                    minlength:12,
                     match:regex.phone,
             });
         });

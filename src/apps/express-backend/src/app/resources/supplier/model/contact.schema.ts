@@ -18,7 +18,6 @@ const schema = new Schema({
     phoneNumber: {
         type: String,
         required:true,
-        maxlength:10,
         match:regex.phone,
     },
     email: {

@@ -37,7 +37,6 @@ describe("Contact schema",()=>{
             expect(phoneNumber).toEqual({
                 type: String,
                 required:true,
-                maxlength:10,
                 match:regex.phone,
         });
     });
