@@ -24,6 +24,6 @@ export const crudRoutes: Route[] = [
     {
         controllerFunctionName:"deleteOne",
         path:"/:id",
-        method:"GET",
+        method:"DELETE",
     },
 ];
