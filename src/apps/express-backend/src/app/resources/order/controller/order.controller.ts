@@ -22,6 +22,9 @@ export class OrderController extends CRUDController{
                         throw {status:404,message:"404 - Not Found"};
                     }
                     const productEntry = product.entries.id(product.mainEntryId);
+                    if(!productEntry){
+                        throw {status:404,message:"404 - Not Found"};
+                    }
                     await Product.findOneAndUpdate({
                         _id:orderEntry.productId,
                         entries:{
