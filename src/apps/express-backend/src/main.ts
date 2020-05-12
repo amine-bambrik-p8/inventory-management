@@ -9,6 +9,7 @@ import * as express from 'express';
 import { setup } from "./app/resources";
 import { connect } from "./app/utils/db/db";
 import { json , urlencoded} from "body-parser"
+import { handleError } from './app/middleware/express.error.handler.middleware';
 
 export const app = express();
 
@@ -22,6 +23,7 @@ const auth = new JwtAuth();
 app.post("/sign-in",auth.signIn);
 app.use(auth.authenticate);
 setup(app);
+app.use(handleError);
 export const start = ()=>{
   const port = process.env.port || 3333;
   const server = app.listen(port, () => {
