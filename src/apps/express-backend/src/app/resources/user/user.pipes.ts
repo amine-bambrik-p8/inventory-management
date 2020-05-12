@@ -1,3 +1,4 @@
+import { upload } from './../../utils/storage';
 import { userValidation } from './validation/user.validation';
 import { authorize } from '../../middleware/authorize.middleware';
 import { Pipe } from '../../utils/pipe.type';
@@ -20,5 +21,9 @@ export const userPipes = {
     updateOne:[
         authorize(Role.ADMIN),
         validate(userValidation),
-    ]
+    ],
+    setPicture:[
+        upload
+    ],
+    removePicture:[]
 }

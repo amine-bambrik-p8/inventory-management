@@ -100,7 +100,11 @@ describe("Product model",()=>{
         test("thumbnails", () => {
             const thumbnails = Product.schema.obj.thumbnails;
                 expect(thumbnails).toEqual({
-                    type: [String]
+                    type: [{
+                        path:{
+                            type: String
+                        }
+                    }]
                     
             });
         });

@@ -2,6 +2,7 @@ import { supplierValidation } from './validation/supplier.validation';
 import { validate } from './../../middleware/validation.middleware';
 import { authorize } from '../../middleware/authorize.middleware';
 import { Role } from '@workspace/interfaces';
+import { upload } from '../../utils/storage';
 export const supplierPipes = {
     createOne: [
         authorize(Role.INVENTORY,Role.ADMIN),
@@ -19,5 +20,9 @@ export const supplierPipes = {
     updateOne:[
         authorize(Role.INVENTORY,Role.ADMIN),
         validate(supplierValidation)
-    ]
+    ],
+    setPicture:[
+        upload
+    ],
+    removePicture:[]
 }

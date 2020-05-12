@@ -28,10 +28,17 @@ describe("User model", () => {
             "lastName",
             "password",
             "role",
+            "picture"
         ]
         const fieldsAsString = Object.keys(fields).sort().join(",");
         const expectedFieldsAsString = expectedFields.sort().join(",");
         expect(fieldsAsString).toBe(expectedFieldsAsString);
+    });
+    test("picture", () => {
+        const picture = User.schema.obj.picture;
+            expect(picture).toEqual({
+                type: String,
+        });
     });
     test("username", () => {
         const username = User.schema.obj.username;

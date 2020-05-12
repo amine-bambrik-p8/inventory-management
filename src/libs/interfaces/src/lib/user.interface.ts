@@ -7,4 +7,5 @@ export interface IUser {
     firstName: string;
     lastName: string;
     role: Role;
+    picture?: string;
 }

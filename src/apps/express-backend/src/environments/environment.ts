@@ -17,5 +17,13 @@ export const environment = {
       useFindAndModify:true,
       useUnifiedTopology:true,
     }
+  },
+  filestorage:{
+    type:"disk",
+    dest:"/public/uploads/",
+    ext:[
+      "jpg",
+      "jpeg"
+    ]
   }
 };

@@ -25,11 +25,6 @@ export const productValidation = Joi.object<IProduct>({
     name:Joi.string()
             .regex(regex.alphanum)
             .required(),
-    thumbnails:Joi.array()
-                .items(
-                    Joi.string()
-                        .uri()
-                    ),
     supplierId:Joi.string()
                     .hex()
                     .length(24)

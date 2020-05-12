@@ -37,6 +37,9 @@ const schema = new Schema({
         type: String,
         enum: [ ...roles ],
         required:true,
+    },
+    picture:{
+        type:String,
     }
 },
 {

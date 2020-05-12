@@ -53,7 +53,11 @@ const schema = new Schema({
         required:true,
     },
     thumbnails: {
-        type: [String],
+        type: [{
+            path:{
+             type:String
+            }
+        }],
     },
     description: {
         type: String,

@@ -14,6 +14,9 @@ export interface IProduct{
     entries?: IProductEntry[];
     categoryId: string;
     supplierId: string;
-    thumbnails?: [string],
+    thumbnails?: [{
+        readonly _id?: string;
+        path:string;
+    }],
     description?:string
 }
