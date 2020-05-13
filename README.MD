@@ -1,5 +1,6 @@
 # Important Note
-This project main purpose is to showcase my skills in various web development frameworks/technologies from front-end to the back-end which is still work in-progress that why you are in the development branch by default
+This project main purpose is to showcase my skills in various web development frameworks/technologies from front-end to the back-end which is still a work in-progress that why you are in the development branch by default
+
 The project includes the following things:
 ## Previously used things that I have used for this project
 * TypeScript/ES6
@@ -62,14 +63,17 @@ I still have to add some simple tasks that you might have noticed they are missi
 You can find the code for the front end app in the `angular-web-client` the main app is in the /src/apps/angular-web-client/src folder where you can find:
   * Routes Lazy Loading
 To be able easily create another app using the same REST API i have separated the UI Components from Services and NgRx store logic for getting data thanks to @nrwl/nx mono repo
+
 In the  /src/libs/core-data/src/lib folder you will find:
   * NgRx store with reducers,effects and actions for each model/entity under the /state folder
   * Services for each model/entity
+
 In the /src/libs/auth/src/lib you will find the:
   * Jwt auth service
   * Jwt interceptor for adding the token to auth header
   * Role based Auth Guard
-In the /src/libs/common/src/lib there's a(n):
+
+In the /src/libs/common/src/lib there's:
   * Basic CRUD controller
   * Interceptor for HttpRequest/Response to format the data before sending/receiving data
 #### Work to-do
