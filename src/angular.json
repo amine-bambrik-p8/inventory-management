@@ -14,7 +14,9 @@
             "outputPath": "dist/apps/express-backend",
             "main": "apps/express-backend/src/main.ts",
             "tsConfig": "apps/express-backend/tsconfig.app.json",
-            "assets": ["apps/express-backend/src/assets"]
+            "assets": [
+              "apps/express-backend/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -43,7 +45,10 @@
               "apps/express-backend/tsconfig.app.json",
               "apps/express-backend/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/express-backend/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/express-backend/**"
+            ]
           }
         },
         "test": {
@@ -69,7 +74,10 @@
               "libs/interfaces/tsconfig.lib.json",
               "libs/interfaces/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/interfaces/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/interfaces/**"
+            ]
           }
         },
         "test": {
@@ -106,7 +114,10 @@
               "apps/angular-web-client/src/favicon.ico",
               "apps/angular-web-client/src/assets"
             ],
-            "styles": ["apps/angular-web-client/src/styles.scss"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "apps/angular-web-client/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -164,7 +175,10 @@
               "apps/angular-web-client/tsconfig.app.json",
               "apps/angular-web-client/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/angular-web-client/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/angular-web-client/**"
+            ]
           }
         },
         "test": {
@@ -199,8 +213,13 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/angular-web-client-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/angular-web-client-e2e/**"]
+            "tsConfig": [
+              "apps/angular-web-client-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/angular-web-client-e2e/**"
+            ]
           }
         }
       }
@@ -218,7 +237,10 @@
               "libs/core-data/tsconfig.lib.json",
               "libs/core-data/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/core-data/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/core-data/**"
+            ]
           }
         },
         "test": {
@@ -250,7 +272,10 @@
               "libs/auth/tsconfig.lib.json",
               "libs/auth/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/auth/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/auth/**"
+            ]
           }
         },
         "test": {
@@ -282,7 +307,10 @@
               "libs/common/tsconfig.lib.json",
               "libs/common/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/common/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/common/**"
+            ]
           }
         },
         "test": {
@@ -314,7 +342,10 @@
               "libs/environments/tsconfig.lib.json",
               "libs/environments/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/environments/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/environments/**"
+            ]
           }
         },
         "test": {
@@ -324,6 +355,111 @@
             "tsConfig": "libs/environments/tsconfig.spec.json",
             "passWithNoTests": true,
             "setupFile": "libs/environments/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "ui-login": {
+      "projectType": "library",
+      "root": "libs/ui-login",
+      "sourceRoot": "libs/ui-login/src",
+      "prefix": "workspace",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ui-login/tsconfig.lib.json",
+              "libs/ui-login/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/ui-login/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ui-login/jest.config.js",
+            "tsConfig": "libs/ui-login/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/ui-login/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "material": {
+      "projectType": "library",
+      "root": "libs/material",
+      "sourceRoot": "libs/material/src",
+      "prefix": "workspace",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/material/tsconfig.lib.json",
+              "libs/material/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/material/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/material/jest.config.js",
+            "tsConfig": "libs/material/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/material/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "ui-components": {
+      "projectType": "library",
+      "root": "libs/ui-components",
+      "sourceRoot": "libs/ui-components/src",
+      "prefix": "workspace",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ui-components/tsconfig.lib.json",
+              "libs/ui-components/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/ui-components/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ui-components/jest.config.js",
+            "tsConfig": "libs/ui-components/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/ui-components/src/test-setup.ts"
           }
         }
       },
