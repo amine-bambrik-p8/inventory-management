@@ -1,6 +1,7 @@
 import { CategoriesActions, CategoriesActionTypes } from './categories.actions';
 import { ICategory } from '@workspace/interfaces';
 import { EntityAdapter,EntityState,createEntityAdapter } from '@ngrx/entity';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface CategoriesState extends EntityState<ICategory>{
     
@@ -11,7 +12,7 @@ const adapter: EntityAdapter<ICategory> = createEntityAdapter<ICategory>({
 });
 
 export const initialState: CategoriesState =  adapter.getInitialState({
-
+    
 });
 
 export function categoriesReducers(state = initialState,action:CategoriesActions): CategoriesState{
@@ -34,10 +35,10 @@ export function categoriesReducers(state = initialState,action:CategoriesActions
             return state;
     }
 }
-
+const selectCategoriesState = createFeatureSelector<CategoriesState>('categories');
 const { selectIds , selectAll , selectEntities , selectTotal} = adapter.getSelectors();
 
-export const selectCategoriesIds = selectIds;
-export const selectAllCategories = selectAll;
-export const selectCategoriesEntities = selectEntities;
-export const selectCategoriesTotal = selectTotal;
+export const selectCategoriesIds = createSelector(selectCategoriesState,selectIds);
+export const selectAllCategories = createSelector(selectCategoriesState,selectAll);
+export const selectCategoriesEntities = createSelector(selectCategoriesState,selectEntities);
+export const selectCategoriesTotal = createSelector(selectCategoriesState,selectTotal);

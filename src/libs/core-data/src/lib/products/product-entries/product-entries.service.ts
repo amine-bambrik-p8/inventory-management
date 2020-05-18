@@ -11,7 +11,7 @@ export class ProductEntriesService {
   constructor(private http:HttpClient) {}
 
   private getUrlForId(id: string,entryId=""): string{
-    return `${environment.apiUrl}/${id}/${entryId}`;
+    return `${environment.url}/${id}/${entryId}`;
   }
 
   private createOne(id: string,data: IProductEntry): Observable<IProductEntry>{

@@ -1,6 +1,7 @@
 import { UsersActions, UsersActionTypes } from './users.actions';
 import { IUser } from '@workspace/interfaces';
 import { EntityAdapter,EntityState,createEntityAdapter } from '@ngrx/entity';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface UsersState extends EntityState<IUser>{
     
@@ -33,9 +34,10 @@ export function usersReducers(state = initialState,action:UsersActions): UsersSt
     }
 }
 
-const { selectIds , selectAll , selectEntities , selectTotal } = adapter.getSelectors();
+const selectUsersState = createFeatureSelector<UsersState>('users');
+const { selectIds , selectAll , selectEntities , selectTotal} = adapter.getSelectors();
 
-export const selectUsersIds = selectIds;
-export const selectAllUsers = selectAll;
-export const selectUsersEntities = selectEntities;
-export const selectUsersTotal = selectTotal;
+export const selectUsersIds = createSelector(selectUsersState,selectIds);
+export const selectAllUsers = createSelector(selectUsersState,selectAll);
+export const selectUsersEntities = createSelector(selectUsersState,selectEntities);
+export const selectUsersTotal = createSelector(selectUsersState,selectTotal);

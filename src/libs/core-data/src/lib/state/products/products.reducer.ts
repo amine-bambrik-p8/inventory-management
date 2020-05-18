@@ -1,6 +1,7 @@
 import { ProductsActions, ProductsActionTypes } from './products.actions';
 import { IProduct } from '@workspace/interfaces';
 import { EntityAdapter,EntityState,createEntityAdapter } from '@ngrx/entity';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 export interface ProductsState extends EntityState<IProduct>{
     
@@ -34,9 +35,10 @@ export function productsReducers(state = initialState,action:ProductsActions): P
 }
 
 
+const selectProductsState = createFeatureSelector<ProductsState>('products');
 const { selectIds , selectAll , selectEntities , selectTotal} = adapter.getSelectors();
 
-export const selectProductsIds = selectIds;
-export const selectAllProducts = selectAll;
-export const selectProductsEntities = selectEntities;
-export const selectProductsTotal = selectTotal;
+export const selectProductsIds = createSelector(selectProductsState,selectIds);
+export const selectAllProducts = createSelector(selectProductsState,selectAll);
+export const selectProductsEntities = createSelector(selectProductsState,selectEntities);
+export const selectProductsTotal = createSelector(selectProductsState,selectTotal);

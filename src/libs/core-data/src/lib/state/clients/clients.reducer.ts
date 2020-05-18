@@ -1,6 +1,7 @@
 import { ClientsActions, ClientsActionTypes } from './clients.actions';
 import { IClient } from '@workspace/interfaces';
 import { EntityAdapter,EntityState,createEntityAdapter } from '@ngrx/entity';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 export interface ClientsState extends EntityState<IClient>{
     
@@ -34,9 +35,10 @@ export function clientsReducers(state = initialState,action:ClientsActions): Cli
 }
 
 
+const selectClientsState = createFeatureSelector<ClientsState>('clients');
 const { selectIds , selectAll , selectEntities , selectTotal} = adapter.getSelectors();
 
-export const selectClientsIds = selectIds;
-export const selectAllClients = selectAll;
-export const selectClientsEntities = selectEntities;
-export const selectClientsTotal = selectTotal;
+export const selectClientsIds = createSelector(selectClientsState,selectIds);
+export const selectAllClients = createSelector(selectClientsState,selectAll);
+export const selectClientsEntities = createSelector(selectClientsState,selectEntities);
+export const selectClientsTotal = createSelector(selectClientsState,selectTotal);

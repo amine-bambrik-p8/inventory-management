@@ -1,18 +1,18 @@
 import { ProductsState } from './products.reducer';
-import { DataPersistence } from '@nrwl/nx';
-import { ProductsService } from './../../products/products.service';
+import { ProductsService } from '../../products/products.service';
 import { ProductsLoaded, ProductsActionTypes, LoadProducts, ProductCreated, CreateProduct, ProductDeleted, DeleteProduct, UpdateProduct, ProductUpdated } from './products.actions';
-import { Effect } from '@ngrx/effects';
+import { Effect, Actions, createEffect, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { IProduct } from '@workspace/interfaces';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { fetch, pessimisticUpdate } from '@nrwl/angular';
 @Injectable({
     providedIn:"root",
 })
 export class ProductsEffects {
     @Effect()
-    loadProducts$: Observable<ProductsLoaded> = this.dataPersistence.fetch(ProductsActionTypes.LOAD_PRODUCTS,{
+    loadProducts$ = createEffect(()=>this.actions$.pipe(ofType(ProductsActionTypes.LOAD_PRODUCTS),fetch({
         run:(action: LoadProducts,state: ProductsState)=>{
             return this.productsService
             .readMany()
@@ -25,9 +25,9 @@ export class ProductsEffects {
         onError(action: LoadProducts,error: any){
             console.log(error);
         }
-    });
+    })));
     @Effect()
-    createProduct$: Observable<ProductCreated> = this.dataPersistence.fetch(ProductsActionTypes.CREATE_PRODUCT,{
+    createProduct$ = createEffect(()=>this.actions$.pipe(ofType(ProductsActionTypes.CREATE_PRODUCT),pessimisticUpdate({
         run:(action: CreateProduct,state: ProductsState)=>{
             return this.productsService
             .createOne(action.payload)
@@ -40,9 +40,9 @@ export class ProductsEffects {
         onError(action: CreateProduct,error: any){
             console.log(error);
         }
-    });
+    })));
     @Effect()
-    deleteProduct$: Observable<ProductDeleted> = this.dataPersistence.fetch(ProductsActionTypes.DELETE_PRODUCT,{
+    deleteProduct$ = createEffect(()=>this.actions$.pipe(ofType(ProductsActionTypes.DELETE_PRODUCT),pessimisticUpdate({
         run:(action: DeleteProduct,state: ProductsState)=>{
             return this.productsService
             .deleteOne(action.payload._id)
@@ -55,9 +55,9 @@ export class ProductsEffects {
         onError(action: DeleteProduct,error: any){
             console.log(error);
         }
-    });
+    })));
     @Effect()
-    updateProduct$: Observable<ProductUpdated> = this.dataPersistence.fetch(ProductsActionTypes.UPDATE_PRODUCT,{
+    updateProduct$ = createEffect(()=>this.actions$.pipe(ofType(ProductsActionTypes.UPDATE_PRODUCT),pessimisticUpdate({
         run:(action: UpdateProduct,state: ProductsState)=>{
             const {_id:id,...changes} = action.payload;
             return this.productsService
@@ -71,9 +71,9 @@ export class ProductsEffects {
         onError(action: UpdateProduct,error: any){
             console.log(error);
         }
-    });
+    })));
     constructor(
         private productsService: ProductsService,
-        private dataPersistence: DataPersistence<ProductsState>
+        private actions$:Actions
     ){}
 }

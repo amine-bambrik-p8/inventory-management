@@ -2,18 +2,18 @@ import { IClient } from '@workspace/interfaces';
 import { ClientsLoaded, ClientsActionTypes, ClientCreated, CreateClient, ClientUpdated, UpdateClient, DeleteClient, LoadClients } from './clients.actions';
 import { Observable } from 'rxjs';
 import { ClientsState } from './clients.reducer';
-import { DataPersistence } from '@nrwl/nx';
 import { ClientsService } from './../../clients/clients.service';
 import { Injectable } from '@angular/core';
-import { Effect } from '@ngrx/effects';
+import { Effect, Actions, createEffect, ofType } from '@ngrx/effects';
 import { map } from 'rxjs/operators';
+import { fetch, pessimisticUpdate } from '@nrwl/angular';
 
 @Injectable({
     providedIn:"root",
 })
 export class ClientsEffects {
     @Effect()
-    loadClients$: Observable<ClientsLoaded> = this.dataPersistence.fetch(ClientsActionTypes.LOAD_CLIENTS,{
+    loadClients$ = createEffect(()=>this.actions$.pipe(ofType(ClientsActionTypes.LOAD_CLIENTS),fetch({
         run:(action: LoadClients,state: ClientsState)=>{
             return this.clientsService
             .readMany()
@@ -26,9 +26,9 @@ export class ClientsEffects {
         onError(action: LoadClients,error: any){
             console.log(error);
         }
-    });
+    })));
     @Effect()
-    createClient$: Observable<ClientCreated> = this.dataPersistence.pessimisticUpdate(ClientsActionTypes.CREATE_CLIENT,{
+    createClient$ = createEffect(()=>this.actions$.pipe(ofType(ClientsActionTypes.CREATE_CLIENT),pessimisticUpdate({
         run:(action: CreateClient,state: ClientsState)=>{
             return this.clientsService
             .createOne(action.payload)
@@ -41,9 +41,9 @@ export class ClientsEffects {
         onError(action: CreateClient,error: any){
             console.log(error);
         }
-    });
+    })));
     @Effect()
-    updateClient$: Observable<ClientUpdated> = this.dataPersistence.pessimisticUpdate(ClientsActionTypes.UPDATE_CLIENT,{
+    updateClient$ = createEffect(()=>this.actions$.pipe(ofType(ClientsActionTypes.UPDATE_CLIENT),pessimisticUpdate({
         run:(action: UpdateClient,state: ClientsState)=>{
             return this.clientsService
             .updateOne(action.payload._id,action.payload)
@@ -56,9 +56,9 @@ export class ClientsEffects {
         onError(action: UpdateClient,error: any){
             console.log(error);
         }
-    });
+    })));
     @Effect()
-    deleteClient$: Observable<ClientUpdated> = this.dataPersistence.pessimisticUpdate(ClientsActionTypes.DELETE_CLIENT,{
+    deleteClient$ = createEffect(()=>this.actions$.pipe(ofType(ClientsActionTypes.DELETE_CLIENT),pessimisticUpdate({
         run:(action: DeleteClient,state: ClientsState)=>{
             return this.clientsService
             .deleteOne(action.payload._id)
@@ -71,9 +71,9 @@ export class ClientsEffects {
         onError(action: DeleteClient,error: any){
             console.log(error);
         }
-    });
+    })));
     constructor(
         private clientsService:ClientsService,
-        private dataPersistence: DataPersistence<ClientsState>
+        private actions$: Actions
         ){}
 }

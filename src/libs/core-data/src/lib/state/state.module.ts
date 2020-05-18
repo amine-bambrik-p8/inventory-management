@@ -1,4 +1,4 @@
-import { NxModule } from '@nrwl/nx';
+import { CategoriesFacade } from './categories/categories.facade';
 import { UsersEffects } from './users/users.effects';
 import { OrdersEffects } from './orders/orders.effects';
 import { ClientsEffects } from './clients/clients.effects';
@@ -6,7 +6,7 @@ import { CategoriesEffects } from './categories/categories.effects';
 import { reducers } from './index';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { environment } from '@environments/client';
+import { sharedEnvironment as environment } from '@workspace/environments';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -18,7 +18,6 @@ import { SuppliersEffects } from './suppliers/suppliers.effects';
   declarations: [],
   imports: [
     CommonModule,
-    NxModule.forRoot(),
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([
       CategoriesEffects,

@@ -1,6 +1,7 @@
 import { OrdersActions, OrdersActionTypes } from './orders.actions';
 import { IOrder } from '@workspace/interfaces';
 import { EntityAdapter,EntityState,createEntityAdapter } from '@ngrx/entity';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 export interface OrdersState extends EntityState<IOrder>{
     
@@ -34,9 +35,10 @@ export function ordersReducers(state = initialState,action:OrdersActions): Order
 }
 
 
+const selectOrdersState = createFeatureSelector<OrdersState>('orders');
 const { selectIds , selectAll , selectEntities , selectTotal} = adapter.getSelectors();
 
-export const selectOrdersIds = selectIds;
-export const selectAllOrders = selectAll;
-export const selectOrdersEntities = selectEntities;
-export const selectOrdersTotal = selectTotal;
+export const selectOrdersIds = createSelector(selectOrdersState,selectIds);
+export const selectAllOrders = createSelector(selectOrdersState,selectAll);
+export const selectOrdersEntities = createSelector(selectOrdersState,selectEntities);
+export const selectOrdersTotal = createSelector(selectOrdersState,selectTotal);
