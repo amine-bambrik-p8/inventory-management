@@ -1,0 +1,26 @@
+mat-card{
+  position: relative;
+}
+
+mat-card-content{
+  padding: 1.2em 0.5em;
+  margin: 0;
+  background: rgba($color: #FFFFFF, $alpha: 1);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+mat-card-title{
+  font-size: 1.2em;
+}
+.product-detail{
+  overflow: hidden;
+  height: 0px ;
+  justify-content: center;
+  transition: height 0.6s ease-out;
+  width: 100%;
+}
+mat-card:hover .product-detail{
+  height: 3em;
+}

@@ -20,7 +20,10 @@
       "@workspace/core-data": ["libs/core-data/src/index.ts"],
       "@workspace/auth": ["libs/auth/src/index.ts"],
       "@workspace/common": ["libs/common/src/index.ts"],
-      "@workspace/environments": ["libs/environments/src/index.ts"]
+      "@workspace/environments": ["libs/environments/src/index.ts"],
+      "@workspace/ui-login": ["libs/ui-login/src/index.ts"],
+      "@workspace/material": ["libs/material/src/index.ts"],
+      "@workspace/ui-components": ["libs/ui-components/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

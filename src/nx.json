@@ -43,6 +43,15 @@
     },
     "environments": {
       "tags": []
+    },
+    "ui-login": {
+      "tags": []
+    },
+    "material": {
+      "tags": []
+    },
+    "ui-components": {
+      "tags": []
     }
   }
 }
