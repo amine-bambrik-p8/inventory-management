@@ -10,9 +10,11 @@ import { setup } from "./app/resources";
 import { connect } from "./app/utils/db/db";
 import { json , urlencoded} from "body-parser"
 import { handleError } from './app/middleware/express.error.handler.middleware';
+import * as cors from "cors";
 
 export const app = express();
 
+app.use(cors());
 app.use(json());
 app.use(urlencoded({
   extended:true,
