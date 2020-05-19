@@ -9,7 +9,7 @@ export abstract class CrudService<T> {
   constructor(
     protected http:HttpClient,
     protected model: string,
-    protected baseUrl: string = environment.apiUrl
+    protected baseUrl: string = environment.url
     ) { }
 
   private get url(): string{

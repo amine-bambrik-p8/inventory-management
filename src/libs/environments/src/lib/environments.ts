@@ -1,3 +1,4 @@
 export const sharedEnvironment = {
-    apiUrl:"http://localhost:3333/"
+    production:false,
+    url:"http://localhost:3333"
 }

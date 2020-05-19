@@ -2,7 +2,7 @@ import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '@environments/client';
+import { sharedEnvironment as environment } from '@workspace/environments';
 import { JwtAuthResponse } from '../interfaces/jwt-auth-response.interface';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class JwtAuthService {
   }
 
   private get url(): string {
-    return `${environment.apiUrl}/${this.model}`;
+    return `${environment.url}/${this.model}`;
   }
   
   public login(username: string,password: string): Observable<string>{
@@ -39,7 +39,7 @@ export class JwtAuthService {
   }
   
   get isAuthenticated$(): BehaviorSubject<Boolean>{
-    this._isAuthenticated$.next(this.token === "");
+    this._isAuthenticated$.next(this.token !== "");
     return this._isAuthenticated$;
   }
 

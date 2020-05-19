@@ -6,10 +6,12 @@ import {
   HttpEvent,
   HttpInterceptor
 } from '@angular/common/http';
-import { environment } from "@environments/client"
+import { sharedEnvironment as environment } from "@workspace/environments"
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn:"root"
+})
 export class JwtTokenInterceptor implements HttpInterceptor {
 
   constructor(private jwtAuthService: JwtAuthService) {}
