@@ -60,6 +60,15 @@ import { Request, Response, NextFunction } from 'express';
              return next(error);
          }
          const user = await User.findById(payload._id).select("-password").lean().exec();
+         if(!user){
+            res.status(401);
+            res.json({
+                 error:{
+                     message: "401 - Unauthenticated"
+                 },
+             });
+             return;
+         }
          req.user = user;
          next();
      }
