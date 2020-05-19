@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="search-bar">
+    <div class="flex-grid space-between ">
+      <mat-form-field>
+        <input matInput placeholder="Ex: Product Name">
+        <mat-label>Search</mat-label>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Sort By</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let food of []" [value]="food.value">
+            {{food.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+  <div class="flex-grid content">
+    <workspace-client-grid-card class="col-2 m-1" *ngFor='let i of [1,2,2,3,3,4,5,1,1,1,1,1,1,1,1,1,11,1,1,11]'>
+    </workspace-client-grid-card>
+  </div>
+</div>

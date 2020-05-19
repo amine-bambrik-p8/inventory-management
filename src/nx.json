@@ -24,6 +24,34 @@
     },
     "interfaces": {
       "tags": []
+    },
+    "angular-web-client": {
+      "tags": []
+    },
+    "angular-web-client-e2e": {
+      "tags": [],
+      "implicitDependencies": ["angular-web-client"]
+    },
+    "core-data": {
+      "tags": []
+    },
+    "auth": {
+      "tags": []
+    },
+    "common": {
+      "tags": []
+    },
+    "environments": {
+      "tags": []
+    },
+    "ui-login": {
+      "tags": []
+    },
+    "material": {
+      "tags": []
+    },
+    "ui-components": {
+      "tags": []
     }
   }
 }

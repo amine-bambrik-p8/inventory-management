@@ -1,0 +1,37 @@
+
+<div class="container h-100 flex-grid nowrap ">
+  <!-- Orders Nav -->
+  <div class="side-nav">
+    <!-- Filters -->
+    <mat-form-field class="w-100">
+      <mat-label>Search</mat-label>
+      <input matInput placeholder="Ex: Client Name">
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <mat-label>Sort By</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let food of []" [value]="food.value">
+          {{food.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Title -->
+    <h3 class="line-title">Orders</h3>
+    <!-- List -->
+    <div>
+      <workspace-order-grid-card class="m-1"></workspace-order-grid-card>
+    </div>
+  </div>
+  <!-- Order Info -->
+  <div class="content w-100">
+    <div class="m-1">
+      <workspace-order-info></workspace-order-info>
+
+    </div>
+    <div class="m-1">
+      <workspace-cart-table></workspace-cart-table>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<mat-sidenav-container >
+  <mat-sidenav [opened]="true" #sidenav mode="side" class="app-sidenav">
+    <nav >
+      <div class="logo col-12"></div>
+      
+      <div class="nav-items w-100">
+        <div class="w-100">
+          <a mat-button class="nav-link " *ngFor="let link of links_top"
+            [routerLink]="link.path" routerLinkActive="active">
+            <mat-icon>{{link.icon}}</mat-icon>
+            {{link.label}}
+          </a>
+        </div>
+        <div class="w-100 bottom-links">
+          <a mat-button class="nav-link" *ngFor="let link of links_bottom"
+            [routerLink]="link.path" routerLinkActive="active">
+            <mat-icon>{{link.icon}}</mat-icon>
+            {{link.label}}
+          </a>
+        </div>
+      </div>
+    </nav>
+  </mat-sidenav>
+
+  <div class="app-content">
+      <div class="title">
+        <h1 class="text-center">Title</h1>
+        <mat-divider></mat-divider>
+      </div>
+      <div class="fill-remaining-space">
+        <router-outlet ></router-outlet>
+
+      </div>
+  </div>
+  
+</mat-sidenav-container>

@@ -1,0 +1,40 @@
+
+<div>
+    <div>
+        <h3 class="cal-result">0</h3>
+        <mat-divider></mat-divider>
+        <mat-grid-list class="cal-controls" cols="3">
+            <mat-grid-tile colspan="3">
+                <div class="flex-grid end w-100 h-100">
+                    <div class="col-4">
+                        <button class="cal-button" mat-button>AC</button>
+                    </div>
+                    <div class="col-4">
+                        <button class="cal-button" mat-button>C</button>
+                    </div>
+                </div>
+                
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list cols="3">
+            <mat-grid-tile colspan="1" *ngFor="let digit of [7,8,9,4,5,6,1,2,3]">
+                <button  class="cal-button" mat-button> {{digit}} </button>    
+            </mat-grid-tile>
+            <mat-grid-tile  colspan="2">
+                <button  class="cal-button" mat-button>0</button>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <button  class="cal-button" mat-button>.</button>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="3" >
+                <button mat-raised-button class="btn-ctrl w-100" color="primary">Commit</button>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+    </div>
+    <div class="m-auto">
+        <button mat-raised-button class="btn-ctrl" color="primary">Confirm</button>
+        <button mat-stroked-button class="btn-ctrl" color="primary">Abort</button>
+    </div>
+</div>

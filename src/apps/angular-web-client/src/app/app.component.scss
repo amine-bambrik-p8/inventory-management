@@ -1,0 +1,76 @@
+@import '~@angular/material/theming';
+
+// Copy the palettes from your selected theme (usually theme.scss).
+$app-primary: mat-palette($mat-deep-purple,500,700,800);
+$app-accent:  mat-palette($mat-red,A200);
+$app-warn:    mat-palette($mat-pink);
+$primary: mat-color($app-primary);
+$accent: mat-color($app-accent);
+$warn: mat-color($app-warn);
+/*
+ * Remove template code below
+ */
+.title{
+    margin: 2em 1em 0 1em;
+}
+.app-content{
+    display: flex;
+    flex-direction: column;
+     height: 100%;
+}
+
+ nav{
+    height: 100%;
+    background-color: $primary;
+    overflow: hidden;
+
+ }
+ 
+a:hover{
+    color:rgba($color: #ffffff, $alpha: 0.93)
+}
+
+mat-sidenav-container{
+    height: 100%;
+    width: 100%;
+}
+
+md-sidenav-layout {
+    height: 100vh;
+}
+
+md-sidenav {
+    width: 200px;
+}
+md-sidenav a {
+    box-sizing: border-box;
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 47px;
+    text-decoration: none;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    padding: 0 16px;
+    position: relative;
+}
+
+mat-sidenav {
+    box-shadow: 3px 0 6px rgba(0, 0, 0, .24);
+    width: 200px;
+    border: 0;
+    
+}
+.nav-items{
+    position: relative;
+    height: 100%;
+}
+.bottom-links{
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    transform: translateY(-100%);
+}
+.container{
+    flex:1;
+}
