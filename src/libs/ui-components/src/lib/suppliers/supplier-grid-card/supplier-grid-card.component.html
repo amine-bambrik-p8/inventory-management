@@ -1,22 +1,23 @@
 <div class="shadow-box clickable">
-  <mat-card>
+  <mat-card >
     <div class="flex-grid nowrap">
-    <mat-card-content>
-        <div >
+
+      <mat-card-content class="col-12">
+        <div>
           <mat-card-title>
-            Supplier Name    
+            {{supplier.name}}   
           </mat-card-title>
           <div>
-              <mat-icon class="icon-20">home</mat-icon>
-              <span>something</span>
+            <mat-icon class="icon-20">call</mat-icon>
+            <span>{{supplier.contact.phoneNumber}}</span>
           </div>
           <div>
-            <mat-icon class="icon-20">home</mat-icon>
-            <span>something</span>
+            <mat-icon class="icon-20">alternate_email</mat-icon>
+            <span>{{supplier.contact.email}}</span>
           </div>
         </div>
       </mat-card-content>
-      <img class="col-8" src="https://via.placeholder.com/300" alt="Supplier Name" mat-card-image>
-    </div> 
+      <img class="col-5 rounded" src="assets/local_offer-black-24dp.svg" alt="Supplier Name" mat-card-image>
+    </div>
   </mat-card>
 </div>

@@ -1,21 +1,22 @@
 <div class="shadow-box clickable">
     <mat-card>
-        <img src="https://via.placeholder.com/300" alt="Client Name" mat-card-image>
-        <mat-card-title class="text-center">
-            Client Name    
+        <img src="assets/person_outline-24px.svg" alt="Client Name" mat-card-image>
+        <mat-card-title class="w-100 text-center">
+            {{client.firstName}}
+            <br>
+            {{client.lastName}}    
         </mat-card-title>
         <mat-divider></mat-divider>
         <mat-card-content >
-            <div class="flex-grid nowrap">
+            <div class="flex-grid nowrap space-between ">
                 <div >
-                    <mat-icon class="icon-20">home</mat-icon>
-                    <span>something</span>
+                    <mat-icon class="icon-20">category</mat-icon>
+                    <span>500</span>
                 </div>
                 <div >
-                    <mat-icon class="icon-20">home</mat-icon>
-                    <span>something</span>
+                    <mat-icon class="icon-20">monetization_on</mat-icon>
+                    <span>50k</span>
                 </div>
-
             </div>
         </mat-card-content>
     </mat-card>

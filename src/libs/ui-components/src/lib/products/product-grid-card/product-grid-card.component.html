@@ -1,9 +1,11 @@
 <div class="shadow-box clickable">
   <mat-card >
-    <img mat-card-image src="https://via.placeholder.com/500" alt="Photo of a Shiba Inu">
+    <div >
+      <img mat-card-image src="assets/package-102.svg" [alt]="product.name">
+    </div>
     <mat-card-content>
-      <mat-card-title class="text-center">Product name</mat-card-title>
-      <div class="flex-grid nowrap product-detail">
+      <mat-card-title class="text-center">{{product.name}}</mat-card-title>
+      <div class="flex-grid nowrap space-around product-detail">
         <div>
           <mat-icon class="icon-20">home</mat-icon>
           <span>value</span>

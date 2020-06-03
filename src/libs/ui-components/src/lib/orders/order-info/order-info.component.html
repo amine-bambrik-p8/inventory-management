@@ -4,15 +4,19 @@
             <img src="https://via.placeholder.com/300" alt="Client Name">
             <mat-card-content class="col-12">
                 <div class="order-info-header flex-grid nowrap space-between">
-                    <mat-card-title class="col-4">#12358978</mat-card-title>
+                    <mat-card-title class="col-4">#{{order._id}}</mat-card-title>
                     <div class="flex-grid space-around nowrap col-4">
                         <div>
                             
                             <!-- <mat-icon>event</mat-icon> -->
-                            <span>Date: 08/06/2019</span>
+                            <span>Date: {{order.dateAndTimeOfOrder | date}}</span>
                         </div>
                         <div>
-                            <mat-icon class="icon-40 status-success">check_circle</mat-icon>
+
+                            <mat-icon *ngIf="order.orderStatus ==='DELIVERED';else notYet " class="icon-40 status-success">check_circle</mat-icon>
+                            <ng-template #notYet >
+                                <mat-icon class="icon-40 status-fail">cancel</mat-icon>    
+                            </ng-template>
                             
                         </div>
                     </div>

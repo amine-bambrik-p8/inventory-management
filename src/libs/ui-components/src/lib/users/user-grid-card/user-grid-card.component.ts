@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { IUser } from '@workspace/interfaces';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'workspace-user-grid-card',
@@ -6,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-grid-card.component.scss']
 })
 export class UserGridCardComponent implements OnInit {
-
+  @Input()
+  user:IUser;
   constructor() { }
 
   ngOnInit(): void {

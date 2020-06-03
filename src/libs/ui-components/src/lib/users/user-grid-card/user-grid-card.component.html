@@ -1,11 +1,16 @@
 <div class="shadow-box clickable">
   <mat-card>
-      <img src="https://via.placeholder.com/300" alt="Username" mat-card-image>
+    <img src="assets/person_outline-24px.svg" alt="Username" mat-card-image>
       
-      <mat-card-content >
-        <mat-card-title class="text-center">
-          Username    
-      </mat-card-title>
+      <mat-card-content class="text-center">
+        <mat-card-title >
+          {{user.username}}    
+        </mat-card-title>
+        <mat-card-subtitle>
+          
+          <span>{{user.role | titlecase}}</span>
+        </mat-card-subtitle>
+        
       </mat-card-content>
   </mat-card>
 </div>

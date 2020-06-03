@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { IClient } from '@workspace/interfaces';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'workspace-client-grid-card',
@@ -6,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./client-grid-card.component.scss']
 })
 export class ClientGridCardComponent implements OnInit {
-
+  @Input()
+  client: IClient;
   constructor() { }
 
   ngOnInit(): void {
