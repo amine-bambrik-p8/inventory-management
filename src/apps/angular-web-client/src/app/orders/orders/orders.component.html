@@ -1,5 +1,5 @@
 
-<div class="container h-100 flex-grid nowrap ">
+<div class="container  h-100 flex-grid nowrap ">
   <!-- Orders Nav -->
   <div class="side-nav">
     <!-- Filters -->
@@ -20,18 +20,16 @@
     <h3 class="line-title">Orders</h3>
     <!-- List -->
     <div>
-      <workspace-order-grid-card class="m-1"></workspace-order-grid-card>
+      <workspace-order-grid-card (click)="selectedOrder = order" *ngFor="let order of (orders$ | async)" class="m-1"></workspace-order-grid-card>
     </div>
   </div>
   <!-- Order Info -->
   <div class="content w-100">
     <div class="m-1">
-      <workspace-order-info></workspace-order-info>
-
+      <workspace-order-info [order]="selectedOrder" ></workspace-order-info>
     </div>
     <div class="m-1">
-      <workspace-cart-table></workspace-cart-table>
-
+      <workspace-cart-table [entries]="selectedOrder?.entries"></workspace-cart-table>
     </div>
   </div>
 </div>

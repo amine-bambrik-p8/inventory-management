@@ -1,3 +1,4 @@
+import { AddComponent } from './add/add.component';
 import { EditComponent } from './edit/edit.component';
 import { ViewComponent } from './view/view.component';
 import { SuppliersComponent } from './suppliers/suppliers.component';
@@ -11,13 +12,18 @@ const routes: Routes = [
     component:SuppliersComponent,
   },
   {
-    path:':id',
-    component:ViewComponent
+    path:'add',
+    component:AddComponent,
   },
   {
     path:':id/edit',
     component:EditComponent
-  }
+  },
+  {
+    path:':id',
+    component:ViewComponent
+  },
+  
 ];
 
 @NgModule({

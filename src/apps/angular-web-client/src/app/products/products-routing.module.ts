@@ -3,6 +3,7 @@ import { ViewComponent } from './view/view.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProductsComponent } from './products/products.component';
+import { AddComponent } from './add/add.component';
 
 
 const routes: Routes = [{
@@ -10,13 +11,18 @@ const routes: Routes = [{
     component:ProductsComponent,
   },
   {
-    path:':id',
-    component:ViewComponent
+    path:'add',
+    component:AddComponent
   },
   {
     path:':id/edit',
     component:EditComponent
   },
+  {
+    path:':id',
+    component:ViewComponent
+  },
+  
 ];
 
 @NgModule({

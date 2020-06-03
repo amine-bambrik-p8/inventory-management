@@ -1,3 +1,5 @@
+import { CommonModule as AppCommonModule } from '@workspace/common';
+import { AddComponent } from './add/add.component';
 import { MaterialModule } from '@workspace/material';
 import { UiComponentsModule } from '@workspace/ui-components';
 import { NgModule } from '@angular/core';
@@ -7,14 +9,17 @@ import { ClientsRoutingModule } from './clients-routing.module';
 import { ClientsComponent } from './clients/clients.component';
 import { ViewComponent } from './view/view.component';
 import { EditComponent } from './edit/edit.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [ClientsComponent, ViewComponent, EditComponent],
+  declarations: [ClientsComponent, ViewComponent, EditComponent,AddComponent],
   imports: [
     CommonModule,
     ClientsRoutingModule,
     UiComponentsModule,
-    MaterialModule
+    ReactiveFormsModule,
+    MaterialModule,
+    AppCommonModule
   ]
 })
 export class ClientsModule { }

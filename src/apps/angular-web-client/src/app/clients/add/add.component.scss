@@ -2,7 +2,7 @@
     flex-direction: column;
     margin: auto;
 }
-.fields mat-form-field{
+.fields mat-form-field:not(:last-child){
     margin-right: 2em;
 }
 img {

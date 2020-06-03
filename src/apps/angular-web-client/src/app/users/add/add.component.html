@@ -1,6 +1,7 @@
+
 <div class="flex-grid justify-center">
     <div class="flex-grid col-12 m-2 justify-center">
-        <img class=" rounded col-3" src="assets/person_outline-24px.svg"  alt="Username">
+        <img class="col-3 rounded" src="assets/person_outline-24px.svg" alt="Username">
     </div>
     <form [formGroup]="form" (submit)="onSubmit()" class="fields col-5 flex-grid">
         
@@ -38,10 +39,7 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="col-12 text-center m-2">
-            <a (click)="onResetPassword()" >Reset password</a>
-        </div>
-        <div *ngIf="isResetPasswordOn" class="m-auto">
+        <div class="m-auto">
             <div >
                 <mat-form-field >
                     <mat-label>

@@ -1,9 +1,18 @@
 
-
+.container{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
 .side-nav{
     width: 225px;
     
 }
 .category{
     text-align: start;
+}
+[mat-fab]{
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
 }

@@ -63,7 +63,9 @@ app-root {
 .shadow-box.clickable:hover{
     box-shadow: 0 9px 18px rgba($color: #000000, $alpha: 0.4);
 }
-
+.clickable{
+    cursor: pointer;
+}
 .full-width {
     width: 100%;
 }
@@ -191,4 +193,8 @@ $columns:12;
 
 .text-center{
     text-align: center;
+}
+
+.rounded{
+    border-radius: 50%;
 }
