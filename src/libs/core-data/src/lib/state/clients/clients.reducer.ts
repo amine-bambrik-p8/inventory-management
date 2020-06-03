@@ -4,7 +4,7 @@ import { EntityAdapter,EntityState,createEntityAdapter } from '@ngrx/entity';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 export interface ClientsState extends EntityState<IClient>{
-    
+    selectedClient:IClient;
 }
 
 const adapter: EntityAdapter<IClient> = createEntityAdapter<IClient>({
@@ -12,11 +12,13 @@ const adapter: EntityAdapter<IClient> = createEntityAdapter<IClient>({
 });
 
 export const initialState: ClientsState =  adapter.getInitialState({
-    
+    selectedClient:null
 });
 
 export function clientsReducers(state = initialState,action:ClientsActions): ClientsState{
     switch (action.type) {
+        case ClientsActionTypes.CLIENT_READ:
+            return {...state,selectedClient:action.payload};
         case ClientsActionTypes.CLIENTS_LOADED:
             return adapter.setAll(action.payload,state);
         case ClientsActionTypes.CLIENT_CREATED:
@@ -42,3 +44,4 @@ export const selectClientsIds = createSelector(selectClientsState,selectIds);
 export const selectAllClients = createSelector(selectClientsState,selectAll);
 export const selectClientsEntities = createSelector(selectClientsState,selectEntities);
 export const selectClientsTotal = createSelector(selectClientsState,selectTotal);
+export const selectedClient = createSelector(selectClientsState,(state:ClientsState)=>state.selectedClient);

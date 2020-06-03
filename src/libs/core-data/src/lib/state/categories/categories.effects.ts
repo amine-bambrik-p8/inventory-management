@@ -1,9 +1,8 @@
 import { CategoriesService } from './../../categories/categories.service';
 import { CategoriesState } from './categories.reducer';
-import { CategoriesActions, CategoriesLoaded, CategoryCreated, CategoriesActionTypes, LoadCategories, CreateCategory, CategoryUpdated, CategoryDeleted, DeleteCategory, UpdateCategory } from './categories.actions';
+import { CategoriesLoaded, CategoryCreated, CategoriesActionTypes, LoadCategories, CreateCategory, CategoryUpdated, CategoryDeleted, DeleteCategory, UpdateCategory, CategoryRead, ReadCategory } from './categories.actions';
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType, createEffect } from '@ngrx/effects';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ICategory } from '@workspace/interfaces';
 import { fetch, pessimisticUpdate } from '@nrwl/angular';
@@ -72,7 +71,21 @@ export class CategoriesEffects {
             console.log(error);
         }
     })));
-
+    @Effect()
+    readCategory$ = createEffect(()=>this.actions$.pipe(ofType(CategoriesActionTypes.READ_CATEGORY),fetch({
+        run:(action:ReadCategory,state:CategoriesState)=>{
+            return this.categoriesService
+            .readOne(action.payload)
+            .pipe(
+                map((category:ICategory)=>{
+                    return new CategoryRead(category)
+                })
+            );
+        },
+        onError(action: ReadCategory,error:any){
+            console.error(error);
+        }
+    })));
     constructor(
         private categoriesService: CategoriesService,
         private actions$: Actions

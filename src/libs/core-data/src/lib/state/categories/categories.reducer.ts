@@ -4,7 +4,7 @@ import { EntityAdapter,EntityState,createEntityAdapter } from '@ngrx/entity';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface CategoriesState extends EntityState<ICategory>{
-    
+    selectedCategory:ICategory;
 }
 
 const adapter: EntityAdapter<ICategory> = createEntityAdapter<ICategory>({
@@ -12,11 +12,13 @@ const adapter: EntityAdapter<ICategory> = createEntityAdapter<ICategory>({
 });
 
 export const initialState: CategoriesState =  adapter.getInitialState({
-    
+    selectedCategory:null,
 });
 
 export function categoriesReducers(state = initialState,action:CategoriesActions): CategoriesState{
     switch (action.type) {
+        case CategoriesActionTypes.CATEGORY_READ:
+            return adapter.addOne(action.payload,state);
         case CategoriesActionTypes.CATEGORIES_LOADED:
             return adapter.setAll(action.payload,state);
         case CategoriesActionTypes.CATEGORY_CREATED:
@@ -42,3 +44,4 @@ export const selectCategoriesIds = createSelector(selectCategoriesState,selectId
 export const selectAllCategories = createSelector(selectCategoriesState,selectAll);
 export const selectCategoriesEntities = createSelector(selectCategoriesState,selectEntities);
 export const selectCategoriesTotal = createSelector(selectCategoriesState,selectTotal);
+export const selectedCategory = createSelector(selectCategoriesState,(state)=>state.selectedCategory);

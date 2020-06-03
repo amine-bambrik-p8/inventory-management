@@ -56,7 +56,7 @@ export class OrderDeleted implements Action{
 
 export class ReadOrder implements Action{
     public readonly type = OrdersActionTypes.READ_ORDER;
-    constructor(public payload: IOrder){}
+    constructor(public payload: string){}
 }
 
 export class OrderRead implements Action{

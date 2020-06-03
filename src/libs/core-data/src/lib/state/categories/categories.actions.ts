@@ -56,7 +56,7 @@ export class CategoryDeleted implements Action{
 
 export class ReadCategory implements Action{
     readonly type = CategoriesActionTypes.READ_CATEGORY;
-    constructor(public payload: ICategory){}
+    constructor(public payload: string){}
 }
 
 export class CategoryRead implements Action{

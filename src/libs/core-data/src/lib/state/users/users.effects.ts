@@ -1,6 +1,6 @@
 import { UsersState } from './users.reducer';
 import { UsersService } from './../../users/users.service';
-import { UsersLoaded, UsersActionTypes, LoadUsers, UserCreated, CreateUser, UserDeleted, DeleteUser, UpdateUser, UserUpdated } from './users.actions';
+import { UsersLoaded, UsersActionTypes, LoadUsers, UserCreated, CreateUser, UserDeleted, DeleteUser, UpdateUser, UserUpdated, ReadUser, UserRead } from './users.actions';
 import { Effect, Actions, createEffect, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { IUser } from '@workspace/interfaces';
@@ -11,7 +11,7 @@ import {optimisticUpdate,fetch, pessimisticUpdate} from '@nrwl/angular'
     providedIn:"root",
 })
 export class UsersEffects {
-    @Effect()
+    //@Effect()
     loadUsers$ = createEffect(()=>
         this.actions$.pipe(
             ofType(UsersActionTypes.LOAD_USERS),
@@ -46,7 +46,7 @@ export class UsersEffects {
     //         console.log(error);
     //     }
     // });
-    @Effect()
+    //@Effect()
     createUser$ = createEffect(()=>this.actions$.pipe(ofType(UsersActionTypes.CREATE_USER),pessimisticUpdate({
         run:(action: CreateUser,state: UsersState)=>{
             return this.usersService
@@ -61,7 +61,7 @@ export class UsersEffects {
             console.log(error);
         }
     })));
-    @Effect()
+    //@Effect()
     deleteUser$ =createEffect(()=>
     this.actions$
     .pipe(
@@ -80,7 +80,7 @@ export class UsersEffects {
                 console.log(error);
             }
     })));
-    @Effect()
+    //@Effect()
     updateUser$= createEffect(()=>
     this.actions$.pipe(
         ofType(UsersActionTypes.UPDATE_USER),
@@ -98,6 +98,21 @@ export class UsersEffects {
             onError(action: UpdateUser,error: any){
                 console.log(error);
             }
+    })));
+    //@Effect()
+    readUser$ = createEffect(()=>this.actions$.pipe(ofType(UsersActionTypes.READ_USER),fetch({
+        run:(action:ReadUser,state:UsersState)=>{
+            return this.usersService
+            .readOne(action.payload)
+            .pipe(
+                map((category:IUser)=>{
+                    return new UserRead(category)
+                })
+            );
+        },
+        onError(action: ReadUser,error:any){
+            console.error(error);
+        }
     })));
     constructor(
         private usersService: UsersService,

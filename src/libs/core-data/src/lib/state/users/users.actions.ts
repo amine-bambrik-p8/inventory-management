@@ -56,7 +56,7 @@ export class UserDeleted implements Action{
 
 export class ReadUser implements Action{
     public readonly type = UsersActionTypes.READ_USER;
-    constructor(public payload: IUser){}
+    constructor(public payload: string){}
 }
 
 export class UserRead implements Action{

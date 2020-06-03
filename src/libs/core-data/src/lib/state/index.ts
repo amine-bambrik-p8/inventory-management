@@ -11,7 +11,7 @@ export interface AppState{
     clients: ClientsState;
     orders: OrdersState;
     products: ProductsState;
-    supplier: SuppliersState;
+    suppliers: SuppliersState;
     users: UsersState;
 }
 
@@ -20,7 +20,7 @@ export const reducers: ActionReducerMap<AppState> = {
     clients: clientsReducers,
     orders: ordersReducers,
     products: productsReducers,
-    supplier: suppliersReducers,
+    suppliers: suppliersReducers,
     users: usersReducers,
 };
 

@@ -2,9 +2,11 @@ import { ProductsActions, ProductsActionTypes } from './products.actions';
 import { IProduct } from '@workspace/interfaces';
 import { EntityAdapter,EntityState,createEntityAdapter } from '@ngrx/entity';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { selectAllSuppliers } from '../suppliers/suppliers.reducer';
+import { selectAllCategories } from '../categories/categories.reducer';
 
 export interface ProductsState extends EntityState<IProduct>{
-    
+    selectedProduct:IProduct;
 }
 
 const adapter: EntityAdapter<IProduct> = createEntityAdapter<IProduct>({
@@ -12,11 +14,13 @@ const adapter: EntityAdapter<IProduct> = createEntityAdapter<IProduct>({
 });
 
 export const initialState: ProductsState =  adapter.getInitialState({
-    
+    selectedProduct:null,
 });
 
 export function productsReducers(state = initialState,action:ProductsActions): ProductsState{
     switch (action.type) {
+        case ProductsActionTypes.PRODUCT_READ:
+            return {...state,selectedProduct:action.payload};
         case ProductsActionTypes.PRODUCTS_LOADED:
             return adapter.setAll(action.payload,state);
         case ProductsActionTypes.PRODUCT_CREATED:
@@ -42,3 +46,4 @@ export const selectProductsIds = createSelector(selectProductsState,selectIds);
 export const selectAllProducts = createSelector(selectProductsState,selectAll);
 export const selectProductsEntities = createSelector(selectProductsState,selectEntities);
 export const selectProductsTotal = createSelector(selectProductsState,selectTotal);
+export const selectedProduct = createSelector(selectProductsState,(state)=>state.selectedProduct);

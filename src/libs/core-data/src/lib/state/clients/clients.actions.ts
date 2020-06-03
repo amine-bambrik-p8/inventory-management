@@ -56,7 +56,7 @@ export class ClientDeleted implements Action{
 
 export class ReadClient implements Action{
     public readonly type = ClientsActionTypes.READ_CLIENT;
-    constructor(public payload: IClient){}
+    constructor(public payload: string){}
 }
 
 export class ClientRead implements Action{

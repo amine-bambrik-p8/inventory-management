@@ -56,7 +56,7 @@ export class SupplierDeleted implements Action{
 
 export class ReadSupplier implements Action{
     public readonly type = SuppliersActionTypes.READ_SUPPLIER;
-    constructor(public payload: ISupplier){}
+    constructor(public payload: string){}
 }
 
 export class SupplierRead implements Action{
