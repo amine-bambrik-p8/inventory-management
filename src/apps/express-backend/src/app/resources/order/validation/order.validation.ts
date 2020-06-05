@@ -7,7 +7,7 @@ import * as Joi from '@hapi/joi';
 
 export const orderValidation = Joi.object<IOrder>({
     address:addressValidation,
-    clientId:Joi.string()
+    client:Joi.string()
                 .hex()
                 .length(24),
     entries:Joi.array()

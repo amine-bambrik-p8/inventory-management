@@ -4,9 +4,10 @@ import { IProduct } from '@workspace/interfaces';
 import * as Joi from '@hapi/joi';
 
 export const productValidation = Joi.object<IProduct>({
-    categoryId:Joi.string()
-                    .hex()
-                    .length(24),
+    category:Joi.string()
+    .hex()
+    .length(24)
+    .required(),
     codebar:Joi.string()
                 .regex(regex.codebar.ean8.validChars)
                 .length(regex.codebar.ean8.validLength),
@@ -25,10 +26,10 @@ export const productValidation = Joi.object<IProduct>({
     name:Joi.string()
             .regex(regex.alphanum)
             .required(),
-    supplierId:Joi.string()
-                    .hex()
-                    .length(24)
-                    .required(),
+    supplier:Joi.string()
+    .hex()
+    .length(24)
+    .required(),
     description:Joi.string()
                     .max(500)
     

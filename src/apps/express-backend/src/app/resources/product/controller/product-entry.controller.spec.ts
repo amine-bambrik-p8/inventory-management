@@ -4,6 +4,8 @@ import { IProductEntry,IProduct } from '@workspace/interfaces';
 import { ProductEntryController } from './product-entry.controller';
 import { connect, closeDatabase, clearDatabase } from '../../../../test-db-setup';
 import * as mongoose from 'mongoose';
+import { Category } from '../../category/model/category.model';
+import { Supplier } from '../../supplier/model/supplier.model';
 describe("ProductEntry controller",()=>{
     let controller: ProductEntryController;
     let someValidEntry: IProductEntry;
@@ -17,7 +19,7 @@ describe("ProductEntry controller",()=>{
     afterAll(()=>{
         return closeDatabase();
     });
-    beforeEach(()=>{
+    beforeEach(async ()=>{
         someValidEntry = {
             boughtPrice:20,
             price:10,
@@ -26,15 +28,54 @@ describe("ProductEntry controller",()=>{
                 soldQuantity:20,
             }
         };
-        const someObjectId = mongoose.Types.ObjectId();
-        const anotherObjectId = mongoose.Types.ObjectId();
+        const someCategories = [
+            {
+                name:"someName",
+            },
+            {
+                name:"someOtherName",
+            }
+        ];
+        const someCategoriesDocument = await Category.create(someCategories);
+        const someSuppliers = [
+            {
+                contact:{
+                    firstName:"someFirstName",
+                    lastName:"someLastName",
+                    email:"someemail@email.com",
+                    phoneNumber:"555-555-5554"
+                },
+                address:{
+                    address:"someaddress",
+                    city:"somesity",
+                    zip:"13000"
+                },
+                name:"somename",
+
+            },
+            {
+                contact:{
+                    firstName:"someFirstName",
+                    lastName:"someLastName",
+                    email:"someemail@email.com",
+                    phoneNumber:"555-555-5554"
+                },
+                address:{
+                    address:"someaddress",
+                    city:"somesity",
+                    zip:"13000"
+                },
+                name:"somename",
+            },
+        ];
+        const someSuppliersDocument = await Supplier.create(someSuppliers);
         someValidProduct= {
             codebar:"12354865",
             name:"somename",
             entries:[
             ],
-            supplierId:anotherObjectId.toHexString(),
-            categoryId:someObjectId.toHexString(),
+            supplier:someSuppliersDocument[0]._id.toHexString(),
+            category:someCategoriesDocument[0]._id.toHexString()
 
         }
     });

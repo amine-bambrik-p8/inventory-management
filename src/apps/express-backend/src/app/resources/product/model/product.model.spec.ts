@@ -13,8 +13,8 @@ describe("Product model",()=>{
                 "mainEntryId",
                 "quantityAlert",
                 "entries",
-                "categoryId",
-                "supplierId",
+                "category",
+                "supplier",
                 'thumbnails',
                 "description",
             ];
@@ -83,13 +83,25 @@ describe("Product model",()=>{
                 expect(result).toBeTruthy();
             });
         })
-        test("categoryId", () => {
-            const categoryId = Product.schema.obj.categoryId;
-                expect(categoryId).toEqual({
-                    type: Schema.Types.ObjectId,
-                    ref: "category",
+        test("category", () => {
+            const category = Product.schema.obj.category;
+                expect(category).toEqual({
+                    type:{
+                        id:{
+                            type: Schema.Types.ObjectId,
+                            ref: "category",
+                            required:true,
+                        },
+                        name:{
+                            type:String,
+                            required:true,
+                            maxlength:60,
+                            match:regex.alphanum,
+                        }
+                    },
                     required:true,
-            });
+                }
+        );
         });
         test("entries", () => {
             const entries = Product.schema.obj.entries;
@@ -115,11 +127,22 @@ describe("Product model",()=>{
                     maxlength:500,
             });
         });
-        test("supplierId", () => {
-            const supplierId = Product.schema.obj.supplierId;
-                expect(supplierId).toEqual({
-                    type: Schema.Types.ObjectId,
-                    ref:"supplier",
+        test("supplier", () => {
+            const supplier = Product.schema.obj.supplier;
+                expect(supplier).toEqual({
+                    type:{
+                        id:{
+                            type:Schema.Types.ObjectId,
+                            ref:"supplier",
+                            required:true,
+                        },
+                        name:{
+                            type:String,        
+                            required:true,
+                            maxlength:60,
+                            match:regex.alphanum,
+                        }
+                    },
                     required:true,
             });
         });

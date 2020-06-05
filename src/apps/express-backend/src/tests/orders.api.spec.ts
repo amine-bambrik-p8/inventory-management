@@ -1,8 +1,10 @@
+import { ICategoryDocument, Category } from './../app/resources/category/model/category.model';
+import { ISupplierDocument, Supplier } from './../app/resources/supplier/model/supplier.model';
 import { environment } from './../environments/environment';
 import { IProductDocument, Product } from './../app/resources/product/model/product.model';
 import { IOrderDocument, Order } from '../app/resources/order/model/order.model';
 import { app } from '../main';
-import { IUser, Role, IOrder, IProduct } from '@workspace/interfaces';
+import { IUser, Role, IOrder, IProduct, ICategory, ISupplier } from '@workspace/interfaces';
 import { IUserDocument, User } from '../app/resources/user/model/user.model';
 import * as request from "supertest";
 import {  clearDatabase, closeDatabase } from "../test-db-setup";
@@ -16,6 +18,10 @@ describe("orders API",()=>{
     let someCheckoutValidUserDocument: IUserDocument;
     let someAdminValidUserDocument: IUserDocument;
     let someInventoryValidUserDocument: IUserDocument;
+    let someCategories:ICategory[];
+    let someSuppliers:ISupplier[];
+    let someSuppliersDocument:ISupplierDocument[];
+    let someCategoriesDocument:ICategoryDocument[];
     let someOrders: IOrder[];
     let someOrdersDocument: IOrderDocument[];
     let someProduct: IProduct;
@@ -38,7 +44,7 @@ describe("orders API",()=>{
             firstName:"someFirstName",
             lastName:"someLastName",
             role:Role.ADMIN,
-            username:"username3",
+            username:"username4",
             password:"somepassword"            
         };
         someInventoryValidUser = {
@@ -95,10 +101,51 @@ describe("orders API",()=>{
                 ]
             },
         ] as any;
+        someCategories = [
+            {
+                name:"someName",
+            },
+            {
+                name:"someOtherName",
+            }
+        ];
+        someCategoriesDocument = await Category.create(someCategories);
+        someSuppliers = [
+            {
+                contact:{
+                    firstName:"someFirstName",
+                    lastName:"someLastName",
+                    email:"someemail@email.com",
+                    phoneNumber:"555-555-5554"
+                },
+                address:{
+                    address:"someaddress",
+                    city:"somesity",
+                    zip:"13000"
+                },
+                name:"somename",
+
+            },
+            {
+                contact:{
+                    firstName:"someFirstName",
+                    lastName:"someLastName",
+                    email:"someemail@email.com",
+                    phoneNumber:"555-555-5554"
+                },
+                address:{
+                    address:"someaddress",
+                    city:"somesity",
+                    zip:"13000"
+                },
+                name:"somename",
+            },
+        ];
+        someSuppliersDocument = await Supplier.create(someSuppliers);
         someProduct = {
             name:"someProductName",
-            categoryId:mongoose.Types.ObjectId().toHexString(),
-            supplierId:mongoose.Types.ObjectId().toHexString(),
+            category:someCategoriesDocument[0]._id.toHexString(),
+            supplier:someSuppliersDocument[0]._id.toHexString(),
             entries:[
                 {
                     boughtPrice:23,

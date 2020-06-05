@@ -1,11 +1,14 @@
+import { Category } from './../app/resources/category/model/category.model';
 import { IProductDocument, Product } from '../app/resources/product/model/product.model';
 import { app } from '../main';
-import { IUser, Role, IProduct } from '@workspace/interfaces';
+import { IUser, Role, IProduct, ICategory, ISupplier } from '@workspace/interfaces';
 import { IUserDocument, User } from '../app/resources/user/model/user.model';
 import * as request from "supertest";
 import { connect, clearDatabase, closeDatabase } from "../test-db-setup";
 import * as path from "path";
 import * as mongoose from "mongoose";
+import { ICategoryDocument } from '../app/resources/category/model/category.model';
+import { Supplier, ISupplierDocument } from '../app/resources/supplier/model/supplier.model';
 
 describe("products API",()=>{
     let someAdminValidUser:IUser;
@@ -14,6 +17,10 @@ describe("products API",()=>{
     let someCheckoutValidUserDocument: IUserDocument;
     let someAdminValidUserDocument: IUserDocument;
     let someInventoryValidUserDocument: IUserDocument;
+    let someCategories:ICategory[];
+    let someSuppliers:ISupplier[];
+    let someSuppliersDocument:ISupplierDocument[];
+    let someCategoriesDocument:ICategoryDocument[];
     let someProducts: IProduct[];
     let someProductsDocument: IProductDocument[];
     let adminToken;
@@ -57,17 +64,57 @@ describe("products API",()=>{
         done();
     });
     beforeEach(async (done)=>{
+        someCategories = [
+            {
+                name:"someName",
+            },
+            {
+                name:"someOtherName",
+            }
+        ];
+        someCategoriesDocument = await Category.create(someCategories);
+        someSuppliers = [
+            {
+                contact:{
+                    firstName:"someFirstName",
+                    lastName:"someLastName",
+                    email:"someemail@email.com",
+                    phoneNumber:"555-555-5554"
+                },
+                address:{
+                    address:"someaddress",
+                    city:"somesity",
+                    zip:"13000"
+                },
+                name:"somename",
+
+            },
+            {
+                contact:{
+                    firstName:"someFirstName",
+                    lastName:"someLastName",
+                    email:"someemail@email.com",
+                    phoneNumber:"555-555-5554"
+                },
+                address:{
+                    address:"someaddress",
+                    city:"somesity",
+                    zip:"13000"
+                },
+                name:"somename",
+            },
+        ];
+        someSuppliersDocument = await Supplier.create(someSuppliers);
         someProducts = [
             {
                 name:"someProductName",
-                categoryId:mongoose.Types.ObjectId().toHexString(),
-                supplierId:mongoose.Types.ObjectId().toHexString(),
+                category:someCategoriesDocument[0]._id.toHexString(),
+                supplier:someSuppliersDocument[0]._id.toHexString()
             },
             {
-                
                 name:"someProductName",
-                categoryId:mongoose.Types.ObjectId().toHexString(),
-                supplierId:mongoose.Types.ObjectId().toHexString(),
+                category:someCategoriesDocument[1]._id.toHexString(),
+                supplier:someSuppliersDocument[1]._id.toHexString(),
                 codebar:"8".repeat(8),
                 description:"somedescription",
                 quantityAlert:{
@@ -132,8 +179,8 @@ describe("products API",()=>{
         it("should return 201 with the new product as data when successful",async ()=>{
             const someNewProduct: IProduct = {
                 name:"someNewProductName",
-                categoryId:mongoose.Types.ObjectId().toHexString(),
-                supplierId:mongoose.Types.ObjectId().toHexString(),
+                category:someCategoriesDocument[1]._id,
+                supplier:someSuppliersDocument[1]._id
             };
             const response = await request(app).post(uri).send({data:someNewProduct}).set("Authorization","Bearer "+adminToken);
             expect(response.status).toBe(201);
@@ -161,8 +208,8 @@ describe("products API",()=>{
         it("should return 200 with the new product as data when successful",async ()=>{
             const someNewProduct: IProduct = {
                 name:"someOtherProductName",
-                categoryId:mongoose.Types.ObjectId().toHexString(),
-                supplierId:mongoose.Types.ObjectId().toHexString(),
+                category:someCategoriesDocument[0]._id,
+                supplier:someSuppliersDocument[0]._id
             };
             const response = await request(app).put(path.join(uri,someProductsDocument[0]._id.toHexString())).send({data:someNewProduct}).set("Authorization","Bearer "+adminToken);
             expect(response.status).toBe(200);
