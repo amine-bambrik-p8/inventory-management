@@ -10,6 +10,6 @@ export interface IOrder {
     entries: IOrderEntry[];
     client?: {
         id:string,
-        name:string
-    }|string;
+        name?:string
+    };
 }

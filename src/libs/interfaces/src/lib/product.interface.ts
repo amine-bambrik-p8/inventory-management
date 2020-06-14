@@ -14,12 +14,12 @@ export interface IProduct{
     entries?: IProductEntry[];
     category:{
         id:string,
-        name:string,
-    }|string,
+        name?:string,
+    },
     supplier: {
         id:string,
-        name:string,
-    }|string,
+        name?:string,
+    },
     readonly thumbnails?: [{
         readonly _id?: string;
         path:string;

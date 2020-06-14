@@ -108,13 +108,21 @@ describe("products API",()=>{
         someProducts = [
             {
                 name:"someProductName",
-                category:someCategoriesDocument[0]._id.toHexString(),
-                supplier:someSuppliersDocument[0]._id.toHexString()
+                category:{
+                    id:someCategoriesDocument[0]._id.toHexString(),
+                },
+                supplier:{
+                    id:someSuppliersDocument[0]._id.toHexString(),
+                },
             },
             {
                 name:"someProductName",
-                category:someCategoriesDocument[1]._id.toHexString(),
-                supplier:someSuppliersDocument[1]._id.toHexString(),
+                category:{
+                    id:someCategoriesDocument[1]._id.toHexString(),
+                },
+                supplier:{
+                    id:someSuppliersDocument[1]._id.toHexString(),
+                },
                 codebar:"8".repeat(8),
                 description:"somedescription",
                 quantityAlert:{
@@ -179,8 +187,12 @@ describe("products API",()=>{
         it("should return 201 with the new product as data when successful",async ()=>{
             const someNewProduct: IProduct = {
                 name:"someNewProductName",
-                category:someCategoriesDocument[1]._id,
-                supplier:someSuppliersDocument[1]._id
+                category:{
+                    id:someCategoriesDocument[1]._id
+                },
+                supplier:{
+                    id:someSuppliersDocument[1]._id
+                }
             };
             const response = await request(app).post(uri).send({data:someNewProduct}).set("Authorization","Bearer "+adminToken);
             expect(response.status).toBe(201);
@@ -208,8 +220,12 @@ describe("products API",()=>{
         it("should return 200 with the new product as data when successful",async ()=>{
             const someNewProduct: IProduct = {
                 name:"someOtherProductName",
-                category:someCategoriesDocument[0]._id,
-                supplier:someSuppliersDocument[0]._id
+                category:{
+                    id:someCategoriesDocument[0]._id
+                },
+                supplier:{
+                    id:someSuppliersDocument[0]._id
+                }
             };
             const response = await request(app).put(path.join(uri,someProductsDocument[0]._id.toHexString())).send({data:someNewProduct}).set("Authorization","Bearer "+adminToken);
             expect(response.status).toBe(200);

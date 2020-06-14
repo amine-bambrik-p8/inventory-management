@@ -5,6 +5,8 @@ import { OrderController } from './order.controller';
 import * as mongoose from "mongoose";
 import {Request,Response} from "express";
 import {connect, closeDatabase, clearDatabase} from "../../../../test-db-setup";
+import { Category } from '../../category/model/category.model';
+import { Supplier } from '../../supplier/model/supplier.model';
 describe("OrderController",()=>{
     let controller: OrderController;
     beforeAll(()=>{
@@ -27,6 +29,47 @@ describe("OrderController",()=>{
                     console.log("Hello World");
                 }
             }))
+            const someCategories = [
+                {
+                    name:"someName",
+                },
+                {
+                    name:"someOtherName",
+                }
+            ];
+            const someCategoriesDocument = await Category.create(someCategories);
+            const someSuppliers = [
+                {
+                    contact:{
+                        firstName:"someFirstName",
+                        lastName:"someLastName",
+                        email:"someemail@email.com",
+                        phoneNumber:"555-555-5554"
+                    },
+                    address:{
+                        address:"someaddress",
+                        city:"somesity",
+                        zip:"13000"
+                    },
+                    name:"somename",
+    
+                },
+                {
+                    contact:{
+                        firstName:"someFirstName",
+                        lastName:"someLastName",
+                        email:"someemail@email.com",
+                        phoneNumber:"555-555-5554"
+                    },
+                    address:{
+                        address:"someaddress",
+                        city:"somesity",
+                        zip:"13000"
+                    },
+                    name:"somename",
+                },
+            ];
+            const someSuppliersDocument = await Supplier.create(someSuppliers);
             const someObjectId = mongoose.Types.ObjectId();
             const anotherObjectId = mongoose.Types.ObjectId();
             const product: IProduct = {
@@ -54,8 +97,12 @@ describe("OrderController",()=>{
                         },
                     },
                 ],
-                supplierId:anotherObjectId.toHexString(),
-                categoryId:someObjectId.toHexString(),
+                supplier:{
+                    id:someSuppliersDocument[0]._id.toHexString(),
+                },
+                category:{
+                    id:someCategoriesDocument[0]._id.toHexString(),
+                },
                 mainEntryId:anotherObjectId.toHexString(),
             };
             const productDocument:IProductDocument = await Product.create(product);

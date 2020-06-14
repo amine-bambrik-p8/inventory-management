@@ -144,8 +144,12 @@ describe("orders API",()=>{
         someSuppliersDocument = await Supplier.create(someSuppliers);
         someProduct = {
             name:"someProductName",
-            category:someCategoriesDocument[0]._id.toHexString(),
-            supplier:someSuppliersDocument[0]._id.toHexString(),
+            category:{
+                id:someCategoriesDocument[0]._id.toHexString()
+            },
+            supplier:{
+                id:someSuppliersDocument[0]._id.toHexString(),
+            },
             entries:[
                 {
                     boughtPrice:23,

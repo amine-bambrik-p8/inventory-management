@@ -51,10 +51,11 @@ const schema = new Schema({
 
 });
 schema.index({"client.name":"text"},{name:"Order Index"});
-schema.pre("validate",async function (){
+schema.pre("save",async function (){
     const order = this as IOrderDocument;
-    const clientId = order.client as string;
-    if(clientId && typeof clientId === "string"){
+    if(!order.client) return;
+    const clientId = order.client.id;
+    if(clientId){
         const client = await Client.findById(clientId);
         if(!client){
             throw new Error("No such client is defined");

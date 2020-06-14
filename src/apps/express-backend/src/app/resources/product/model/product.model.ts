@@ -92,11 +92,11 @@ const schema = new Schema({
 
 });
 schema.index({ codebar: 'text',name:'text',"category.name":'text',"supplier.name":'text' }, {name: 'Product index'});
-schema.pre("validate",async function (){
+schema.pre("save",async function (){
     const product:IProductDocument = this as IProductDocument; 
-    const categoryId:string = product.category as string;
-    const supplierId:string = product.supplier as string;
-    if(categoryId && typeof categoryId === 'string'){
+    const categoryId:string = product.category.id;
+    const supplierId:string = product.supplier.id;
+    if(categoryId){
         const category = await Category.findById(categoryId);
         if(!category){
             throw Error("No such category is defind")
@@ -106,7 +106,7 @@ schema.pre("validate",async function (){
             id: categoryId,
         }
     }
-    if(supplierId  && typeof supplierId === 'string'){
+    if(supplierId){
         const supplier = await Supplier.findById(supplierId);
         if(!supplier){
             throw new Error("No such supplier is defind");

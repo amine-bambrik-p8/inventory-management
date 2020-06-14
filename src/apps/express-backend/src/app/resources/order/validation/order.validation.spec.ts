@@ -20,7 +20,9 @@ describe("Order Validation",()=>{
                 zip:faker.address.zipCode(),
             },
             orderStatus:OrderStatus.PENDING,
-            client:mongoose.Types.ObjectId().toHexString(),
+            client:{
+                id:mongoose.Types.ObjectId().toHexString(),
+            },
         };
     });
     it("should succeed when valid order is passed",()=>{
@@ -56,13 +58,13 @@ describe("Order Validation",()=>{
     describe("clientId",()=>{
         it("should fail when it's not a hex value",()=>{
             const someOrderWithInvalidClientId = {...someValidOrder};
-            someOrderWithInvalidClientId.client = "m".repeat(24);
+            someOrderWithInvalidClientId.client.id = "m".repeat(24);
             const {error} = orderValidation.validate(someOrderWithInvalidClientId);
             expect(error).toBeTruthy();
         });
         it("should fail when its length is not equal to 24",()=>{
             const someOrderWithInvalidLength =  {...someValidOrder};
-            someOrderWithInvalidLength.client = "f".repeat(23);
+            someOrderWithInvalidLength.client.id = "f".repeat(23);
         });
     });
 });
