@@ -154,7 +154,7 @@ describe("categories API",()=>{
     
     describe("DELETE /:id",()=>{
         it("should require authentication",async ()=>{
-            const response = await request(app).put(uri).send({data:someCategories[0]});
+            const response = await request(app).del(uri).send({data:someCategories[0]});
             expect(response.status).toBe(401);
         });
         it("should require Inventory or Admin role Auth",async ()=>{
