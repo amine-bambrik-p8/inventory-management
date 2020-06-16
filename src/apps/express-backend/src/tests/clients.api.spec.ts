@@ -189,7 +189,7 @@ describe("clients API",()=>{
     
     describe("DELETE /:id",()=>{
         it("should require authentication",async ()=>{
-            const response = await request(app).put(uri).send({data:someClients[0]});
+            const response = await request(app).del(uri).send({data:someClients[0]});
             expect(response.status).toBe(401);
         });
         it("should require Admin role Auth",async ()=>{

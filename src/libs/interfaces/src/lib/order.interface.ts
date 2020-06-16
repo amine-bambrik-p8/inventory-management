@@ -8,5 +8,8 @@ export interface IOrder {
     orderStatus?: OrderStatus;
     address?: IAddress;
     entries: IOrderEntry[];
-    clientId?: string;
+    client?: {
+        id:string,
+        name?:string
+    };
 }

@@ -12,9 +12,15 @@ export interface IProduct{
         maxQuantity?: Number;
     },
     entries?: IProductEntry[];
-    categoryId: string;
-    supplierId: string;
-    thumbnails?: [{
+    category:{
+        id:string,
+        name?:string,
+    },
+    supplier: {
+        id:string,
+        name?:string,
+    },
+    readonly thumbnails?: [{
         readonly _id?: string;
         path:string;
     }],

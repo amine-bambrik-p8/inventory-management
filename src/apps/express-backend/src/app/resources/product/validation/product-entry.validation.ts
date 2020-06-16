@@ -9,7 +9,14 @@ export const prodcutEntryValidation = Joi.object<IProductEntry>({
                                     return helpers.error("checkedInQuantity must be greater then 0");
                                 }
                                 return value
-                            }),
+                            }),        
+        soldQuantity:Joi.number()
+        .custom((value,helpers)=>{
+            if(value<=0){
+                return helpers.error("soldQuantity must be greater then 0");
+            }
+            return value
+        }),
     }).required(),
     boughtPrice:Joi.number()
                     .min(0)

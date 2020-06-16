@@ -12,7 +12,7 @@ describe("Order model",()=>{
                 "dateAndTimeOfOrder",
                 "orderStatus",
                 "address",
-                "clientId",
+                "client",
                 "entries"
             ]
             const fieldsAsString = Object.keys(fields).sort().join(",");
@@ -62,12 +62,22 @@ describe("Order model",()=>{
                 expect(result).toBeTruthy();
             })
         });
-        test("clientId", () => {
-            const clientId = Order.schema.obj.clientId;
-                expect(clientId).toEqual({
-                    type: Schema.Types.ObjectId,
-                    ref: "client",
-            });
+        test("client", () => {
+            const client = Order.schema.obj.client;
+                expect(client).toEqual({
+                    type:{
+                        id:{
+                            type: Schema.Types.ObjectId,
+                            ref: "client",
+                            required:true,
+                        },
+                        name:{
+                            type:String,
+                            maxlength:120,
+                            required:true,
+                        },
+                    },
+                });
         });
         
     });

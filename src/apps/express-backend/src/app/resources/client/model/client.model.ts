@@ -47,5 +47,5 @@ const schema = new Schema({
 {
 
 });
-
+schema.index({firstName:"text",lastName:"text"},{name:"Client Index"});
 export const Client = model<IClientDocument>("client",schema);

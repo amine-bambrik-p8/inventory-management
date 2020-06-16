@@ -1,3 +1,5 @@
+import { Supplier } from './../../supplier/model/supplier.model';
+import { Category } from './../../category/model/category.model';
 import { regex } from './../../../utils/regex.utils';
 import * as mongoose from "mongoose";
 import { Schema, model,Document} from 'mongoose';
@@ -42,14 +44,36 @@ const schema = new Schema({
     entries: {
         type: [ProductEntry],
     },
-    categoryId: {
-        type: Schema.Types.ObjectId,
-        ref: "category",
+    category: {
+        type:{
+            id:{
+                type:Schema.Types.ObjectId,
+                ref:"category",
+                required:true,
+            },
+            name:{
+                type:String,        
+                required:true,
+                maxlength:60,
+                match:regex.alphanum,
+            }
+        },
         required:true,
     },
-    supplierId: {
-        type: Schema.Types.ObjectId,
-        ref: "supplier",
+    supplier: {
+        type:{
+            id:{
+                type:Schema.Types.ObjectId,
+                ref:"supplier",
+                required:true,
+            },
+            name:{
+                type:String,        
+                required:true,
+                maxlength:60,
+                match:regex.alphanum,
+            }
+        },
         required:true,
     },
     thumbnails: {
@@ -67,5 +91,30 @@ const schema = new Schema({
 {
 
 });
-
+schema.index({ codebar: 'text',name:'text',"category.name":'text',"supplier.name":'text' }, {name: 'Product index'});
+schema.pre("save",async function (){
+    const product:IProductDocument = this as IProductDocument; 
+    const categoryId:string = product.category.id;
+    const supplierId:string = product.supplier.id;
+    if(categoryId){
+        const category = await Category.findById(categoryId);
+        if(!category){
+            throw Error("No such category is defind")
+        }
+        product.category={
+            name:category.name,
+            id: categoryId,
+        }
+    }
+    if(supplierId){
+        const supplier = await Supplier.findById(supplierId);
+        if(!supplier){
+            throw new Error("No such supplier is defind");
+        }
+        product.supplier={
+            name:supplier.name,
+            id:supplierId,
+        }
+    }
+})
 export const Product = model<IProductDocument>("product",schema);

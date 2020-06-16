@@ -6,9 +6,13 @@ describe("Product validation",()=>{
     let someValidProduct: IProduct;
     beforeEach(()=>{
         someValidProduct = {
-            categoryId: mongoose.Types.ObjectId().toHexString(),
+            category:{
+                id:mongoose.Types.ObjectId().toHexString(),
+            },
             name:faker.commerce.product(),
-            supplierId:mongoose.Types.ObjectId().toHexString(),
+            supplier:{
+                id:mongoose.Types.ObjectId().toHexString(),
+            },
             codebar:faker.random.number({
                 min:Number.parseInt("1"+"0".repeat(7)),
                 max:Number.parseInt("9".repeat(8)),
@@ -23,15 +27,14 @@ describe("Product validation",()=>{
                 }),
             },
             description:faker.lorem.paragraph(),
-            thumbnails:[faker.image.food()],
         };
     });
     it("should succeed when a valid product is passed",()=>{
         const {error} = productValidation.validate(someValidProduct);
         expect(error).toBeFalsy();
     });
-    it("should succeed when no description,thumbnails,quantityAlert,codebar,categoryId is given",()=>{
-        const {description,thumbnails,quantityAlert,codebar,categoryId,...someValidProductWithoutFields} = someValidProduct;
+    it("should succeed when no description,thumbnails,quantityAlert,codebar is given",()=>{
+        const {description,thumbnails,quantityAlert,codebar,...someValidProductWithoutFields} = someValidProduct;
         const {error} = productValidation.validate(someValidProductWithoutFields);
         expect(error).toBeFalsy();
     })
@@ -63,22 +66,22 @@ describe("Product validation",()=>{
             expect(error).toBeTruthy();
         });
     });
-    describe("supplierId",()=>{
+    describe("supplier",()=>{
         it("should fail when missing",()=>{
-            const {supplierId,...someProductWithNoSupplierId} = someValidProduct;
-            const {error} = productValidation.validate(someProductWithNoSupplierId);
+            const {supplier,...someProductWithNoSupplier} = someValidProduct;
+            const {error} = productValidation.validate(someProductWithNoSupplier);
             expect(error).toBeTruthy()
         });
         it("should fail when it is not a hex value",()=>{
-            const someProductWithInvalidSupplierId = {...someValidProduct};
-            someProductWithInvalidSupplierId.supplierId ="m".repeat(24);
-            const {error} = productValidation.validate(someProductWithInvalidSupplierId);
+            const someProductWithInvalidSupplier = {...someValidProduct};
+            someProductWithInvalidSupplier.supplier ={id:"m".repeat(24),name:"somename"};
+            const {error} = productValidation.validate(someProductWithInvalidSupplier);
             expect(error).toBeTruthy()
         })
         it("should fail when its length is not 24",()=>{
-            const someProductWithInvalidSupplierId = {...someValidProduct};
-            someProductWithInvalidSupplierId.supplierId ="f".repeat(23);
-            const {error} = productValidation.validate(someProductWithInvalidSupplierId);
+            const someProductWithInvalidSupplier = {...someValidProduct};
+            someProductWithInvalidSupplier.supplier ={id:"f".repeat(23),name:"somename"};
+            const {error} = productValidation.validate(someProductWithInvalidSupplier);
             expect(error).toBeTruthy()
         });
     });

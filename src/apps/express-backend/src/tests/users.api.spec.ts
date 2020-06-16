@@ -179,7 +179,7 @@ describe("users API",()=>{
     
     describe("DELETE /:id",()=>{
         it("should require authentication",async ()=>{
-            const response = await request(app).put(uri).send({data:someUsers[0]});
+            const response = await request(app).del(uri).send({data:someUsers[0]});
             expect(response.status).toBe(401);
         });
         it("should require Inventory or Admin role Auth",async ()=>{

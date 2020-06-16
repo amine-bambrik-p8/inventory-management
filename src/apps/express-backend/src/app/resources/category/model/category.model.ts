@@ -16,5 +16,5 @@ const schema = new Schema({
 {
 
 });
-
+schema.index({name:"text"},{name:"Category Index"});
 export const Category = model<ICategoryDocument>("category",schema);
