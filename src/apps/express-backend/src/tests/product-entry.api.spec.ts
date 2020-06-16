@@ -1,7 +1,7 @@
-import { Category } from './../app/resources/category/model/category.model';
+import { Category } from '../app/resources/category/model/category.model';
 import { IProductDocument, Product } from '../app/resources/product/model/product.model';
 import { app } from '../main';
-import { IUser, Role, IProduct, ICategory, ISupplier } from '@workspace/interfaces';
+import { IUser, Role, IProduct, ICategory, ISupplier, IProductEntry } from '@workspace/interfaces';
 import { IUserDocument, User } from '../app/resources/user/model/user.model';
 import * as request from "supertest";
 import { connect, clearDatabase, closeDatabase } from "../test-db-setup";
@@ -10,7 +10,7 @@ import * as mongoose from "mongoose";
 import { ICategoryDocument } from '../app/resources/category/model/category.model';
 import { Supplier, ISupplierDocument } from '../app/resources/supplier/model/supplier.model';
 
-describe("products API",()=>{
+describe("product-entry API",()=>{
     let someAdminValidUser:IUser;
     let someInventoryValidUser: IUser; 
     let someCheckoutValidUser: IUser; 
@@ -22,6 +22,7 @@ describe("products API",()=>{
     let someSuppliersDocument:ISupplierDocument[];
     let someCategoriesDocument:ICategoryDocument[];
     let someProducts: IProduct[];
+    let someProductEntry: IProductEntry;
     let someProductsDocument: IProductDocument[];
     let adminToken;
     let inventoryToken;
@@ -104,6 +105,14 @@ describe("products API",()=>{
                 name:"somename",
             },
         ];
+        someProductEntry = {
+            boughtPrice:23,
+            price:15,
+            quantityInfo:{
+                checkedInQuantity:40,
+                soldQuantity:5,
+            },
+        }
         someSuppliersDocument = await Supplier.create(someSuppliers);
         someProducts = [
             {
@@ -123,6 +132,16 @@ describe("products API",()=>{
                 supplier:{
                     id:someSuppliersDocument[1]._id.toHexString(),
                 },
+                entries:[
+                    {
+                        boughtPrice:23,
+                        price:15,
+                        quantityInfo:{
+                            checkedInQuantity:40,
+                            soldQuantity:5,
+                        },
+                    }
+                ],
                 codebar:"8".repeat(8),
                 description:"somedescription",
                 quantityAlert:{
@@ -145,56 +164,55 @@ describe("products API",()=>{
     });
     describe("GET /",()=>{
         it("should require authentication",async ()=>{
-            const response = await request(app).get(uri);
+            const response = await request(app).get(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries"));
             expect(response.status).toBe(401);
         });
-        it("should return products when authenticated",async(done)=>{
-            const response = await request(app).get(uri).set('Authorization',"Bearer "+adminToken);
+        it("should return products when authenticated",async()=>{
+            const response = await request(app).get(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries")).set('Authorization',"Bearer "+adminToken);
+            console.log(response.body.error);
+
             expect(response.status).toBe(200);
-            expect(JSON.stringify(response.body.data)).toEqual(JSON.stringify(someProductsDocument.map((d)=>d.toJSON())));
-            done();
-        });
+            expect(JSON.stringify(response.body.data)).toEqual(JSON.stringify(someProductsDocument[1].toJSON().entries));
     });
-    describe("GET /:id",()=>{
+    })
+    describe("POST /:id",()=>{
         it("should require authentication",async ()=>{
-            const response = await request(app).get(path.join(uri,someProductsDocument[0]._id.toHexString()));
+            const someEntryId = (someProductsDocument[1].entries[0] as any)._id.toHexString();
+            const response = await request(app).post(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries",someEntryId));
             expect(response.status).toBe(401);
         });
         it("should return the product when authenticated",async()=>{
-            const response = await request(app).get(path.join(uri,someProductsDocument[0]._id.toHexString())).set('Authorization',"Bearer "+adminToken);
+            const someEntryId = (someProductsDocument[1].entries[0] as any)._id.toHexString();
+            const response = await request(app).post(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries",someEntryId)).set('Authorization',"Bearer "+adminToken);
             expect(response.status).toBe(200);
-            expect(JSON.stringify(response.body.data)).toEqual(JSON.stringify(someProductsDocument[0]));
+            expect(JSON.stringify(response.body.data)).toEqual(JSON.stringify(someProductsDocument[1].toJSON().entries[0]));
         });
     });
     describe("POST /",()=>{
         it("should require authentication",async ()=>{
-            const response = await request(app).post(uri).send({data:someProducts[0]});
+            const response = await request(app).post(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries")).send({data:someProductEntry});
             expect(response.status).toBe(401);
         });
         it("should require Inventory or Admin role Auth",async ()=>{
-            let response = await request(app).post(uri).send({data:someProducts[0]}).set('Authorization',"Bearer "+checkoutToken);
+            let response = await request(app).post(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries")).send({data:someProductEntry}).set('Authorization',"Bearer "+checkoutToken);
+            console.log(response.error);
             expect(response.status).toBe(403);
             expect(response.body).toHaveProperty('error')
-            response = await request(app).post(uri).send({data:someProducts[0]}).set('Authorization',"Bearer "+adminToken);
+            response = await request(app).post(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries")).send({data:someProductEntry}).set('Authorization',"Bearer "+adminToken);
             expect(response.status).not.toBe(403);
             expect(response.body).toHaveProperty('data')
             
-            response = await request(app).post(uri).send({data:someProducts[1]}).set('Authorization',"Bearer "+inventoryToken);
+            response = await request(app).post(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries")).send({data:someProductEntry}).set('Authorization',"Bearer "+inventoryToken);
             expect(response.status).not.toBe(403);
             expect(response.body).toHaveProperty('data')
 
         });
         it("should return 201 with the new product as data when successful",async ()=>{
-            const someNewProduct: IProduct = {
-                name:"someNewProductName",
-                category:{
-                    id:someCategoriesDocument[1]._id
-                },
-                supplier:{
-                    id:someSuppliersDocument[1]._id
-                }
+            const someNewProductEntry: IProductEntry = {
+                ...someProductEntry,
+                price:50
             };
-            const response = await request(app).post(uri).send({data:someNewProduct}).set("Authorization","Bearer "+adminToken);
+            const response = await request(app).post(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries")).send({data:someNewProductEntry}).set("Authorization","Bearer "+adminToken);
             expect(response.status).toBe(201);
             expect(response.body).toHaveProperty("data");
                     
@@ -203,57 +221,62 @@ describe("products API",()=>{
 
     describe("PUT /:id",()=>{
         it("should require authentication",async ()=>{
-            const response = await request(app).put(uri).send({data:someProducts[0]});
+            const someEntryId = (someProductsDocument[1].entries[0] as any)._id.toHexString();
+
+            const response = await request(app).put(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries",someEntryId)).send({data:someProductEntry});
             expect(response.status).toBe(401);
         });
         it("should require Inventory or Admin role Auth",async ()=>{
-            let response = await request(app).put(path.join(uri,someProductsDocument[0]._id.toHexString())).send({data:someProducts[0]}).set('Authorization',"Bearer "+checkoutToken);
+            const someEntryId = (someProductsDocument[1].entries[0] as any)._id.toHexString();
+
+            let response = await request(app).put(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries",someEntryId)).send({data:someProductEntry}).set('Authorization',"Bearer "+checkoutToken);
             expect(response.status).toBe(403);
             expect(response.body).toHaveProperty('error')
-            response = await request(app).put(path.join(uri,someProductsDocument[0]._id.toHexString())).send({data:someProducts[0]}).set('Authorization',"Bearer "+adminToken);
+            response = await request(app).put(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries",someEntryId)).send({data:someProductEntry}).set('Authorization',"Bearer "+adminToken);
             expect(response.status).not.toBe(403);
             expect(response.body).toHaveProperty('data')
-            response = await request(app).put(path.join(uri,someProductsDocument[1]._id.toHexString())).send({data:someProducts[1]}).set('Authorization',"Bearer "+inventoryToken);
+            response = await request(app).put(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries",someEntryId)).send({data:someProductEntry}).set('Authorization',"Bearer "+inventoryToken);
             expect(response.status).not.toBe(403);
             expect(response.body).toHaveProperty('data')
         });
         it("should return 200 with the new product as data when successful",async ()=>{
-            const someNewProduct: IProduct = {
-                name:"someOtherProductName",
-                category:{
-                    id:someCategoriesDocument[0]._id
-                },
-                supplier:{
-                    id:someSuppliersDocument[0]._id
-                }
+            const someEntryId = (someProductsDocument[1].entries[0] as any)._id.toHexString();
+            const someNewProductEntry: IProductEntry = {
+                ...someProductEntry,
+                price:50
             };
-            const response = await request(app).put(path.join(uri,someProductsDocument[0]._id.toHexString())).send({data:someNewProduct}).set("Authorization","Bearer "+adminToken);
+            const response = await request(app).put(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries",someEntryId)).send({data:someNewProductEntry}).set("Authorization","Bearer "+adminToken);
             expect(response.status).toBe(200);
-            expect(response.body.data.name).toBe(someNewProduct.name)
-            expect(response.body.data._id).toBe(someProductsDocument[0]._id.toHexString());
+            expect(response.body.data.entries.find(p=>p._id===someEntryId).price).toBe(someNewProductEntry.price)
+            expect(response.body.data._id).toBe(someProductsDocument[1]._id.toHexString());
         });
     });
     
     describe("DELETE /:id",()=>{
         it("should require authentication",async ()=>{
-            const response = await request(app).del(uri).send({data:someProducts[0]});
+            const someEntryId = (someProductsDocument[1].entries[0] as any)._id.toHexString();
+            const response = await request(app).del(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries",someEntryId));
             expect(response.status).toBe(401);
         });
         it("should require Inventory or Admin role Auth",async ()=>{
-            let response = await request(app).del(path.join(uri,someProductsDocument[0]._id.toHexString())).set('Authorization',"Bearer "+checkoutToken);
+            let someEntryId = (someProductsDocument[1].entries[0] as any)._id.toHexString();
+            let response = await request(app).del(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries",someEntryId)).set('Authorization',"Bearer "+checkoutToken);
             expect(response.status).toBe(403);
             expect(response.body).toHaveProperty('error')
-            response = await request(app).del(path.join(uri,someProductsDocument[0]._id.toHexString())).set('Authorization',"Bearer "+adminToken);
+            response = await request(app).del(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries",someEntryId)).set('Authorization',"Bearer "+adminToken);
             expect(response.status).not.toBe(403);
             expect(response.body).toHaveProperty('data')
-            response = await request(app).del(path.join(uri,someProductsDocument[1]._id.toHexString())).set('Authorization',"Bearer "+inventoryToken);
+            someProductsDocument = await Product.create(someProducts);
+            someEntryId = (someProductsDocument[1].entries[0] as any)._id.toHexString();
+            response = await request(app).del(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries",someEntryId)).set('Authorization',"Bearer "+inventoryToken);
             expect(response.status).not.toBe(403);
             expect(response.body).toHaveProperty('data')
         });
         it("should return 200 with the deleted product as data when successful",async ()=>{
-            const response = await request(app).del(path.join(uri,someProductsDocument[1]._id.toHexString())).set("Authorization","Bearer "+adminToken);
+            const someEntryId = (someProductsDocument[1].entries[0] as any)._id.toHexString();
+            const response = await request(app).del(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries",someEntryId)).set("Authorization","Bearer "+adminToken);
             expect(response.status).toBe(200);
             expect(response.body.data._id).toBe(someProductsDocument[1]._id.toHexString());
         });
     });
-});
+})

@@ -2,13 +2,18 @@ import { Route } from '../../utils/crud/route.interface';
 
 export const productEntryRoutes: Route[]=[
     {
-        controllerFunctionName:"",
-        method:"PUT",
-        path:"/main-entry/:id"
+        controllerFunctionName:"readMany",
+        method:"GET",
+        path:"/"
+    },
+    {
+        controllerFunctionName:"setMainEntry",
+        method:"POST",
+        path:"/:id"
     },
     {
         controllerFunctionName:"createOne",
-        method:"GET",
+        method:"POST",
         path:"/",
     },
     {
