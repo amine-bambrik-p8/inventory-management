@@ -13,22 +13,11 @@ import { Observable } from 'rxjs';
 export class AddComponent implements OnInit {
   categories$:Observable<ICategory[]> = this.categoriesFacade.allCategories$;
   suppliers$:Observable<ISupplier[]> = this.suppliersFacade.allSuppliers$;
-  form:FormGroup = this.fb.group({
-    codebar:[""],
-    name:[""],
-    categoryId:[""],
-    supplierId:[""],
-    description:[""],
-    
-  });
-  get isQuantityAlertOn(): boolean{
-    return !!this.form.get("quantityAlert");
-  }
+  
   constructor(
     private productsFacade:ProductsFacade,
     private categoriesFacade:CategoriesFacade,
     private suppliersFacade:SuppliersFacade,
-    private fb:FormBuilder,
     private router:Router
     ) { }
 
@@ -36,28 +25,22 @@ export class AddComponent implements OnInit {
     this.loadData();
   }
 
-  loadData(): void {
-    this.categoriesFacade.loadCategories();
-    this.suppliersFacade.loadSuppliers();
+  async loadData(): Promise<void> {
+    try {
+      await this.categoriesFacade.loadCategories();
+      await this.suppliersFacade.loadSuppliers();
+    } catch (error) {
+      
+    }
   }
 
-  onSubmit(): void{
-    const product:IProduct = this.form.value;
-    this.productsFacade.addProduct(product);
-    this.router.navigate(["products"]);
-  }
-  onToggleQuantityAlert(): void{
-    const quantityAlert = this.form.get("quantityAlert");
-    if(quantityAlert){
-      this.form.removeControl("quantityAlert");
-      return;
+  async onSubmit(product:IProduct): Promise<void>{
+    try {
+      await this.productsFacade.addProduct(product);
+      this.router.navigate(["products"]);
+      
+    } catch (error) {
+      console.error(error);
     }
-    this.form.addControl("quantityAlert",
-      this.fb.group({
-          maxQuantity:[0],
-          minQuantity:[0]
-      })
-    );
   }
-  
 }

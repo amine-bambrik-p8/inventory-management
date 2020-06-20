@@ -52,6 +52,9 @@
     },
     "ui-components": {
       "tags": []
+    },
+    "utils": {
+      "tags": []
     }
   }
 }

@@ -4,7 +4,7 @@ import { EntityAdapter,EntityState,createEntityAdapter } from '@ngrx/entity';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 export interface OrdersState extends EntityState<IOrder>{
-    selectedOrder:IOrder;
+    selectedOrder?:IOrder;
 }
 
 const adapter: EntityAdapter<IOrder> = createEntityAdapter<IOrder>({
@@ -12,13 +12,12 @@ const adapter: EntityAdapter<IOrder> = createEntityAdapter<IOrder>({
 });
 
 export const initialState: OrdersState =  adapter.getInitialState({
-    selectedOrder:null,
 });
 
 export function ordersReducers(state = initialState,action:OrdersActions): OrdersState{
     switch (action.type) {
         case OrdersActionTypes.ORDER_READ:
-            return adapter.addOne(action.payload,state);
+            return {...state,selectedOrder:action.payload};
         case OrdersActionTypes.ORDERS_LOADED:
             return adapter.setAll(action.payload,state);
         case OrdersActionTypes.ORDER_CREATED:

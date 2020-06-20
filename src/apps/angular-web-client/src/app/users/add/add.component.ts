@@ -10,22 +10,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
-  form:FormGroup = this.fb.group({
-    firstName:[""],
-    lastName:[""],
-    password:[""],
-    username:[""],
-    role:[""],
-    confirmPassword:[""],
-  });
+  
 
-  constructor(private usersFacade:UsersFacade,private fb:FormBuilder,private router:Router) { }
+  constructor(
+    private usersFacade:UsersFacade,
+    private router:Router
+  ) { }
 
   ngOnInit(): void {
   }
-  onSubmit(){
-    const user:IUser = this.form.value;
-    this.usersFacade.addUser(user);
-    this.router.navigate(["users"]);
+  async onSubmit(user:IUser){
+    try {
+      await this.usersFacade.addUser(user);
+      this.router.navigate(["/users"])
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

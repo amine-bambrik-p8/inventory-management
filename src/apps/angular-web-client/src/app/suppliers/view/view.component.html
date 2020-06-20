@@ -1,35 +1,5 @@
-
-<div *ngIf="(supplier$ | async) as supplier" class="container m-1 flex-grid justify-center">
+<div *ngIf="(selectedSupplier$ | async) as supplier" class="container">
     <button (click)="onEdit(supplier)" mat-fab><mat-icon>edit</mat-icon></button>
-    <div class="flex-grid m-1 col-12 justify-center">
-        <img class="rounded col-3" src="assets/local_offer-black-24dp.svg" alt="Client name">
-    </div>
-    <div  class="fields col-5 justify-center">
-        <div >
-            <span class="w-100 text-center">{{supplier.name}}</span>
-        </div>
-        <div >
-            <span>Contact:</span>
-        </div>
-        <div class="fields">        
-            <div class="flex-grid space-between">
-                <b>Full Name:</b><span>{{supplier.contact.firstName}} {{supplier.contact.lastName}}</span>
-            </div>
-            <div>
-                <b>Email:</b><span>{{supplier.contact.email}}</span>
-            </div>
-        </div>
-        <div class="fields">
-            <div>
-                <b>City:</b><span>{{supplier.address.city}}</span>
-            </div>
-            <div>
-                <b>Address:</b><span>{{supplier.address.address}}</span>
-            </div>
-            <div>
-                <b>Zip:</b><span>{{supplier.address.zip}}</span>
-            </div>
-        </div>
-        
-    </div>
+    <workspace-supplier-info [supplier]="supplier" ></workspace-supplier-info>
+
 </div>

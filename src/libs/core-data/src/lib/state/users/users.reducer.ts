@@ -4,7 +4,7 @@ import { EntityAdapter,EntityState,createEntityAdapter } from '@ngrx/entity';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface UsersState extends EntityState<IUser>{
-    selectedUser:IUser;
+    selectedUser?:IUser;
 }
 
 const adapter: EntityAdapter<IUser> = createEntityAdapter<IUser>({
@@ -12,7 +12,6 @@ const adapter: EntityAdapter<IUser> = createEntityAdapter<IUser>({
 });
 
 export const initialState: UsersState =  adapter.getInitialState({
-    selectedUser:null
 });
 
 export function usersReducers(state = initialState,action:UsersActions): UsersState{

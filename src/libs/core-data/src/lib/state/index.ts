@@ -1,10 +1,11 @@
+import { ProductsActions } from './products/products.actions';
 import { UsersState, usersReducers } from './users/users.reducer';
 import { SuppliersState, suppliersReducers } from './suppliers/suppliers.reducer';
-import { ProductsState, productsReducers } from './products/products.reducer';
+import { ProductsState, productsReducers, initialState } from './products/products.reducer';
 import { OrdersState, ordersReducers } from './orders/orders.reducer';
 import { ClientsState, clientsReducers } from './clients/clients.reducer';
 import { CategoriesState, categoriesReducers } from './categories/categories.reducer';
-import { ActionReducerMap } from '@ngrx/store';
+import { ActionReducerMap, combineReducers, } from '@ngrx/store';
 
 export interface AppState{
     categories: CategoriesState;

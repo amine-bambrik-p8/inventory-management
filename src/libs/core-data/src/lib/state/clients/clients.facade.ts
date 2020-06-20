@@ -1,8 +1,8 @@
-import { ClientsActionTypes, ClientsActions, UpdateClient, CreateClient, LoadClients, DeleteClient, ReadClient } from './clients.actions';
+import { ClientsActionTypes, ClientsActions, UpdateClient, CreateClient, LoadClients, DeleteClient, ReadClient, isActionTypeSuccess, isActionTypeFail } from './clients.actions';
 import { Injectable } from "@angular/core";
 import { ClientsState, selectAllClients, selectedClient } from './clients.reducer';
 import { Store, ActionsSubject, select } from '@ngrx/store';
-import { filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { IClient } from '@workspace/interfaces';
 
 @Injectable({
@@ -11,6 +11,15 @@ import { IClient } from '@workspace/interfaces';
 export class ClientsFacade{
     allClients$ = this.store.pipe(select(selectAllClients));
     selectedClient$ = this.store.pipe(select(selectedClient));
+    
+    actionCompleted$ = this.actions$
+    .pipe(
+        filter((action:ClientsActions) =>
+            isActionTypeFail(action) || isActionTypeSuccess(action)
+        ),
+        take(1)
+    );
+
     mutations$ = this.actions$
     .pipe(
       filter(action =>
@@ -19,23 +28,30 @@ export class ClientsFacade{
         || action.type === ClientsActionTypes.DELETE_CLIENT
       )
     );
+
     constructor(private store: Store<ClientsState>,private actions$: ActionsSubject) {}
-    readClient(id:string):void{
-        this.store.dispatch(new ReadClient(id));
+
+    readClient(id:string):Promise<void>{
+        return this.dispatchAction(new ReadClient(id));
     }
-    loadClients():void{
-        this.store.dispatch(new LoadClients());
+    loadClients():Promise<void>{
+        return this.dispatchAction(new LoadClients());
     }
-    
-    addClient(item:IClient):void{
-        this.store.dispatch(new CreateClient(item));
+    addClient(item:IClient):Promise<void>{
+        return this.dispatchAction(new CreateClient(item));
     }
-    
-    updateClient(item:IClient):void{
-        this.store.dispatch(new UpdateClient(item));
+    updateClient(item:IClient):Promise<void>{
+        return this.dispatchAction(new UpdateClient(item));
     }
-    
-    deleteClient(item:IClient):void{
-        this.store.dispatch(new  DeleteClient(item));
+    deleteClient(item:IClient):Promise<void>{
+        return this.dispatchAction(new DeleteClient(item));
+    }
+    private async dispatchAction(action:ClientsActions):Promise<void>{
+        this.store.dispatch(action);
+        const response:any = await this.actionCompleted$.toPromise();
+        if(isActionTypeFail(response)){
+            const httpError = response.payload;
+            throw httpError;
+        }
     }
 }

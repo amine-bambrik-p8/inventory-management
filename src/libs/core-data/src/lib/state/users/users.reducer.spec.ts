@@ -28,7 +28,8 @@ describe("users reducer",()=>{
             entities:someUsers.reduce((obj,u)=>{
                 obj[u._id]=u;
                 return obj;
-            },{})
+            },{}),
+            selectedUser:null
         }
     })
     describe("default",()=>{

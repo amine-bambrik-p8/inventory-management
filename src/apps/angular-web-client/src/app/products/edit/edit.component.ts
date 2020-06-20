@@ -3,7 +3,7 @@ import { ProductsFacade, CategoriesFacade, SuppliersFacade } from '@workspace/co
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { IProduct, ISupplier, ICategory } from '@workspace/interfaces';
-import { filter, take, map } from 'rxjs/operators';
+import { take} from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -14,24 +14,11 @@ import { Observable } from 'rxjs';
 export class EditComponent implements OnInit {
   suppliers$:Observable<ISupplier[]> = this.suppliersFacade.allSuppliers$;
   categories$:Observable<ICategory[]> = this.categoriesFacade.allCategories$;
-  form:FormGroup = this.fb.group({
-    _id:[""],
-    categoryId:[""],
-    name:[""],
-    supplierId:[""],
-    codebar:[""],
-    description:[""],
-    quantityAlert:this.fb.group({
-      maxQuantity:[0],
-      minQuantity:[0]
-    }),
-  });
-
+  selectedProduct$:Observable<IProduct> = this.productsFacade.selectedProduct$;
   constructor(
     private productsFacade: ProductsFacade,
     private categoriesFacade: CategoriesFacade,
     private suppliersFacade: SuppliersFacade,
-    private fb:FormBuilder,
     private router:Router,
     private activatedRoute:ActivatedRoute
   ) { }
@@ -41,37 +28,24 @@ export class EditComponent implements OnInit {
   }
 
   loadData(): void {
-    this.categoriesFacade.loadCategories();
-    this.suppliersFacade.loadSuppliers();
-    const id: string = this.activatedRoute.snapshot.paramMap.get("id");
-    this.productsFacade.readProduct(id);
-    this.productsFacade.selectedProduct$
-      .pipe(
-        filter(product => !!product),
-        take(1)
-      ).subscribe((product: IProduct) => {
-        this.form.patchValue(product);
-      });
-  }
-
-  onSubmit(): void{
-    const product:IProduct = this.form.value;
-    this.productsFacade.updateProduct(product);
-    this.router.navigate(["prodcuts"]);
-  }
-
-  onToggleQuantityAlert(): void{
-    const quantityAlert = this.form.get("quantityAlert");
-    if(quantityAlert){
-      this.form.removeControl("quantityAlert");
-      return;
+    try {
+      this.categoriesFacade.loadCategories();
+      this.suppliersFacade.loadSuppliers();
+      const id: string = this.activatedRoute.snapshot.paramMap.get("id");
+      this.productsFacade.readProduct(id);  
+    } catch (error) {
+      console.error(error);
     }
-    this.form.addControl("quantityAlert",
-      this.fb.group({
-          maxQuantity:[0],
-          minQuantity:[0]
-      })
-    );
+    
+  }
+
+  async onSubmit(product:IProduct): Promise<void>{
+    try {
+      await this.productsFacade.updateProduct(product);
+      this.router.navigate(["/products"]);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
 }

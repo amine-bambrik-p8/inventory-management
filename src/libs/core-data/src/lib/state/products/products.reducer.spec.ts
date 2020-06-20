@@ -9,14 +9,20 @@ describe("products reducer",()=>{
             {
                 _id:"someId",
                 name:"someName",
-                supplierId:"someSupplier",
-                categoryId:"someCategory",
+                supplier:{
+                    id:"someSupplier"
+                },
+                category:{
+                    id:"someSupplier"
+                },
                 codebar:"somecodebar",
                 entries:[],
                 description:"someDescription",
                 mainEntryId:"someId",
                 thumbnails:[
-                    "someuri"
+                    {
+                        path:"someuri"
+                    }
                 ],
                 quantityAlert:{
                     maxQuantity:23,
@@ -26,14 +32,20 @@ describe("products reducer",()=>{
             {
                 _id:"someOtherId",
                 name:"someName",
-                supplierId:"someSupplier",
-                categoryId:"someCategory",
+                supplier:{
+                    id:"someSupplier"
+                },
+                category:{
+                    id:"someSupplier"
+                },
                 codebar:"somecodebar",
                 entries:[],
                 description:"someDescription",
                 mainEntryId:"someId",
                 thumbnails:[
-                    "someuri"
+                    {
+                        path:"someuri"
+                    }
                 ],
                 quantityAlert:{
                     maxQuantity:23,
@@ -46,7 +58,8 @@ describe("products reducer",()=>{
             entities:someProducts.reduce((obj,p)=>{
                 obj[p._id]=p;
                 return obj;
-            },{})
+            },{}),
+            selectedProduct:null
         };
     });
     describe("default",()=>{

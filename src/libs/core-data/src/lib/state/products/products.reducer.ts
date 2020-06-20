@@ -6,15 +6,14 @@ import { selectAllSuppliers } from '../suppliers/suppliers.reducer';
 import { selectAllCategories } from '../categories/categories.reducer';
 
 export interface ProductsState extends EntityState<IProduct>{
-    selectedProduct:IProduct;
+    selectedProduct?:IProduct;
 }
 
-const adapter: EntityAdapter<IProduct> = createEntityAdapter<IProduct>({
+export const adapter: EntityAdapter<IProduct> = createEntityAdapter<IProduct>({
     selectId: (product: IProduct)=> product._id
 });
 
 export const initialState: ProductsState =  adapter.getInitialState({
-    selectedProduct:null,
 });
 
 export function productsReducers(state = initialState,action:ProductsActions): ProductsState{

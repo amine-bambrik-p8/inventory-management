@@ -20,7 +20,8 @@ describe("categories reducer",()=>{
                 obj[c._id] = c;
                 return obj
             },{}),
-            ids:someCategories.map((c)=>c._id)
+            ids:someCategories.map((c)=>c._id),
+            selectedCategory:null
         }
     })
     describe("default",()=>{

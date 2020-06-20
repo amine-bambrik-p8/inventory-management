@@ -1,6 +1,6 @@
 import { IClient } from '@workspace/interfaces';
-import { ClientsLoaded, ClientsActionTypes, ClientCreated, CreateClient, ClientUpdated, UpdateClient, DeleteClient, LoadClients, ReadClient, ClientRead } from './clients.actions';
-import { Observable } from 'rxjs';
+import { ClientsLoaded, ClientsActionTypes, ClientCreated, CreateClient, ClientUpdated, UpdateClient, DeleteClient, LoadClients, ReadClient, ClientRead, ClientsLoadFail, ClientCreateFail, ClientUpdateFail, ClientDeleteFail, ClientReadFail } from './clients.actions';
+import { Observable, of } from 'rxjs';
 import { ClientsState } from './clients.reducer';
 import { ClientsService } from './../../clients/clients.service';
 import { Injectable } from '@angular/core';
@@ -24,7 +24,7 @@ export class ClientsEffects {
             );
         },
         onError(action: LoadClients,error: any){
-            console.log(error);
+            return of(new ClientsLoadFail(error));
         }
     })));
     //@Effect()
@@ -39,7 +39,7 @@ export class ClientsEffects {
             );
         },
         onError(action: CreateClient,error: any){
-            console.log(error);
+            return of(new ClientCreateFail(error));
         }
     })));
     //@Effect()
@@ -55,7 +55,7 @@ export class ClientsEffects {
             );
         },
         onError(action: UpdateClient,error: any){
-            console.log(error);
+            return of(new ClientUpdateFail(error));
         }
     })));
     //@Effect()
@@ -70,7 +70,7 @@ export class ClientsEffects {
             );
         },
         onError(action: DeleteClient,error: any){
-            console.log(error);
+            return of(new ClientDeleteFail(error));
         }
     })));
     //@Effect()
@@ -85,7 +85,7 @@ export class ClientsEffects {
             );
         },
         onError(action: ReadClient,error:any){
-            console.error(error);
+            return of(new ClientReadFail(error));
         }
     })));
     constructor(

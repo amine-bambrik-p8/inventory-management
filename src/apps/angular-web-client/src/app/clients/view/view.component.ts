@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientsFacade } from '@workspace/core-data';
 import { Observable } from 'rxjs';
-import { IClient } from '@workspace/interfaces';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { map, switchMap } from 'rxjs/operators';
+import { IClient, IOrder } from '@workspace/interfaces';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-view',
@@ -12,21 +11,18 @@ import { map, switchMap } from 'rxjs/operators';
 })
 export class ViewComponent implements OnInit {
   id: string;
-  client$:Observable<IClient>;
+  client$:Observable<IClient> = this.clientsFacade.selectedClient$;;
   constructor(private clientsFacade:ClientsFacade,private activatedRoute:ActivatedRoute,private router:Router) { }
   ngOnInit(): void {
-    this.client$ = this.activatedRoute.paramMap.pipe(
-        map((params:ParamMap)=>{
-          this.id = params.get("id");
-          console.log(this.id);
-
-          return this.id;
-        }),
-        switchMap((id:string)=>{
-          this.clientsFacade.readClient(id);
-          return this.clientsFacade.selectedClient$;
-        })
-      );
+    this.loadData();
+  }
+  private loadData() {
+    this.id = this.activatedRoute.snapshot.paramMap.get("id");
+    this.clientsFacade.readClient(this.id);
+  }
+  onSelectOrder(order:IOrder){
+    const orderId = order._id;
+    this.router.navigate(["orders",orderId]);
   }
   onEdit(){
     this.router.navigate(['clients',this.id,'edit']);

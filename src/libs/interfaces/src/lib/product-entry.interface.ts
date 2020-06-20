@@ -4,12 +4,12 @@ export interface IProductEntry {
         dateOfManufacturing: Date;
         dateOfExpiration: Date;
     }
-    boughtPrice: Number;
-    price: Number;
-    discount?: Number;
+    boughtPrice: number;
+    price: number;
+    discount?: number;
     quantityInfo:{
-        readonly soldQuantity?: Number;
-        checkedInQuantity: Number;
+        readonly soldQuantity?: number;
+        checkedInQuantity: number;
     },
-    readonly quantity?:Number
+    readonly quantity?:number
 }

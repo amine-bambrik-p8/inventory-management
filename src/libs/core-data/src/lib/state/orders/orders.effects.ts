@@ -1,7 +1,7 @@
 import { OrdersState } from './orders.reducer';
 import { OrdersService } from './../../orders/orders.service';
-import { OrdersLoaded, OrdersActionTypes, LoadOrders, OrderCreated, CreateOrder, OrderUpdated, UpdateOrder, OrderDeleted, DeleteOrder, ReadOrder, OrderRead } from './orders.actions';
-import { Observable } from 'rxjs';
+import { OrdersLoaded, OrdersActionTypes, LoadOrders, OrderCreated, CreateOrder, OrderUpdated, UpdateOrder, OrderDeleted, DeleteOrder, ReadOrder, OrderRead, OrdersLoadFail, OrderCreateFail, OrderUpdateFail, OrderReadFail } from './orders.actions';
+import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Effect, createEffect, ofType, Actions } from '@ngrx/effects';
 import { map } from 'rxjs/operators';
@@ -23,7 +23,7 @@ export class OrdersEffects {
             );
         },
         onError(action: LoadOrders,error: any){
-            console.error(error);
+            return of(new OrdersLoadFail(error))
         }
     })));
     createOrder$ = createEffect(()=>this.actions$.pipe(ofType(OrdersActionTypes.CREATE_ORDER),pessimisticUpdate({
@@ -37,7 +37,7 @@ export class OrdersEffects {
             );
         },
         onError(action: CreateOrder,error: any){
-            console.log(error);
+            return of(new OrderCreateFail(error));
         }
     })));
     updateClient$ = createEffect(()=>this.actions$.pipe(ofType(OrdersActionTypes.UPDATE_ORDER),pessimisticUpdate({
@@ -52,7 +52,7 @@ export class OrdersEffects {
             );
         },
         onError(action: UpdateOrder,error: any){
-            console.log(error);
+            return of(new OrderUpdateFail(error));
         }
     })));
     deleteClient$ = createEffect(()=>this.actions$.pipe(ofType(OrdersActionTypes.DELETE_ORDER),pessimisticUpdate({
@@ -65,8 +65,8 @@ export class OrdersEffects {
                 })
             )
         },
-        onError(action: DeleteOrder,error){
-            console.log(error);
+        onError(action: DeleteOrder,error:any){
+            return of(new OrderDeleted(error));
         }
     })));
     //@Effect()
@@ -81,7 +81,7 @@ export class OrdersEffects {
             );
         },
         onError(action: ReadOrder,error:any){
-            console.error(error);
+            return of(new OrderReadFail(error));
         }
     })));
     constructor(

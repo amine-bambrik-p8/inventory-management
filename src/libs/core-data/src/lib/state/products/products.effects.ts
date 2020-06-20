@@ -1,8 +1,8 @@
 import { ProductsState } from './products.reducer';
 import { ProductsService } from '../../products/products.service';
-import { ProductsLoaded, ProductsActionTypes, LoadProducts, ProductCreated, CreateProduct, ProductDeleted, DeleteProduct, UpdateProduct, ProductUpdated, ProductRead, ReadProduct } from './products.actions';
+import { ProductsLoaded, ProductsActionTypes, LoadProducts, ProductCreated, CreateProduct, ProductDeleted, DeleteProduct, UpdateProduct, ProductUpdated, ProductRead, ReadProduct, ProductsLoadFail, ProductCreateFail, ProductDeleteFail, ProductUpdateFail, ProductReadFail } from './products.actions';
 import { Effect, Actions, createEffect, ofType } from '@ngrx/effects';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IProduct } from '@workspace/interfaces';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -23,7 +23,7 @@ export class ProductsEffects {
             );
         },
         onError(action: LoadProducts,error: any){
-            console.log(error);
+            return of(new ProductsLoadFail(error));
         }
     })));
     //@Effect()
@@ -38,7 +38,7 @@ export class ProductsEffects {
             );
         },
         onError(action: CreateProduct,error: any){
-            console.log(error);
+            return of(new ProductCreateFail(error));
         }
     })));
     //@Effect()
@@ -53,7 +53,7 @@ export class ProductsEffects {
             );
         },
         onError(action: DeleteProduct,error: any){
-            console.log(error);
+            return of(new ProductDeleteFail(error));
         }
     })));
     //@Effect()
@@ -69,7 +69,7 @@ export class ProductsEffects {
             );
         },
         onError(action: UpdateProduct,error: any){
-            console.log(error);
+            return of(new ProductUpdateFail(error));
         }
     })));
     //@Effect()
@@ -84,7 +84,7 @@ export class ProductsEffects {
             );
         },
         onError(action: ReadProduct,error:any){
-            console.error(error);
+            return of(new ProductReadFail(error));
         }
     })));
     constructor(

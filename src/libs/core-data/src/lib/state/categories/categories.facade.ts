@@ -1,8 +1,8 @@
-import { CategoriesActionTypes, CategoriesActions, UpdateCategory, CreateCategory, LoadCategories, DeleteCategory, ReadCategory } from './categories.actions';
+import { CategoriesActionTypes, CategoriesActions, UpdateCategory, CreateCategory, LoadCategories, DeleteCategory, ReadCategory, isActionTypeFail, isActionTypeSuccess } from './categories.actions';
 import { Injectable } from "@angular/core";
 import { CategoriesState, selectAllCategories, selectedCategory } from './categories.reducer';
 import { Store, ActionsSubject, select } from '@ngrx/store';
-import { filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { ICategory } from '@workspace/interfaces';
 
 @Injectable({
@@ -11,6 +11,13 @@ import { ICategory } from '@workspace/interfaces';
 export class CategoriesFacade{
     allCategories$ = this.store.pipe(select(selectAllCategories));
     selectedCategory = this.store.pipe(select(selectedCategory));
+    actionCompleted$ = this.actions$
+    .pipe(
+        filter((action:CategoriesActions) =>
+            isActionTypeFail(action) || isActionTypeSuccess(action)
+        ),
+        take(1)
+    );
     mutations$ = this.actions$
     .pipe(
       filter(action =>
@@ -20,22 +27,47 @@ export class CategoriesFacade{
       )
     );
     constructor(private store: Store<CategoriesState>,private actions$: ActionsSubject) {}
-    readCategory(id:string):void{
+    async readCategory(id:string):Promise<void>{
         this.store.dispatch(new ReadCategory(id));
+        const action:any = await this.actionCompleted$.toPromise();
+        if(isActionTypeFail(action)){
+            const httpError = action.payload;
+            throw httpError;
+        }
     }
-    loadCategories():void {
+    async loadCategories():Promise<void> {
         this.store.dispatch(new LoadCategories());
+        const action:any = await this.actionCompleted$.toPromise();
+        if(isActionTypeFail(action)){
+            const httpError = action.payload;
+            throw httpError;
+        }
     }
     
-    addCategory(item:ICategory):void{
+    async addCategory(item:ICategory):Promise<void>{
         this.store.dispatch(new CreateCategory(item));
+        const action:any = await this.actionCompleted$.toPromise();
+        if(isActionTypeFail(action)){
+            const httpError = action.payload;
+            throw httpError;
+        }
     }
     
-    updateCategory(item:ICategory):void{
+    async updateCategory(item:ICategory):Promise<void>{
         this.store.dispatch(new UpdateCategory(item));
+        const action:any = await this.actionCompleted$.toPromise();
+        if(isActionTypeFail(action)){
+            const httpError = action.payload;
+            throw httpError;
+        }
     }
     
-    deleteCategory(item:ICategory):void{
+    async deleteCategory(item:ICategory):Promise<void>{
         this.store.dispatch(new  DeleteCategory(item));
+        const action:any = await this.actionCompleted$.toPromise();
+        if(isActionTypeFail(action)){
+            const httpError = action.payload;
+            throw httpError;
+        }
     }
 }

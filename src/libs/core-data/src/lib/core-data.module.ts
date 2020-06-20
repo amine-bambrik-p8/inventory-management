@@ -1,4 +1,3 @@
-import { CategoriesFacade } from './state/categories/categories.facade';
 import { StateModule } from './state/state.module';
 import { UsersService } from './users/users.service';
 import { SuppliersService } from './suppliers/suppliers.service';

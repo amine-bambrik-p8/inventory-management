@@ -1,0 +1,50 @@
+<div class="flex-grid nowrap space-around">
+      <div class="fields fill-remaining-space">
+          <div>
+              <b>Codebar: </b>
+              <span>{{product?.codebar}}</span>
+          </div>
+          <div >
+              <div>
+                <b>Category: </b>
+                <span>{{product?.category.name}}</span>
+              </div>
+              <div>
+                <b>Name: </b>
+                <span>{{product?.name}}</span>
+              </div>
+          </div>
+          <div>
+            <b>Suppplier: </b>
+            <span>
+              {{product?.supplier.name}}
+            </span>
+          </div>
+          <div>
+            <b>Quantity Alert:</b>
+          </div>
+          <div *ngIf="product?.quantityAlert as quantityAlert" class="flex-grid nowrap ">
+              <div>
+                <b>Min: </b>
+                <span>{{quantityAlert?.minQuantity}}</span>
+              </div>
+              <div>
+                <b>Max: </b>
+                <span>{{quantityAlert?.maxQuantity}}</span>
+              </div>
+          </div>
+          <div>
+              <b>Description:</b>
+          </div>
+          <div>
+            <p>{{product?.description}}</p>
+          </div>
+      </div>
+      <div class="images">
+          <img src="assets/package-102.svg" alt="">
+          <div class="flex-grid nowrap">
+              <img src="https://via.placeholder.com/80" alt="">
+              <img src="https://via.placeholder.com/80" alt="">
+          </div>
+      </div>
+  </div>

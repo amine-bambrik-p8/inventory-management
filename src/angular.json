@@ -14,9 +14,7 @@
             "outputPath": "dist/apps/express-backend",
             "main": "apps/express-backend/src/index.ts",
             "tsConfig": "apps/express-backend/tsconfig.app.json",
-            "assets": [
-              "apps/express-backend/src/assets"
-            ]
+            "assets": ["apps/express-backend/src/assets"]
           },
           "configurations": {
             "production": {
@@ -45,10 +43,7 @@
               "apps/express-backend/tsconfig.app.json",
               "apps/express-backend/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/express-backend/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/express-backend/**"]
           }
         },
         "test": {
@@ -74,10 +69,7 @@
               "libs/interfaces/tsconfig.lib.json",
               "libs/interfaces/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/interfaces/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/interfaces/**"]
           }
         },
         "test": {
@@ -175,10 +167,7 @@
               "apps/angular-web-client/tsconfig.app.json",
               "apps/angular-web-client/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/angular-web-client/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/angular-web-client/**"]
           }
         },
         "test": {
@@ -213,13 +202,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/angular-web-client-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/angular-web-client-e2e/**"
-            ]
+            "tsConfig": ["apps/angular-web-client-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/angular-web-client-e2e/**"]
           }
         }
       }
@@ -237,10 +221,7 @@
               "libs/core-data/tsconfig.lib.json",
               "libs/core-data/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/core-data/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/core-data/**"]
           }
         },
         "test": {
@@ -272,10 +253,7 @@
               "libs/auth/tsconfig.lib.json",
               "libs/auth/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/auth/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/auth/**"]
           }
         },
         "test": {
@@ -307,10 +285,7 @@
               "libs/common/tsconfig.lib.json",
               "libs/common/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/common/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/common/**"]
           }
         },
         "test": {
@@ -342,10 +317,7 @@
               "libs/environments/tsconfig.lib.json",
               "libs/environments/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/environments/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/environments/**"]
           }
         },
         "test": {
@@ -377,10 +349,7 @@
               "libs/ui-login/tsconfig.lib.json",
               "libs/ui-login/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/ui-login/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/ui-login/**"]
           }
         },
         "test": {
@@ -412,10 +381,7 @@
               "libs/material/tsconfig.lib.json",
               "libs/material/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/material/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/material/**"]
           }
         },
         "test": {
@@ -447,10 +413,7 @@
               "libs/ui-components/tsconfig.lib.json",
               "libs/ui-components/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/ui-components/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/ui-components/**"]
           }
         },
         "test": {
@@ -460,6 +423,38 @@
             "tsConfig": "libs/ui-components/tsconfig.spec.json",
             "passWithNoTests": true,
             "setupFile": "libs/ui-components/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "utils": {
+      "projectType": "library",
+      "root": "libs/utils",
+      "sourceRoot": "libs/utils/src",
+      "prefix": "workspace",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/utils/tsconfig.lib.json",
+              "libs/utils/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/utils/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/utils/jest.config.js",
+            "tsConfig": "libs/utils/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/utils/src/test-setup.ts"
           }
         }
       },

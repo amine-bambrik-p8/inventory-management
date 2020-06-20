@@ -10,29 +10,23 @@ import { ISupplier } from '@workspace/interfaces';
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
-  form:FormGroup =this.fb.group({
-    name:[""],
-    contact:this.fb.group({
-      email:[""],
-      firstName:[""],
-      lastName:[""],
-      phoneNumber:[""]
-    }),
-    address:this.fb.group({
-      address:[""],
-      city:[""],
-      zip:[""],
-    }),
-  });
-  constructor(private suppliersFacade:SuppliersFacade,private fb:FormBuilder,private router:Router) { }
+  
+  constructor(
+    private suppliersFacade:SuppliersFacade,
+    private router:Router
+  ) { }
 
   ngOnInit(): void {
     
   }
-  onSubmit(){
-    const supplier:ISupplier = this.form.value;
-    this.suppliersFacade.addSupplier(supplier);
-    this.router.navigate(["suppliers"]);
+  async onSubmit(supplier:ISupplier):Promise<void>{
+    try {
+      await this.suppliersFacade.addSupplier(supplier);
+      this.router.navigate(["suppliers"]);
+      
+    } catch (error) {
+      console.error(error);
+    }
   }
 
 }

@@ -4,7 +4,7 @@ import { EntityAdapter,EntityState,createEntityAdapter } from '@ngrx/entity';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 export interface SuppliersState extends EntityState<ISupplier>{
-    selectedSupplier:ISupplier;
+    selectedSupplier?:ISupplier;
 }
 
 const adapter: EntityAdapter<ISupplier> = createEntityAdapter<ISupplier>({
@@ -12,7 +12,6 @@ const adapter: EntityAdapter<ISupplier> = createEntityAdapter<ISupplier>({
 });
 
 export const initialState: SuppliersState =  adapter.getInitialState({
-    selectedSupplier:null
 });
 
 export function suppliersReducers(state = initialState,action:SuppliersActions): SuppliersState{

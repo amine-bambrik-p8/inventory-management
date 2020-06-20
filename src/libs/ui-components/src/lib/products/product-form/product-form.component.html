@@ -1,0 +1,67 @@
+<form [formGroup]="form" (submit)="onSubmit()" class="flex-grid nowrap">
+    <div class="fields fill-remaining-space m-1">
+        <div>
+            <mat-form-field>
+                <mat-label>Codebar</mat-label>
+                <input formControlName="codebar" matInput>
+            </mat-form-field>
+        </div>
+        <div >
+            <mat-form-field formGroupName="category">
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="id">
+                    <mat-option *ngFor="let category of categories" [value]="category._id">
+                        {{category.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Product Name</mat-label>
+                <input formControlName="name" matInput>
+            </mat-form-field>
+        </div>
+        <div formGroupName="supplier">
+            <mat-form-field>
+                <mat-label>Supplier</mat-label>
+                <mat-select formControlName="id">
+                    <mat-option *ngFor="let supplier of suppliers" [value]="supplier._id">
+                        {{supplier.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-checkbox formControlName="isQuantityAlertOn">Quantity Alert</mat-checkbox>
+        </div>
+        <div *ngIf="isQuantityAlertOn" formGroupName="quantityAlert" >
+            <mat-form-field>
+                <mat-label>Min Quantity</mat-label>
+                <input formControlName="minQuantity" matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Max Quantity</mat-label>
+                <input formControlName="maxQuantity" matInput>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field class="w-100">
+                <mat-label>Description</mat-label>
+                <textarea formControlName="description" matInput cols="30" rows="10"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="flex-grid nowrap space-around">
+            <button mat-raised-button color="primary">Confirm</button>
+            <button mat-button color="primary">Abort</button>
+        </div>
+    </div>
+    <div class="images col-6">
+        <img src="assets/package-102.svg" alt="">
+
+        <div class="flex-grid ">
+            <img src="https://via.placeholder.com/80" alt="">
+            <img src="https://via.placeholder.com/80" alt="">
+            <button mat-fab><mat-icon>add</mat-icon></button>
+        </div>
+    </div>
+  </form>
+  

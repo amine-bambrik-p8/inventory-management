@@ -12,7 +12,9 @@ describe("orders reducer",()=>{
                 entries:[
 
                 ],
-                clientId:"someClientId",
+                client:{
+                    id:"someClientId"
+                },
                 address:{
                     address:"someAddress",
                     zip:"someZip",
@@ -26,7 +28,9 @@ describe("orders reducer",()=>{
                 entries:[
 
                 ],
-                clientId:"someClientId",
+                client:{
+                    id:"someClientId"
+                },
                 address:{
                     address:"someAddress",
                     zip:"someZip",
@@ -41,7 +45,8 @@ describe("orders reducer",()=>{
             entities:someOrders.reduce((obj,o)=>{
                 obj[o._id]=o;
                 return obj;
-            },{})
+            },{}),
+            selectedOrder:null
         };
     });
     describe("default",()=>{

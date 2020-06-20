@@ -1,0 +1,36 @@
+<div class="flex-grid justify-center">
+    <div class="flex-grid col-12 justify-center">
+      <img class="rounded col-4 m-1" src="assets/person_outline-24px.svg" alt="Client name">
+    </div>
+    <div class="fields col-6">
+      <div>
+        <b>Full Name:</b><span> {{client.firstName}} {{client.lastName}}</span>
+      </div>
+      <div class="fields" *ngLet="client.address as address">
+        <div>
+            <b>City: </b>
+            <span>
+              {{address.city}}
+            </span>
+        </div>
+        <div>
+          <b>Address: </b>
+          <span>
+            {{address.address}}
+          </span>
+        </div>
+        <div>
+          <b>Zip Code: </b>
+          <span>{{address.zip}}</span>
+        </div>
+      </div>
+      <div>
+        <b>Phone: </b>
+        <span>{{client.phoneNumber}}</span>
+      </div>
+      <div>
+        <b>Email: </b>
+        <span>{{client.email}}</span>
+      </div>
+    </div>
+  </div>

@@ -23,7 +23,8 @@
       "@workspace/environments": ["libs/environments/src/index.ts"],
       "@workspace/ui-login": ["libs/ui-login/src/index.ts"],
       "@workspace/material": ["libs/material/src/index.ts"],
-      "@workspace/ui-components": ["libs/ui-components/src/index.ts"]
+      "@workspace/ui-components": ["libs/ui-components/src/index.ts"],
+      "@workspace/utils": ["libs/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

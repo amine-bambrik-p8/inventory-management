@@ -1,8 +1,8 @@
 import { UsersState } from './users.reducer';
 import { UsersService } from './../../users/users.service';
-import { UsersLoaded, UsersActionTypes, LoadUsers, UserCreated, CreateUser, UserDeleted, DeleteUser, UpdateUser, UserUpdated, ReadUser, UserRead } from './users.actions';
+import { UsersLoaded, UsersActionTypes, LoadUsers, UserCreated, CreateUser, UserDeleted, DeleteUser, UpdateUser, UserUpdated, ReadUser, UserRead, UsersLoadFail, UserCreateFail, UserDeleteFail, UserUpdateFail, UserReadFail } from './users.actions';
 import { Effect, Actions, createEffect, ofType } from '@ngrx/effects';
-import { Observable } from 'rxjs';
+import { of } from 'rxjs';
 import { IUser } from '@workspace/interfaces';
 import { map, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -26,8 +26,7 @@ export class UsersEffects {
                     );
                 },
                 onError(action: LoadUsers,error: any){
-                    console.log(error);
-                    return null;
+                    return of(new UsersLoadFail(error));
                 }
             })
         )
@@ -58,7 +57,7 @@ export class UsersEffects {
             );
         },
         onError(action: CreateUser,error: any){
-            console.log(error);
+            return of(new UserCreateFail(error));
         }
     })));
     //@Effect()
@@ -77,7 +76,7 @@ export class UsersEffects {
                 );
             },
             onError(action: DeleteUser,error: any){
-                console.log(error);
+                return of(new UserDeleteFail(error));
             }
     })));
     //@Effect()
@@ -96,7 +95,7 @@ export class UsersEffects {
                 );
             },
             onError(action: UpdateUser,error: any){
-                console.log(error);
+                return of(new UserUpdateFail(error));
             }
     })));
     //@Effect()
@@ -111,7 +110,7 @@ export class UsersEffects {
             );
         },
         onError(action: ReadUser,error:any){
-            console.error(error);
+            return of(new UserReadFail(error));
         }
     })));
     constructor(

@@ -46,7 +46,8 @@ describe("suppliers reducer",()=>{
             entities:someSuppliers.reduce((obj,s)=>{
                 obj[s._id]=s;
                 return obj;
-            },{})
+            },{}),
+            selectedSupplier:null
         };
     });
     describe("default",()=>{

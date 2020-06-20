@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap, ActivatedRouteSnapshot } from '@angular/router';
 import { UsersFacade } from '@workspace/core-data';
 import { Observable } from 'rxjs';
 import { IUser } from '@workspace/interfaces';
-import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-view',
@@ -11,21 +10,24 @@ import { map, switchMap } from 'rxjs/operators';
   styleUrls: ['./view.component.scss']
 })
 export class ViewComponent implements OnInit {
-  user$:Observable<IUser>;
-  id:string;
-  constructor(private usersFacade:UsersFacade,private router:Router,private activatedRoute:ActivatedRoute) { }
+  selectedUser$:Observable<IUser> = this.usersFacade.selectedUser$;
+  constructor(
+    private usersFacade:UsersFacade,
+    private router:Router,
+    private activatedRoute:ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-    this.user$ = this.activatedRoute.paramMap.pipe(
-      map((params:ParamMap)=>{
-        this.id = params.get("id");
-        return this.id;
-      }),
-      switchMap((id:string)=>{
-        this.usersFacade.readUser(id);
-        return this.usersFacade.selectedUser$;
-      })
-    );
+    this.loadData();
+  }
+
+  private async loadData() {
+    try {
+      const id = this.activatedRoute.snapshot.paramMap.get("id");
+      await this.usersFacade.readUser(id);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   onEdit(user:IUser){

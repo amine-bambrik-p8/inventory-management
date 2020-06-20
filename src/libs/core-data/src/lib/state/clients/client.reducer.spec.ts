@@ -42,7 +42,8 @@ describe("clients reducer",()=>{
             entities:someClients.reduce((obj,c)=>{
                 obj[c._id]=c;
                 return obj;
-            },{})
+            },{}),
+            selectedClient:null
         }
     })
     describe("default",()=>{

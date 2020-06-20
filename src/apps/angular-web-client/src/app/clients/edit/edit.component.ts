@@ -1,10 +1,7 @@
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { map, switchMap, takeWhile, take, filter } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsFacade } from '@workspace/core-data';
 import { IClient } from '@workspace/interfaces';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-edit',
@@ -12,42 +9,31 @@ import { Observable } from 'rxjs';
   styleUrls: ['./edit.component.scss']
 })
 export class EditComponent implements OnInit {
-  form: FormGroup = this.fb.group({
-    _id:[''],
-    firstName:[''],
-    lastName:[''],
-    address:this.fb.group({
-      city:[''],
-      address:[''],
-      zip:[''],
-    }),
-    phoneNumber:[''],
-    email:[''],
-  });
-  constructor(private clientsFacade:ClientsFacade,private activatedRoute:ActivatedRoute,private router:Router,private fb: FormBuilder) {}
+  selectedClient$ = this.clientsFacade.selectedClient$;
+  constructor(
+    private clientsFacade:ClientsFacade,
+    private activatedRoute:ActivatedRoute,
+    private router:Router,
+  ) {}
 
   ngOnInit(): void {
-    
-    this.activatedRoute.paramMap.pipe(
-      map((params:ParamMap)=>{
-        return params.get("id");
-      }),
-      take(1)
-    ).subscribe((id:string)=>{
-      this.clientsFacade.readClient(id);
-    });
-    this.clientsFacade.selectedClient$
-    .pipe(
-      filter(client=>!!client),
-      take(1)
-    ).subscribe((client:IClient)=>{
-      this.form.patchValue(client);
-    });
+    this.loadData();
   }
 
-  onSubmit(){
-    const client: IClient = this.form.value;
-    this.clientsFacade.updateClient(client);
-    this.router.navigate(['clients']);
+  async onSubmit(client: IClient){
+    try {
+      await this.clientsFacade.updateClient(client);
+      this.router.navigate(['clients']);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  private async loadData(): Promise<void>{
+    try {
+      const id = this.activatedRoute.snapshot.paramMap.get("id")
+      await this.clientsFacade.readClient(id);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

@@ -1,8 +1,8 @@
-import { OrdersActionTypes, OrdersActions, UpdateOrder, CreateOrder, LoadOrders, DeleteOrder, ReadOrder } from './orders.actions';
+import { OrdersActionTypes, OrdersActions, UpdateOrder, CreateOrder, LoadOrders, DeleteOrder, ReadOrder, isActionTypeFail, isActionTypeSuccess } from './orders.actions';
 import { Injectable } from "@angular/core";
 import { OrdersState, selectAllOrders, selectedOrder } from './orders.reducer';
 import { Store, ActionsSubject, select } from '@ngrx/store';
-import { filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { IOrder } from '@workspace/interfaces';
 
 @Injectable({
@@ -10,7 +10,14 @@ import { IOrder } from '@workspace/interfaces';
 })
 export class OrdersFacade{
     allOrders$ = this.store.pipe(select(selectAllOrders));
-    selectedOrder$ = this.store.pipe(select(selectedOrder))
+    selectedOrder$ = this.store.pipe(select(selectedOrder));
+    actionCompleted$ = this.actions$
+    .pipe(
+        filter((action:OrdersActions) =>
+            isActionTypeFail(action) || isActionTypeSuccess(action)
+        ),
+        take(1)
+    );
     mutations$ = this.actions$
     .pipe(
       filter(action =>
@@ -20,22 +27,27 @@ export class OrdersFacade{
       )
     );
     constructor(private store: Store<OrdersState>,private actions$: ActionsSubject) {}
-    readOrder(id:string):void{
-        this.store.dispatch(new ReadOrder(id))
+    readOrder(id:string):Promise<void>{
+        return this.dispatchAction(new ReadOrder(id));
     }
-    loadOrders():void{
-        this.store.dispatch(new LoadOrders());
+    loadOrders():Promise<void>{
+        return this.dispatchAction(new LoadOrders());
     }
-    
-    addOrder(item:IOrder):void{
-        this.store.dispatch(new CreateOrder(item));
+    addOrder(item:IOrder):Promise<void>{
+        return this.dispatchAction(new CreateOrder(item));
     }
-    
-    updateOrder(item:IOrder):void{
-        this.store.dispatch(new UpdateOrder(item));
+    updateOrder(item:IOrder):Promise<void>{
+        return this.dispatchAction(new UpdateOrder(item));
     }
-    
-    deleteOrder(item:IOrder):void{
-        this.store.dispatch(new  DeleteOrder(item));
+    deleteOrder(item:IOrder):Promise<void>{
+        return this.dispatchAction(new DeleteOrder(item));
+    }
+    private async dispatchAction(action:OrdersActions):Promise<void>{
+        this.store.dispatch(action);
+        const response:any = await this.actionCompleted$.toPromise();
+        if(isActionTypeFail(response)){
+            const httpError = response.payload;
+            throw httpError;
+        }
     }
 }

@@ -1,0 +1,21 @@
+<div class="flex-grid justify-center">
+    <div class="flex-grid col-12 justify-center">
+        <img class="col-3 rounded" src="assets/person_outline-24px.svg" alt="Username" mat-card-image>
+    </div>
+    <div class="fields col-4 flex-grid m-1">
+        <div >
+            <b>Full Name:</b>
+            <span>{{user.firstName}} {{user.lastName}}</span>
+        </div>
+        <div>
+            <b>Username:</b>
+            <span> {{user.username}}</span>
+        </div>
+        
+        <div>
+            <b>Role:</b>
+            <span>{{user.role | titlecase}}</span>
+        </div>
+        
+    </div>
+</div>

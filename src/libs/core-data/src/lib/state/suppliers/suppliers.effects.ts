@@ -1,9 +1,9 @@
 import { fetch, pessimisticUpdate } from '@nrwl/angular';
 import { SuppliersState } from './suppliers.reducer';
 import { SuppliersService } from './../../suppliers/suppliers.service';
-import { SuppliersLoaded, SuppliersActionTypes, LoadSuppliers, SupplierCreated, CreateSupplier, SupplierDeleted, DeleteSupplier, UpdateSupplier, SupplierUpdated, ReadSupplier, SupplierRead } from './suppliers.actions';
+import { SuppliersLoaded, SuppliersActionTypes, LoadSuppliers, SupplierCreated, CreateSupplier, SupplierDeleted, DeleteSupplier, UpdateSupplier, SupplierUpdated, ReadSupplier, SupplierRead, SuppliersLoadFail, SupplierCreateFail, SupplierDeleteFail, SupplierUpdateFail, SupplierReadFail } from './suppliers.actions';
 import { Effect, Actions, ofType, createEffect } from '@ngrx/effects';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ISupplier } from '@workspace/interfaces';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -23,7 +23,7 @@ export class SuppliersEffects {
             );
         },
         onError(action: LoadSuppliers,error: any){
-            console.log(error);
+            return of(new SuppliersLoadFail(error));
         }
     })));
     //@Effect()
@@ -38,7 +38,7 @@ export class SuppliersEffects {
             );
         },
         onError(action: CreateSupplier,error: any){
-            console.log(error);
+            return of(new SupplierCreateFail(error));
         }
     })));
     //@Effect()
@@ -53,7 +53,7 @@ export class SuppliersEffects {
             );
         },
         onError(action: DeleteSupplier,error: any){
-            console.log(error);
+            return of(new SupplierDeleteFail(error));
         }
     })));
     //@Effect()
@@ -69,7 +69,7 @@ export class SuppliersEffects {
             );
         },
         onError(action: UpdateSupplier,error: any){
-            console.log(error);
+            return of(new SupplierUpdateFail(error));
         }
     })));
     //@Effect()
@@ -84,7 +84,7 @@ export class SuppliersEffects {
             );
         },
         onError(action: ReadSupplier,error:any){
-            console.error(error);
+            return of(new SupplierReadFail(error));
         }
     })));
     constructor(

@@ -1,0 +1,17 @@
+<div class="side-nav">
+    <!-- Filters -->
+    <mat-form-field class="w-100">
+        <mat-label>Sort By</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let filter of filters" [value]="filter.value">
+            {{filter.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    <!-- Title -->
+    <h3 class="line-title">Entries</h3>
+    <!-- List -->
+    <div>
+        <workspace-product-entry (click)="onSelectEntry(entry)" *ngFor="let entry of entries"></workspace-product-entry>
+    </div>
+  </div>

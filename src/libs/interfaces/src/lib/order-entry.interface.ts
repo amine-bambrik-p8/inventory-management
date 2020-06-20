@@ -3,7 +3,7 @@ import { IProduct } from './product.interface';
 
 export interface IOrderEntry {
     readonly _id?: string
-    quantity: Number;
+    quantity: number;
     readonly productEntry?: IProductEntry;
     productId:string;
 }

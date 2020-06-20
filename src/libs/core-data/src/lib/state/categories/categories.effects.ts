@@ -1,11 +1,12 @@
 import { CategoriesService } from './../../categories/categories.service';
 import { CategoriesState } from './categories.reducer';
-import { CategoriesLoaded, CategoryCreated, CategoriesActionTypes, LoadCategories, CreateCategory, CategoryUpdated, CategoryDeleted, DeleteCategory, UpdateCategory, CategoryRead, ReadCategory } from './categories.actions';
+import { CategoriesLoaded, CategoryCreated, CategoriesActionTypes, LoadCategories, CreateCategory, CategoryUpdated, CategoryDeleted, DeleteCategory, UpdateCategory, CategoryRead, ReadCategory, CategoriesLoadFail, CategoryCreateFail, CategoryUpdateFail, CategoryDeleteFail, CategoryReadFail } from './categories.actions';
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType, createEffect } from '@ngrx/effects';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { ICategory } from '@workspace/interfaces';
 import { fetch, pessimisticUpdate } from '@nrwl/angular';
+import { of } from 'rxjs';
 @Injectable({
     providedIn:'root',
 })
@@ -22,7 +23,7 @@ export class CategoriesEffects {
             );
         },
         onError(action: LoadCategories,error: any){
-            console.log(error); // Implement
+            return of(new CategoriesLoadFail(error));
         }
     })));
     @Effect()
@@ -37,7 +38,7 @@ export class CategoriesEffects {
             );
         },
         onError(action: CreateCategory,error: any){
-            console.log(error);
+            return of(new CategoryCreateFail(error));
         }
     })));
     @Effect()
@@ -51,8 +52,8 @@ export class CategoriesEffects {
                 })
             );
         },
-        onError(action: UpdateCategory,error){
-            console.log(error);
+        onError(action: UpdateCategory,error:any){
+            return of(new CategoryUpdateFail(error))
         }
     })));
 
@@ -68,7 +69,7 @@ export class CategoriesEffects {
             );
         },
         onError(action: DeleteCategory,error: any){
-            console.log(error);
+            return of(new CategoryDeleteFail(error));
         }
     })));
     @Effect()
@@ -83,7 +84,7 @@ export class CategoriesEffects {
             );
         },
         onError(action: ReadCategory,error:any){
-            console.error(error);
+            return of(new CategoryReadFail(error));
         }
     })));
     constructor(

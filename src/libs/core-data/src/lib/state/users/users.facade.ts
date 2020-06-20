@@ -1,8 +1,8 @@
-import { UsersActionTypes, UsersActions, UpdateUser, CreateUser, LoadUsers, DeleteUser, ReadUser } from './users.actions';
+import { UsersActionTypes, UsersActions, UpdateUser, CreateUser, LoadUsers, DeleteUser, ReadUser, isActionTypeFail, isActionTypeSuccess } from './users.actions';
 import { Injectable } from "@angular/core";
 import { UsersState, selectAllUsers, selectedUser } from './users.reducer';
 import { Store, ActionsSubject, select } from '@ngrx/store';
-import { filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { IUser } from '@workspace/interfaces';
 
 @Injectable({
@@ -11,6 +11,13 @@ import { IUser } from '@workspace/interfaces';
 export class UsersFacade{
     allUsers$ = this.store.pipe(select(selectAllUsers));
     selectedUser$ = this.store.pipe(select(selectedUser));
+    actionCompleted$ = this.actions$
+    .pipe(
+        filter((action:UsersActions) =>
+            isActionTypeFail(action) || isActionTypeSuccess(action)
+        ),
+        take(1)
+    );
     mutations$ = this.actions$
     .pipe(
       filter(action =>
@@ -20,22 +27,27 @@ export class UsersFacade{
       )
     );
     constructor(private store: Store<UsersState>,private actions$: ActionsSubject) {}
-    readUser(id:string){
-        this.store.dispatch(new ReadUser(id));
+    readUser(id:string):Promise<void>{
+        return this.dispatchAction(new ReadUser(id));
     }
-    loadUsers() {
-        this.store.dispatch(new LoadUsers());
+    loadUsers():Promise<void>{
+        return this.dispatchAction(new LoadUsers());
     }
-    
-    addUser(item:IUser) {
-        this.store.dispatch(new CreateUser(item));
+    addUser(item:IUser):Promise<void>{
+        return this.dispatchAction(new CreateUser(item));
     }
-    
-    updateUser(item:IUser) {
-        this.store.dispatch(new UpdateUser(item));
+    updateUser(item:IUser):Promise<void>{
+        return this.dispatchAction(new UpdateUser(item));
     }
-    
-    deleteUser(item:IUser) {
-        this.store.dispatch(new  DeleteUser(item));
+    deleteUser(item:IUser):Promise<void>{
+        return this.dispatchAction(new DeleteUser(item));
+    }
+    private async dispatchAction(action:UsersActions):Promise<void>{
+        this.store.dispatch(action);
+        const response:any = await this.actionCompleted$.toPromise();
+        if(isActionTypeFail(response)){
+            const httpError = response.payload;
+            throw httpError;
+        }
     }
 }

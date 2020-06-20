@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Category Form</h1>
+<form [formGroup]="form" mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Category Name</mat-label>
+    <input formControlName="name" matInput>
+  </mat-form-field>
+</form>
+<div mat-dialog-actions>
+  <button mat-button [matDialogClose]="form.value" >Confirm</button>
+  <button mat-button (click)="onClose()">Close</button>
+</div>

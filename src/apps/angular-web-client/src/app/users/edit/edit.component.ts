@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { UsersFacade } from '@workspace/core-data';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap, ActivatedRouteSnapshot } from '@angular/router';
 import { IUser } from '@workspace/interfaces';
 import { map, take, filter } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-edit',
@@ -11,43 +12,35 @@ import { map, take, filter } from 'rxjs/operators';
   styleUrls: ['./edit.component.scss']
 })
 export class EditComponent implements OnInit {
-  form:FormGroup = this.fb.group({
-    _id:[""],
-    firstName:[""],
-    lastName:[""],
-    username:[""],
-    role:[""],
-  });
-  get isResetPasswordOn(){
-    return this.form.get("password") && this.form.get("confirmPassword");
-  }
-  constructor(private usersFacade:UsersFacade,private fb:FormBuilder,private router:Router,private activatedRoute:ActivatedRoute) { }
+  
+  selectedUser$:Observable<IUser> = this.usersFacade.selectedUser$;
+  
+  constructor(
+    private usersFacade:UsersFacade,
+    private router:Router,
+    private activatedRoute:ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-    this.onLoadData();
+    this.loadData();
   }
 
-  onResetPassword(){
-    this.form.addControl("password",this.fb.control([""]));
-    this.form.addControl("confirmPassword",this.fb.control([""]));
+
+  async onSubmit(user:IUser){
+    try {
+      await this.usersFacade.updateUser(user);
+      this.router.navigate(["/users"])
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  onSubmit(){
-    const user:IUser = this.form.value;
-    this.usersFacade.addUser(user);
-    this.router.navigate(["users"]);
-  }
-
-  onLoadData() {
-    const id: string = this.activatedRoute.snapshot.paramMap.get("id");
-    this.usersFacade.readUser(id);
-    this.usersFacade.selectedUser$
-      .pipe(
-        filter(user => !!user), 
-        take(1)
-      )
-      .subscribe((user: IUser) => {
-        this.form.patchValue(user);
-      });
+  private async loadData() {
+    try {
+      const id: string = this.activatedRoute.snapshot.paramMap.get("id");
+      this.usersFacade.readUser(id);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

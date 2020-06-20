@@ -1,9 +1,7 @@
 import { IClient } from '@workspace/interfaces';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { map, switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { ClientsFacade } from '@workspace/core-data';
-import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-add',
@@ -11,25 +9,21 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
-  form: FormGroup = this.fb.group({
-    firstName:[''],
-    lastName:[''],
-    address:this.fb.group({
-      city:[''],
-      address:[''],
-      zip:[''],
-    }),
-    phoneNumber:[''],
-    email:['']
-  });
-  constructor(private clientsFacade:ClientsFacade,private fb:FormBuilder,private router:Router) {}
+  
+  constructor(
+    private clientsFacade:ClientsFacade,
+    private router:Router
+    ) {}
 
   ngOnInit(): void {
     
   }
-  onSubmit(){
-    const client: IClient = this.form.value;
-    this.clientsFacade.addClient(client);
-    this.router.navigate(['clients']);
+  async onSubmit(client:IClient){
+    try {
+      await this.clientsFacade.addClient(client);
+      this.router.navigate(['clients']);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

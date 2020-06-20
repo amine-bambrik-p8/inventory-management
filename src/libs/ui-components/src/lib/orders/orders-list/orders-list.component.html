@@ -1,0 +1,22 @@
+<div class="side-nav">
+    <!-- Filters -->
+    <mat-form-field class="w-100">
+      <mat-label>Search</mat-label>
+      <input matInput placeholder="Ex: Order N°">
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <mat-label>Sort By</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let filter of filters" [value]="filter.value">
+          {{filter.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Title -->
+    <h3 class="line-title">Orders</h3>
+    <!-- List -->
+    <div>
+      <workspace-order-grid-card (click)="onSelectOrder(order)" [order]="order" *ngFor="let order of orders" class="m-1"></workspace-order-grid-card>
+    </div>
+</div>
