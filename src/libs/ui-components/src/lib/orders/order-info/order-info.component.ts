@@ -1,4 +1,4 @@
-import { IOrder } from '@workspace/interfaces';
+import { IOrder, IClient } from '@workspace/interfaces';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -9,6 +9,8 @@ import { Component, OnInit, Input } from '@angular/core';
 export class OrderInfoComponent implements OnInit {
   @Input()
   order: IOrder;
+  @Input()
+  client: IClient;
   constructor() { }
 
   ngOnInit(): void {

@@ -24,35 +24,35 @@
                 <div class="order-info m-1 flex-grid nowrap">
                     <div class="col-3">
                         <div>
-                            <span>First Name</span>
+                            <span>{{client?.firstName}}</span>
                         </div>
                         <div>
-                            <span >Last Name</span>
+                            <span >{{client?.lastName}}</span>
                         </div>
                     </div>
                     <div class="col-3">
                         <div>
                             <mat-icon>alternate_email</mat-icon>
-                            <span>Email</span>
+                            <span>{{client?.email}}</span>
                         </div>
                         <div>
                             <mat-icon>phone</mat-icon>
-                            <span>Number</span>
+                            <span>{{client?.phoneNumber}}</span>
                         </div>
                     </div>
                     <div class="col-3 flex-grid align-center nowrap">
                         <mat-icon>person_pin_circle</mat-icon>
                         <div>
                             <div>
-                                <span >City</span>
+                                <span >{{client?.address.city}}</span>
     
                             </div>
                             <div>
-                                <span>Address</span>
+                                <span>{{client?.address.address}}</span>
     
                             </div>
                             <div>
-                                <span>Zip</span>
+                                <span>{{client?.address.zip}}</span>
     
                             </div>
 
@@ -62,13 +62,13 @@
                         <mat-icon>place</mat-icon>
                         <div>
                             <div>
-                                <span>City</span>
+                                <span>{{order.address?.city}}</span>
                             </div>
                             <div>
-                                <span>Address </span>
+                                <span>{{order.address?.address}}</span>
                             </div>
                             <div>
-                                <span>Zip</span>
+                                <span>{{order.address?.zip}}</span>
                             </div>
 
                         </div>

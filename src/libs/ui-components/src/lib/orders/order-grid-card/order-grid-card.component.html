@@ -20,14 +20,14 @@
                 </mat-grid-tile>
                 <mat-grid-tile  colspan="3" rowspan="1">
                     <div class="order-detail">
-                        <mat-icon class="icon-20">monetization_on</mat-icon>
+                        <mat-icon class="icon-20">local_atm</mat-icon>
                         <span>{{order | orderValue | currency:"EUR"}}</span>
                     </div>
                 </mat-grid-tile>
                 <mat-grid-tile  colspan="3" rowspan="1">
                     <div class="order-detail">
                         <mat-icon class="icon-20">face</mat-icon>
-                        <span>{{order.client?.name | titlecase}}</span>
+                        <span>{{order.client ? order.client.name:"-" | titlecase}}</span>
                     </div>
                 </mat-grid-tile>
                 <mat-grid-tile colspan="3" rowspan="1">
