@@ -1,18 +1,33 @@
-<div class="shadow-box clickable">
+<div class="container shadow-box clickable">
+  <div class="menu"
+  *ngIf="editable">
+    <mat-menu #appMenu="matMenu">
+        <button (click)="onEdit(product)" mat-menu-item><mat-icon>create</mat-icon>Edit</button>
+        <button (click)="onDelete(product)" mat-menu-item><mat-icon>delete</mat-icon>Remove</button>
+    </mat-menu>
+    <button mat-icon-button (click)="$event.stopPropagation()" [matMenuTriggerFor]="appMenu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+  </div>
   <mat-card >
     <div >
       <img mat-card-image src="assets/package-102.svg" [alt]="product.name">
     </div>
-    <mat-card-content>
-      <mat-card-title class="text-center">{{product.name}}</mat-card-title>
-      <div class="flex-grid nowrap space-around product-detail">
+    <mat-card-content *ngLet="(product | productMainEntry) as entry" >
+      
+      <mat-card-title class="text-center">{{product.name}}<div class="indicators">
+        <mat-icon color="warn" *ngIf="!entry">
+          warning
+        </mat-icon>
+      </div></mat-card-title>
+      <div *ngIf="entry" class="flex-grid nowrap space-around product-detail">
         <div>
-          <mat-icon class="icon-20">home</mat-icon>
-          <span>value</span>
+          <mat-icon class="icon-20">local_atm</mat-icon>
+          <span>{{entry.price}}</span>
         </div>
         <div>
-          <mat-icon class="icon-20">home</mat-icon>
-          <span>quantity</span>
+          <mat-icon class="icon-20">category</mat-icon>
+          <span>{{entry.quantity}}</span>
         </div>
       </div>
     </mat-card-content>

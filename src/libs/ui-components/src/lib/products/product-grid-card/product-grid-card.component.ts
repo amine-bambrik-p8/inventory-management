@@ -1,5 +1,7 @@
 import { IProduct } from '@workspace/interfaces';
 import { Component, OnInit, Input } from '@angular/core';
+import { ProductsFacade } from '@workspace/core-data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'workspace-product-grid-card',
@@ -9,9 +11,17 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ProductGridCardComponent implements OnInit {
   @Input()
   product: IProduct;
-  constructor() { }
+  @Input()
+  editable:boolean;
+  constructor(private productsFacade:ProductsFacade,private router:Router) { }
 
   ngOnInit(): void {
+  }
+  onEdit(product:IProduct){
+    this.router.navigate(["/products",product._id,"edit"]);
+  }
+  onDelete(product: IProduct){
+    this.productsFacade.deleteProduct(product);
   }
 
 }

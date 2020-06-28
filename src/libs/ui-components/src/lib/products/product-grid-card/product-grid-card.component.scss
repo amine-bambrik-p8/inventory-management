@@ -1,9 +1,7 @@
 mat-card{
   position: relative;
 }
-img{
-  background-color: rgba($color: #000000, $alpha: 0.27);
-}
+
 mat-card-content{
   padding: 1.2em 0.5em;
   margin: 0;
@@ -24,4 +22,25 @@ mat-card-title{
 }
 mat-card:hover .product-detail{
   height: 3em;
+}
+.container{
+  position: relative;
+}
+.menu{
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}
+img{
+  background-color: rgba($color: #000000, $alpha: 0.27);
+}
+mat-card-title{
+  position: relative;
+}
+.indicators{
+  position: absolute;
+  top: 0;
+  right: 0;
 }
