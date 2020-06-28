@@ -30,6 +30,8 @@ export function clientsReducers(state = initialState,action:ClientsActions): Cli
                 id,
                 changes,
             },state);
+        case ClientsActionTypes.UNSET_SELECTED_CLIENT:
+            return {...state,selectedClient:null};
         default:
             return state;
     }

@@ -1,4 +1,4 @@
-import { ClientsActionTypes, ClientsActions, UpdateClient, CreateClient, LoadClients, DeleteClient, ReadClient, isActionTypeSuccess, isActionTypeFail } from './clients.actions';
+import { ClientsActionTypes, ClientsActions, UpdateClient, CreateClient, LoadClients, DeleteClient, ReadClient, isActionTypeSuccess, isActionTypeFail, UnsetSelectedClient } from './clients.actions';
 import { Injectable } from "@angular/core";
 import { ClientsState, selectAllClients, selectedClient } from './clients.reducer';
 import { Store, ActionsSubject, select } from '@ngrx/store';
@@ -15,23 +15,23 @@ export class ClientsFacade{
     actionCompleted$ = this.actions$
     .pipe(
         filter((action:ClientsActions) =>
-            isActionTypeFail(action) || isActionTypeSuccess(action)
+        isActionTypeFail(action) || isActionTypeSuccess(action)
         ),
         take(1)
-    );
-
-    mutations$ = this.actions$
-    .pipe(
-      filter(action =>
-        action.type === ClientsActionTypes.CREATE_CLIENT
-        || action.type === ClientsActionTypes.UPDATE_CLIENT
-        || action.type === ClientsActionTypes.DELETE_CLIENT
-      )
-    );
-
-    constructor(private store: Store<ClientsState>,private actions$: ActionsSubject) {}
-
-    readClient(id:string):Promise<void>{
+        );
+        
+        mutations$ = this.actions$
+        .pipe(
+            filter(action =>
+                action.type === ClientsActionTypes.CREATE_CLIENT
+                || action.type === ClientsActionTypes.UPDATE_CLIENT
+                || action.type === ClientsActionTypes.DELETE_CLIENT
+                )
+                );
+                
+                constructor(private store: Store<ClientsState>,private actions$: ActionsSubject) {}
+                
+                readClient(id:string):Promise<void>{
         return this.dispatchAction(new ReadClient(id));
     }
     loadClients():Promise<void>{
@@ -53,5 +53,8 @@ export class ClientsFacade{
             const httpError = response.payload;
             throw httpError;
         }
+    }
+    unsetSelecetedClient(): void{
+      this.store.dispatch(new UnsetSelectedClient());
     }
 }

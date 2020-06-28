@@ -1,22 +1,23 @@
 import { IClient } from '@workspace/interfaces';
 import { Action } from '@ngrx/store';
 
-export enum ClientsActionTypes{
-    LOAD_CLIENTS='[Clients] Load',
-    CLIENTS_LOADED='[Clients] Loaded',
-    CLIENTS_LOAD_FAIL='[Clients] Load Fail',
-    CREATE_CLIENT='[Clients] Create',
-    CLIENT_CREATED='[Clients] Created',
-    CLIENT_CREATE_FAIL='[Clients] Create Fail',
-    UPDATE_CLIENT='[Clients] Update',
-    CLIENT_UPDATE_FAIL='[Clients] Update Fail',
-    CLIENT_UPDATED='[Clients] Updated',
-    DELETE_CLIENT='[Clients] Delete',
-    CLIENT_DELETED='[Clients] Deleted',
-    CLIENT_DELETE_FAIL='[Clients] Deleted Fail',
-    READ_CLIENT='[Clients] Read]',
-    CLIENT_READ='[Clients] Read Done]',
-    CLIENT_READ_FAIL='[Clients] Read Fail]',
+export enum ClientsActionTypes {
+    LOAD_CLIENTS = '[Clients] Load',
+    CLIENTS_LOADED = '[Clients] Loaded',
+    CLIENTS_LOAD_FAIL = '[Clients] Load Fail',
+    CREATE_CLIENT = '[Clients] Create',
+    CLIENT_CREATED = '[Clients] Created',
+    CLIENT_CREATE_FAIL = '[Clients] Create Fail',
+    UPDATE_CLIENT = '[Clients] Update',
+    CLIENT_UPDATE_FAIL = '[Clients] Update Fail',
+    CLIENT_UPDATED = '[Clients] Updated',
+    DELETE_CLIENT = '[Clients] Delete',
+    CLIENT_DELETED = '[Clients] Deleted',
+    CLIENT_DELETE_FAIL = '[Clients] Deleted Fail',
+    READ_CLIENT = '[Clients] Read]',
+    CLIENT_READ = '[Clients] Read Done]',
+    CLIENT_READ_FAIL = '[Clients] Read Fail]',
+    UNSET_SELECTED_CLIENT = "[Clients] Unset Seleceted Client"
 }
 
 export class LoadClients implements Action{
@@ -90,6 +91,11 @@ export class ClientReadFail implements Action{
     constructor(public payload: any){}
 }
 
+export class UnsetSelectedClient implements Action{
+    public readonly type = ClientsActionTypes.UNSET_SELECTED_CLIENT;
+    constructor(){}
+}
+
 export const isActionTypeFail = (action:ClientsActions):boolean => {
     return action.type === ClientsActionTypes.CLIENTS_LOAD_FAIL
         || action.type === ClientsActionTypes.CLIENT_UPDATE_FAIL
@@ -119,4 +125,5 @@ ClientDeleted |
 ClientDeleteFail |
 ReadClient |
 ClientRead |
+UnsetSelectedClient |
 ClientReadFail;
