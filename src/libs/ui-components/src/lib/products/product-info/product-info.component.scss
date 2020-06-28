@@ -1,3 +1,10 @@
+.images>img{
+    width: 400px;
+    height: 400px;
+}
+.images > div > img{
+    margin-right:1em;
+}
 .fields > div{
     margin: 1em;
     display: flex;
