@@ -9,3 +9,12 @@ mat-card{
 mat-card-title{
     font-size: 1.2em;
 }
+.container{
+    position: relative;
+  }
+.menu{  
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
