@@ -15,7 +15,7 @@ export class ProductsEffects {
     loadProducts$ = createEffect(()=>this.actions$.pipe(ofType(ProductsActionTypes.LOAD_PRODUCTS),fetch({
         run:(action: LoadProducts,state: ProductsState)=>{
             return this.productsService
-            .readMany()
+            .readMany(action.payload)
             .pipe(
                 map((products:IProduct[])=>{
                     return new ProductsLoaded(products);

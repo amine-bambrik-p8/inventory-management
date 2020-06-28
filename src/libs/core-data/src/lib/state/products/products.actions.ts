@@ -21,6 +21,7 @@ export enum ProductsActionTypes{
 
 export class LoadProducts implements Action{
     public readonly type = ProductsActionTypes.LOAD_PRODUCTS;
+    constructor(public payload?:any){}
 }
 
 export class ProductsLoaded implements Action{
