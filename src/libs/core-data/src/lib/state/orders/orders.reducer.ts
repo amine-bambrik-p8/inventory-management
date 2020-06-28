@@ -1,5 +1,5 @@
 import { OrdersActions, OrdersActionTypes } from './orders.actions';
-import { IOrder } from '@workspace/interfaces';
+import { IOrder, IProduct, IProductEntry, ICartItem } from '@workspace/interfaces';
 import { EntityAdapter,EntityState,createEntityAdapter } from '@ngrx/entity';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
@@ -43,4 +43,20 @@ export const selectOrdersIds = createSelector(selectOrdersState,selectIds);
 export const selectAllOrders = createSelector(selectOrdersState,selectAll);
 export const selectOrdersEntities = createSelector(selectOrdersState,selectEntities);
 export const selectOrdersTotal = createSelector(selectOrdersState,selectTotal);
-export const selectedOrder = createSelector(selectOrdersState,(state)=>state.selectedOrder)
+export const selectedOrder = createSelector(selectOrdersState,(state)=>state.selectedOrder);
+export const selectedOrderAsCart = createSelector(selectedOrder,(order:IOrder)=>
+    order.entries.map(
+        (entry)=>{
+            let product= entry.product;
+            const mainEntry:IProductEntry = product.entry;
+            const cartItem: ICartItem = {
+                "_id":product._id,
+                "discount":mainEntry.discount,
+                "name":product.name,
+                "price":mainEntry.price,
+                "quantity":entry.quantity
+            }
+            return cartItem;
+        }
+    )
+);

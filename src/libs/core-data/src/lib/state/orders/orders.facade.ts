@@ -1,9 +1,9 @@
 import { OrdersActionTypes, OrdersActions, UpdateOrder, CreateOrder, LoadOrders, DeleteOrder, ReadOrder, isActionTypeFail, isActionTypeSuccess } from './orders.actions';
 import { Injectable } from "@angular/core";
-import { OrdersState, selectAllOrders, selectedOrder } from './orders.reducer';
+import { OrdersState, selectAllOrders, selectedOrder, selectedOrderAsCart } from './orders.reducer';
 import { Store, ActionsSubject, select } from '@ngrx/store';
 import { filter, take } from 'rxjs/operators';
-import { IOrder } from '@workspace/interfaces';
+import { IOrder, IOrderEntry, IClient, OrderStatus } from '@workspace/interfaces';
 
 @Injectable({
     providedIn:'root'
@@ -11,6 +11,7 @@ import { IOrder } from '@workspace/interfaces';
 export class OrdersFacade{
     allOrders$ = this.store.pipe(select(selectAllOrders));
     selectedOrder$ = this.store.pipe(select(selectedOrder));
+    selectedOrderAsCart$ = this.store.pipe(select(selectedOrderAsCart));
     actionCompleted$ = this.actions$
     .pipe(
         filter((action:OrdersActions) =>
@@ -33,8 +34,12 @@ export class OrdersFacade{
     loadOrders():Promise<void>{
         return this.dispatchAction(new LoadOrders());
     }
-    addOrder(item:IOrder):Promise<void>{
-        return this.dispatchAction(new CreateOrder(item));
+    addOrder(items:IOrderEntry[],client?:IClient,status?:OrderStatus):Promise<void>{
+        const order:IOrder = {
+            entries:items,
+            
+        }
+        return this.dispatchAction(new CreateOrder(order));
     }
     updateOrder(item:IOrder):Promise<void>{
         return this.dispatchAction(new UpdateOrder(item));
