@@ -5,7 +5,19 @@ img{
 mat-card-title{
     font-size: 1.2em;
 }
-mat-card-content span{
-    overflow-x: hidden;
 
+.container{
+    position: relative;
+}
+.menu{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
+mat-card-content > *{
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
