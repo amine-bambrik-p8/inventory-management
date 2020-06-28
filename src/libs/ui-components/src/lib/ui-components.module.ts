@@ -24,6 +24,8 @@ import { SupplierInfoComponent } from './suppliers/supplier-info/supplier-info.c
 import { UserFormComponent } from './users/user-form/user-form.component';
 import { UserInfoComponent } from './users/user-info/user-info.component';
 import { UtilsModule } from "@workspace/utils";
+import { ProductEntryFormComponent } from './products/product-entries/product-entry-form/product-entry-form.component';
+import { CategoriesListComponent } from './category/categories-list/categories-list.component';
 
 @NgModule({
   imports: [
@@ -53,9 +55,14 @@ import { UtilsModule } from "@workspace/utils";
     SupplierFormComponent,
     SupplierInfoComponent,
     UserFormComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    ProductEntryFormComponent,
+    CategoriesListComponent
   ],
-  entryComponents:[CategoryFormComponent],
+  entryComponents:[
+    CategoryFormComponent,
+    ProductEntryFormComponent
+  ],
   exports: [
     CartTableComponent,
     ProductGridCardComponent,
@@ -76,7 +83,9 @@ import { UtilsModule } from "@workspace/utils";
     SupplierFormComponent,
     SupplierInfoComponent,
     UserFormComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    ProductEntryFormComponent,
+    CategoriesListComponent
   ]
 })
 export class UiComponentsModule {}
