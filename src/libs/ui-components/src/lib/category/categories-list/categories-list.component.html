@@ -1,0 +1,44 @@
+<div class="side-nav ">
+    <!-- Filters -->
+    <div class="m-x-1">
+      <mat-form-field class="w-100">
+        <mat-label>Search</mat-label>
+        <input matInput placeholder="Ex: Category's Name">
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-label>Sort By</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let filter of filters" [value]="filter.value">
+            {{filter.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Title -->
+    <h3 class="line-title">Categories</h3>
+    <!-- List -->
+      <div class="container">
+          <div *ngIf="editable" class="flex-grid end">
+            <button mat-mini-fab
+             (click)="onSubmitCategory()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          <div *ngFor="let category of categories$ | async " class="flex-grid nowrap " >
+            <button mat-button class="category fill-remaining-space">
+              <mat-icon>label</mat-icon>
+              {{category.name}} 
+            </button>
+            <div *ngIf="editable">
+              <mat-menu #appMenu="matMenu">
+                <button (click)="onSubmitCategory(category)" mat-menu-item><mat-icon>create</mat-icon>Edit</button>
+                <button (click)="onDelete(category)" mat-menu-item><mat-icon>delete</mat-icon>Remove</button>
+              </mat-menu>
+              <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+            </div>
+          </div> 
+      </div>
+  </div>
