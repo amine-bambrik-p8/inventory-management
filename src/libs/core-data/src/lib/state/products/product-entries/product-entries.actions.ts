@@ -15,8 +15,6 @@ export enum ProductEntriesActionTypes {
     PRODUCT_ENTRY_DELETED = '[ProductEntries] Deleted',
     PRODUCT_ENTRY_DELETE_FAIL = '[ProductEntries] Delete Fail',
     READ_PRODUCT_ENTRY = '[ProductEntries] Read]',
-    PRODUCT_ENTRY_READ = '[ProductEntries] Read Done]',
-    PRODUCT_ENTRY_READ_FAIL = '[ProductEntries] Read Fail]',
     SET_PRODUCT_MAIN_ENTRY = "[ProductEntries] Set Product Main Entry",
     PRODUCT_MAIN_ENTRY_FAILED_TO_BE_SET = "[ProductEntries] Product Main Entry Failed To Be Set",
     PRODUCT_MAIN_ENTRY_SET = "[ProductEntries] Product Main Entry Set",
@@ -91,6 +89,22 @@ export class ProductMainEntryFailedToBeSet implements Action{
     public readonly type = ProductEntriesActionTypes.PRODUCT_MAIN_ENTRY_FAILED_TO_BE_SET;
     constructor(public id:string,public payload:IProductEntry){}
 }
+
+export const isActionTypeFail = (action:ProductEntriesActions):boolean => {
+    return action.type === ProductEntriesActionTypes.PRODUCT_ENTRIES_LOAD_FAIL
+        || action.type === ProductEntriesActionTypes.PRODUCT_ENTRY_UPDATE_FAIL
+        || action.type === ProductEntriesActionTypes.PRODUCT_ENTRY_DELETE_FAIL
+        || action.type === ProductEntriesActionTypes.PRODUCT_ENTRY_CREATE_FAIL
+        || action.type === ProductEntriesActionTypes.PRODUCT_MAIN_ENTRY_FAILED_TO_BE_SET
+}
+export const isActionTypeSuccess = (action:ProductEntriesActions):boolean => {
+    return action.type === ProductEntriesActionTypes.PRODUCT_ENTRIES_LOADED
+        || action.type === ProductEntriesActionTypes.PRODUCT_ENTRY_UPDATED
+        || action.type === ProductEntriesActionTypes.PRODUCT_ENTRY_DELETED
+        || action.type === ProductEntriesActionTypes.PRODUCT_ENTRY_CREATED
+        || action.type === ProductEntriesActionTypes.PRODUCT_MAIN_ENTRY_SET
+}
+
 export type ProductEntriesActions = LoadProductEntries |
 ProductEntriesLoaded |
 ProductEntriesLoadFail |
