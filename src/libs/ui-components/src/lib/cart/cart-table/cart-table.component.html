@@ -1,14 +1,15 @@
 <div class="container shadow-box">
 
-  <table mat-table [dataSource]="dataSource">
-      <ng-container matColumnDef="item-description">
-        <th [attr.colspan]="displayedColumns.length" mat-header-cell *matHeaderCellDef> 
-          <div class="flex-grid space-between">
+  <table mat-table [dataSource]="entries">
+      <ng-container *ngIf="editable"  matColumnDef="item-description">
+        <th  [attr.colspan]="displayedColumns.length" mat-header-cell *matHeaderCellDef> 
+          <div  class="flex-grid space-between">
             <mat-form-field>
               <mat-label>Barcode</mat-label>
-              <input matInput placeholder="12389456">
+              <input matInput (keyup.enter)="codebarEntered.emit($event.target.value);$event.target.value=''"  placeholder="12389456">
+              <mat-icon matSuffix>qr_code_scanner</mat-icon>
             </mat-form-field>
-            <button mat-raised-button color="primary">Search</button>
+            <button (click)="search.emit()" mat-mini-fab color="primary"><mat-icon>search</mat-icon></button>
           </div>
         </th>
       </ng-container>
@@ -16,45 +17,54 @@
             The actual rendered columns are set as a property on the row definition" -->
     
       <ng-container matColumnDef="product">
-        <th mat-header-cell *matHeaderCellDef> Product </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        <th mat-header-cell *matHeaderCellDef><b>Product</b></th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <td mat-footer-cell colspan="5" *matFooterCellDef><strong>Total</strong></td>
       </ng-container>
     
       <ng-container matColumnDef="quantity">
-        <th mat-header-cell *matHeaderCellDef> Quantity </th>
+        <th mat-header-cell *matHeaderCellDef> <b>Quantity</b>  </th>
         <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
       </ng-container>
     
       <ng-container matColumnDef="unit">
-        <th mat-header-cell *matHeaderCellDef> Unit </th>
-        <td mat-cell *matCellDef="let element"> {{element?.unit}} </td>
+        <th mat-header-cell *matHeaderCellDef> <b>Unit</b>  </th>
+        <td mat-cell *matCellDef="let element"> {{element.unit}} </td>
       </ng-container>
     
       <ng-container matColumnDef="unit-price">
-        <th mat-header-cell *matHeaderCellDef> Unit Price </th>
-        <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+        <th mat-header-cell *matHeaderCellDef> <b>Unit Price</b>  </th>
+        <td mat-cell *matCellDef="let element"> {{element.price | currency}} </td>
       </ng-container>
       <ng-container matColumnDef="discount">
-        <th mat-header-cell *matHeaderCellDef> Discount </th>
-        <td mat-cell *matCellDef="let element"> {{element.discount}} </td>
+        <th mat-header-cell *matHeaderCellDef> <b>Discount</b> </th>
+        <td mat-cell *matCellDef="let element"> {{element.discount | percent}}  </td>
       </ng-container>
   
       <ng-container matColumnDef="sub-total">
-        <th mat-header-cell *matHeaderCellDef> Sub-Total </th>
-        <td mat-cell *matCellDef="let element"> {{element.discount * element.price * element.quantity}} </td>
+        <th mat-header-cell *matHeaderCellDef> <b>Sub-Total</b> </th>
+        <td mat-cell *matCellDef="let element"> {{(1-element.discount) * element.price * element.quantity | currency}} </td>
+        <td mat-footer-cell *matFooterCellDef><strong>{{total | currency}}</strong></td>
       </ng-container>
     
       <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <th mat-header-cell class="text-center" *matHeaderCellDef> <b>Actions</b> </th>
         <td mat-cell *matCellDef="let element"> 
-          <button mat-mini-fab><mat-icon>home</mat-icon></button>
+          <mat-menu #appMenu="matMenu">
+            <button (click)="onEdit(element)" mat-menu-item><mat-icon>create</mat-icon>Edit</button>
+            <button (click)="onDelete(element)" mat-menu-item><mat-icon>delete</mat-icon>Remove</button>
+          </mat-menu>
+          <button mat-icon-button [matMenuTriggerFor]="appMenu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
         </td>
       </ng-container>
-      
-      <tr mat-header-row colspan="2" *matHeaderRowDef="['item-description']"
-        class="example-second-header-row">
-      </tr>
+      <ng-container *ngIf="editable">
+        <tr mat-header-row *matHeaderRowDef="['item-description']">
+        </tr>
+      </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="['product','sub-total']; sticky: true"></tr>
     </table>
 </div>
