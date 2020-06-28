@@ -1,5 +1,5 @@
 import { IClient } from '@workspace/interfaces';
-import { ClientsLoaded, ClientsActionTypes, ClientCreated, CreateClient, ClientUpdated, UpdateClient, DeleteClient, LoadClients, ReadClient, ClientRead, ClientsLoadFail, ClientCreateFail, ClientUpdateFail, ClientDeleteFail, ClientReadFail } from './clients.actions';
+import { ClientsLoaded, ClientsActionTypes, ClientCreated, CreateClient, ClientUpdated, UpdateClient, DeleteClient, LoadClients, ReadClient, ClientRead, ClientsLoadFail, ClientCreateFail, ClientUpdateFail, ClientDeleteFail, ClientReadFail, ClientDeleted } from './clients.actions';
 import { Observable, of } from 'rxjs';
 import { ClientsState } from './clients.reducer';
 import { ClientsService } from './../../clients/clients.service';
@@ -65,7 +65,7 @@ export class ClientsEffects {
             .deleteOne(action.payload._id)
             .pipe(
                 map((client: IClient)=>{
-                    return new ClientUpdated(client);
+                    return new ClientDeleted(client);
                 })
             );
         },
