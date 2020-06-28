@@ -7,11 +7,11 @@ import { sharedEnvironment as environment } from '@workspace/environments';
   providedIn: 'root'
 })
 export class ProductEntriesService {
-  private readonly model: string = 'products/';
+  private readonly model: string = 'products';
   constructor(private http:HttpClient) {}
 
   private getUrlForId(id: string,entryId=""): string{
-    return `${environment.url}/${id}/entries/${entryId}`;
+    return `${environment.url}/${this.model}/${id}/entries/${entryId}`;
   }
   public setMainEntry(id:string,data: IProductEntry): Observable<IProduct>{
     return this.http.post<IProduct>(this.getUrlForId(id,data._id),data);
