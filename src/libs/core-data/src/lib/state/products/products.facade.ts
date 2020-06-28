@@ -1,16 +1,18 @@
 import { ProductsActionTypes, ProductsActions, UpdateProduct, CreateProduct, LoadProducts, DeleteProduct, ReadProduct, isActionTypeFail, isActionTypeSuccess } from './products.actions';
 import { Injectable } from "@angular/core";
-import { ProductsState, selectAllProducts, selectedProduct } from './products.reducer';
+import { ProductsState, selectAllProducts, selectedProduct, selectProductByCodebar } from './products.reducer';
 import { Store, ActionsSubject, select } from '@ngrx/store';
-import { filter, take } from 'rxjs/operators';
+import { filter, take, takeLast } from 'rxjs/operators';
 import { IProduct } from '@workspace/interfaces';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn:'root'
 })
 export class ProductsFacade{
-    allProducts$ = this.store.pipe(select(selectAllProducts));
-    selectedProduct$ = this.store.pipe(select(selectedProduct));
+    allProducts$:Observable<IProduct[]> = this.store.pipe(select(selectAllProducts));
+    selectedProduct$:Observable<IProduct> = this.store.pipe(select(selectedProduct));
+    selectedProductByCodebar$?:Observable<IProduct>;
     actionCompleted$ = this.actions$
     .pipe(
         filter((action:ProductsActions) =>
@@ -30,8 +32,19 @@ export class ProductsFacade{
     readProduct(id:string):Promise<void>{
         return this.dispatchAction(new ReadProduct(id));
     }
-    loadProducts():Promise<void>{
-        return this.dispatchAction(new LoadProducts());
+    loadProducts(props?:any):Promise<void>{
+        return this.dispatchAction(new LoadProducts(props));
+    }
+    readProductByCodebar(codebar:string):Promise<void>{
+        const props ={
+            codebar
+        };
+        this.selectedProductByCodebar$=this.store
+        .pipe(
+            select(selectProductByCodebar,props),
+            take(1)
+        );
+        return this.loadProducts(props);
     }
     addProduct(item:IProduct):Promise<void>{
         return this.dispatchAction(new CreateProduct(item));
