@@ -3,7 +3,7 @@
     <div class="flex-grid col-12 justify-center">
         <img class="rounded  col-3" src="assets/local_offer-black-24dp.svg" alt="Client name">
     </div>
-    <form [formGroup]="form" (submit)="onSubmit()" class="col-5 flex-grid m-auto ">
+    <form [formGroup]="form" (submit)="formSubmit.emit(value)" class="col-5 flex-grid m-auto ">
         <div class="m-auto">
             <mat-form-field  >
                 <mat-label>
