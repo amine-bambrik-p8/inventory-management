@@ -4,17 +4,38 @@ mat-card-title{
     font-size: 1.2em;
 }
 
-.order-detail{
+.detail{
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
     font-size: 12px;
 }
-.order-status mat-icon{
+.status mat-icon{
     font-size: 3em;
     width: 100%;
     height: 100%;
-
 }
+.status button {
+    background-color: rgba($color: #000000, $alpha: 0.0);
+    padding: 0;
+}
+.status mat-icon::before{
+    content: "star_outline";
+}
+.status mat-icon.highlight::before{
+    content:"star";
+}
+.status mat-icon.edit:hover::before{
+    content: "star";
+}
+.container{
+    position: relative;
+}
+.menu{
 
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}

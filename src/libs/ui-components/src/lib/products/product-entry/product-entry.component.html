@@ -1,36 +1,47 @@
-<div class="shadow-box clickable">
-
+<div class="container shadow-box clickable">
+    <div *ngIf="editable" class="menu">
+        <mat-menu #appMenu="matMenu">
+            <button (click)="edit.emit(entry)" mat-menu-item><mat-icon>create</mat-icon>Edit</button>
+            <button (click)="delete.emit(entry)" mat-menu-item><mat-icon>delete</mat-icon>Remove</button>
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="appMenu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </div>
     <mat-card >
-        <mat-card-title >
-            #
-        </mat-card-title>
+        
+        
         <mat-card-content>
             <mat-grid-list cols="8">
-                <mat-grid-tile class="order-status" colspan="2" rowspan="2">
-                    <mat-icon class="status-success">check_circle</mat-icon>
+                <mat-grid-tile class="status" colspan="2" rowspan="2">
+                    <button (click)="editable && entryHightlight.emit(entry)" mat-icon-button>
+                        <mat-icon [ngClass]="{'highlight':highlight,'edit':editable}"></mat-icon>
+                    </button>
                 </mat-grid-tile>
                 <mat-grid-tile  colspan="3" rowspan="1">
-                    <div class="order-detail">
+                    <div class="detail">
                         <mat-icon class="icon-20">category</mat-icon>
-                        <span>20</span>
+                        <span>
+                            {{entry.quantity}}
+                        </span>
                     </div>
                 </mat-grid-tile>
                 <mat-grid-tile  colspan="3" rowspan="1">
-                    <div class="order-detail">
+                    <div class="detail">
                         <mat-icon class="icon-20">monetization_on</mat-icon>
-                        <span>5,000.00</span>
+                        <span>{{entry | productEntryValue}}</span>
                     </div>
                 </mat-grid-tile>
                 <mat-grid-tile  colspan="3" rowspan="1">
-                    <div class="order-detail">
+                    <div class="detail">
                         <mat-icon class="icon-20">face</mat-icon>
-                        <span>Amine</span>
+                        <span>{{entry.price}}</span>
                     </div>
                 </mat-grid-tile>
                 <mat-grid-tile colspan="3" rowspan="1">
-                    <div class="order-detail">
+                    <div class="detail">
                         <mat-icon class="icon-20">event</mat-icon>
-                        <span>06/11/2019</span>
+                        <span>{{entry.dates?.dateOfExpiration | date:"shortDate"}}</span>
                     </div>
                 </mat-grid-tile>
             </mat-grid-list>                
