@@ -12,6 +12,21 @@
     <h3 class="line-title">Entries</h3>
     <!-- List -->
     <div>
-        <workspace-product-entry (click)="onSelectEntry(entry)" *ngFor="let entry of entries"></workspace-product-entry>
+      <div *ngIf="editable" class="flex-grid end">
+        <button mat-mini-fab 
+          (click)="onSubmitEntry()">
+            <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <workspace-product-entry class="m-1"
+      *ngFor="let entry of product.entries"
+      (entryHightlight)="onHighlight($event)" 
+      (edit)="onSubmitEntry(entry)"
+      (delete)="onDeleteEntry(entry)"
+      [editable]="editable"
+      [highlight]="entry._id===product.mainEntryId" 
+      [entry]="entry"  
+       >
+    </workspace-product-entry>
     </div>
   </div>
