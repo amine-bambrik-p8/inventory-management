@@ -1,0 +1,42 @@
+<h1 mat-dialog-title>Product Entry Form</h1>
+<form [formGroup]="form" mat-dialog-content>
+  <div>
+    <mat-form-field>
+      <mat-label>Bought Price</mat-label>
+      <input formControlName="boughtPrice" matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Price</mat-label>
+      <input formControlName="price" matInput>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label>Discount</mat-label>
+      <input formControlName="discount" matInput>
+    </mat-form-field>
+  </div>
+  <div formGroupName="quantityInfo">
+    <mat-form-field>
+      <mat-label>Checked In Quantity</mat-label>
+      <input formControlName="checkedInQuantity" matInput>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-checkbox formControlName="isDateInfoOn">Date Info</mat-checkbox>
+  </div>
+  <div *ngIf="isDateInfoOn" formGroupName="dates">
+    <mat-form-field>
+      <mat-label>Date Of Expiration</mat-label>
+      <input formControlName="dateOfExpiration" matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Date Of Manufacturing</mat-label>
+      <input formControlName="dateOfManufacturing" matInput>
+    </mat-form-field>
+  </div>
+</form>
+<div mat-dialog-actions>
+  <button mat-button (click)="onSubmit()" >Confirm</button>
+  <button mat-button (click)="onClose()">Close</button>
+</div>
