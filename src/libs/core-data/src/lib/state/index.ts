@@ -1,3 +1,5 @@
+import { CalculatorState, calculatorReducer } from './calculator/calculator.reducer';
+import { CartState, cartReducer } from './cart/cart.reducer';
 import { ProductsActions } from './products/products.actions';
 import { UsersState, usersReducers } from './users/users.reducer';
 import { SuppliersState, suppliersReducers } from './suppliers/suppliers.reducer';
@@ -14,6 +16,8 @@ export interface AppState{
     products: ProductsState;
     suppliers: SuppliersState;
     users: UsersState;
+    cart: CartState;
+    calculator: CalculatorState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -23,6 +27,8 @@ export const reducers: ActionReducerMap<AppState> = {
     products: productsReducers,
     suppliers: suppliersReducers,
     users: usersReducers,
+    cart: cartReducer,
+    calculator: calculatorReducer,
 };
 
 

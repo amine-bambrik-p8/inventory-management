@@ -1,4 +1,4 @@
-import { CategoriesFacade } from './categories/categories.facade';
+import { ProductEntriesEffects } from './products/product-entries/product-entries.effects';
 import { UsersEffects } from './users/users.effects';
 import { OrdersEffects } from './orders/orders.effects';
 import { ClientsEffects } from './clients/clients.effects';
@@ -28,6 +28,7 @@ import { ProductsEffects } from './products/products.effects';
       SuppliersEffects,
       ProductsEffects,
       UsersEffects,
+      ProductEntriesEffects,
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ]
