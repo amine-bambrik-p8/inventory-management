@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IProduct } from '@workspace/interfaces';
-import { Router, ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ProductsFacade } from '@workspace/core-data';
 
 @Component({
@@ -31,5 +31,5 @@ export class ViewComponent implements OnInit {
   onEdit(product:IProduct){
     this.router.navigate(["products",product._id,"edit"]);
   }
-
+  
 }

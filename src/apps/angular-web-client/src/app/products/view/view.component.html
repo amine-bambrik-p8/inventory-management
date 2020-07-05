@@ -1,7 +1,17 @@
-<div *ngIf="(selectedProduct$ | async) as selectedProduct" class="flex-grid h-100 nowrap">
-  <workspace-product-entries-list [entries]="selectedProduct.entries" class="col-3"></workspace-product-entries-list>
-  <div class="content m-1 fill-remaining-space">
-    <button (click)="onEdit(selectedProduct)" mat-fab><mat-icon>edit</mat-icon></button>
-    <workspace-product-info [product]="selectedProduct"></workspace-product-info>
+<div class="flex-grid nowrap h-100 "
+*ngIf="(selectedProduct$ | async) as selectedProduct">
+  <workspace-product-entries-list class="col-3"
+    [product]="selectedProduct">
+  </workspace-product-entries-list>
+  <div class="m-x-1 fill-remaining-space">
+    <div class="flex-grid m-1 reverse ">
+      <button mat-fab
+      (click)="onEdit(selectedProduct)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+    <workspace-product-info  
+      [product]="selectedProduct">
+    </workspace-product-info>
   </div>
 </div>
