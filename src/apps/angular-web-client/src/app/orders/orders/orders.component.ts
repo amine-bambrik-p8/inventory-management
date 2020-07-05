@@ -1,6 +1,6 @@
-import { IOrder } from '@workspace/interfaces';
+import { IOrder, ICartItem, IClient } from '@workspace/interfaces';
 import { Component, OnInit } from '@angular/core';
-import { OrdersFacade } from '@workspace/core-data';
+import { OrdersFacade, CartFacade, ClientsFacade } from '@workspace/core-data';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -11,7 +11,12 @@ import { Observable } from 'rxjs';
 export class OrdersComponent implements OnInit {
   orders$:Observable<IOrder[]> = this.orders.allOrders$;
   selectedOrder$:Observable<IOrder> = this.orders.selectedOrder$;
-  constructor(private orders:OrdersFacade) {
+  selectedOrderAsCart$:Observable<ICartItem[]> = this.orders.selectedOrderAsCart$;
+  selectedClient$:Observable<IClient> = this.clients.selectedClient$;
+  constructor(
+    private orders:OrdersFacade,
+    private clients:ClientsFacade
+    ) {
   }
 
   ngOnInit(): void {
@@ -25,6 +30,13 @@ export class OrdersComponent implements OnInit {
       console.error(error);
     }
   }
+  async onLoadClient(order:IOrder){
+    if(!order || !order.client){
+      return this.clients.unsetSelecetedClient();
+    }
+    const clientId:string = order.client.id;
+    this.clients.readClient(clientId);
+  }
   private async loadData() {
     try {
       await this.orders.loadOrders();
@@ -32,4 +44,5 @@ export class OrdersComponent implements OnInit {
       console.error(error);
     }
   }
+  
 }

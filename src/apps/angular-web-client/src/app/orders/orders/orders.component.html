@@ -1,7 +1,7 @@
 
 <div class="container  h-100 flex-grid nowrap ">
   <!-- Orders Nav -->
-  <workspace-orders-list (selectOrder)="onSelectOrder($event)" [orders]="[]"></workspace-orders-list>
+  <workspace-orders-list (selectOrder)="onSelectOrder($event)" [orders]="orders$ | async"></workspace-orders-list>
 
   <!-- Order Info -->
   <div *ngIf="(selectedOrder$ | async) as selectedOrder" class="content fill-remaining-space">
@@ -9,7 +9,7 @@
       <workspace-order-info [order]="selectedOrder" ></workspace-order-info>
     </div>
     <div class="m-1">
-      <workspace-cart-table [entries]="selectedOrder?.entries"></workspace-cart-table>
+      <workspace-cart-table *ngIf="(selectedOrderAsCart$ | async) as cartItems" [entries]="cartItems"></workspace-cart-table>
     </div>
   </div>
 </div>
