@@ -1,3 +1,4 @@
+export { ICartItem } from './lib/cart-item.interface';
 export { OrderStatus } from './lib/order-status.enum';
 export { IAddress } from './lib/address.interface';
 export { IClient } from './lib/client.interface';
