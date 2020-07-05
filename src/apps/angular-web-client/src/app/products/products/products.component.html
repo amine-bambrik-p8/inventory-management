@@ -19,37 +19,18 @@
   </div>
   <div class="flex-grid fill-remaining-space nowrap">
     <!-- Categories Nav -->
-    <div class="side-nav ">
-      <!-- Filters -->
-      <div class="m-x-1">
-        <mat-form-field class="w-100">
-          <mat-label>Search</mat-label>
-          <input matInput placeholder="Ex: Client Name">
-        </mat-form-field>
-        <mat-form-field class="w-100">
-          <mat-label>Sort By</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let food of []" [value]="food.value">
-              {{food.viewValue}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-  
-      <!-- Title -->
-      <h3 class="line-title">Categories</h3>
-      <!-- List -->
-        <div >
-            <button mat-mini-fab (click)="onAddCategory()"><mat-icon>add</mat-icon></button>
-            <button mat-button *ngFor="let category of (categories$ |async)" class="category m-y-1 w-100">
-                <mat-icon>label</mat-icon>
-                {{category.name}}
-            </button>
-        </div>
-    </div>
+    <workspace-categories-list class="col-3"
+      [editable]="true">
+      
+    </workspace-categories-list>
     <!-- Products -->
     <div class="content fill-remaining-space flex-grid">
-      <workspace-product-grid-card (click)="onView(product)" *ngFor="let product of ( products$ | async )" class="col-3 m-1" [product]="product"></workspace-product-grid-card>
+      <workspace-product-grid-card [editable]="true" class="col-3 m-1" 
+        *ngFor="let product of ( products$ | async )"  
+        (click)="onSelect(product)" 
+        [product]="product">
+        
+    </workspace-product-grid-card>
       <button mat-fab (click)="onAdd()"><mat-icon>add</mat-icon></button>
 
     </div>

@@ -4,15 +4,10 @@
     flex-direction: column;
     height: 100%;
 }
-.side-nav{
-    width: 225px;
-    
-}
-.category{
-    text-align: start;
-}
+
 [mat-fab]{
     position: fixed;
-    bottom: 1em;
-    right: 1em;
+    top: 100vh;
+    right: 2em;
+    transform: translateY(-125%);
 }
