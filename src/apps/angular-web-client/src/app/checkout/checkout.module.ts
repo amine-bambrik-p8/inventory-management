@@ -1,3 +1,4 @@
+import { CommonModule as AppCommonModule } from '@workspace/common';
 import { MaterialModule } from '@workspace/material';
 import { UiComponentsModule } from '@workspace/ui-components';
 import { NgModule } from '@angular/core';
@@ -13,7 +14,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
     CommonModule,
     CheckoutRoutingModule,
     UiComponentsModule,
-    MaterialModule
+    MaterialModule,
+    AppCommonModule
   ]
 })
 export class CheckoutModule { }

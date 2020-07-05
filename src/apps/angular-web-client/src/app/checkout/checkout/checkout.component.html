@@ -1,5 +1,48 @@
-<div class="container flex-grid nowrap">
-    <workspace-cart-table class="col-12"></workspace-cart-table>
-    <workspace-calculator ></workspace-calculator>
-</div>
+<div *ngLet="(calculatorOutput$ | async) as output" class="h-100 flex-grid nowrap">
+
+    <mat-horizontal-stepper class="fill-remaining-space">
+        <mat-step>
+            <ng-template matStepLabel>Cart</ng-template>
+            <div *ngLet="(allOrderEntries$ | async) as orderEntries" class="flex-grid justify-center fill-remaining-space">
+                
+                <div class="col-12">
+                    <workspace-cart-table
+                    (search)="onSearch()" 
+                    (codebarEntered)="onReadCodebar($event)" 
+                    [actions]="true"
+                    [entries]="allCartEntries$ | async">
+                        
+                    </workspace-cart-table>
+                </div>
+                <div class="flex-grid col-4 space-around">
+                    <button mat-fab  color="primary"
+                    (click)="onCheckout(orderEntries)"
+                    matStepperNext>
+                        <mat-icon>done</mat-icon>
+                    </button>
+                    <button mat-fab color="warn"
+                    (click)="onCancelOrder()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+
+                </div>
+            </div>
+        </mat-step>
+        <mat-step label="Payment Method" state="payment">
+           
+        </mat-step>
+        <mat-step label="Done" state="done">
+        </mat-step>
+        <ng-template matStepperIcon="payment"><mat-icon>local_atm</mat-icon></ng-template>
+        <ng-template matStepperIcon="done"><mat-icon>done</mat-icon></ng-template>
+    </mat-horizontal-stepper>
     
+    
+    <workspace-calculator
+    *ngIf="(selectedOrderEntry$ | async) as orderEntry" 
+    (add)="onAddOrderEntry(output,orderEntry)" 
+    (cancel)="onCancelOrderEntry()"
+    [initailValue]="orderEntry.quantity">
+
+</workspace-calculator>
+</div>
