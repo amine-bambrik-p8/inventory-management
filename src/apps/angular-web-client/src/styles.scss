@@ -1,6 +1,35 @@
   
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~@angular/material/theming';
+$app-primary: mat-palette($mat-deep-purple,500,700,800);
 
+// Define a custom mixin that takes in the current theme
+$app-primary: mat-palette($mat-deep-purple,500,700,800);
+$app-accent:  mat-palette($mat-red,A200);
+$app-warn:    mat-palette($mat-pink);
+$primary: mat-color($app-primary);
+$accent: mat-color($app-accent);
+$warn: mat-color($app-warn);
+
+// Create theme specfic styles
+.primary-color-bg {
+    background-color: $primary;
+}
+.accent-color-bg {
+    background-color: $accent;
+}
+.warn-color-bg {
+    background-color: $warn;
+}
+.primary-color {
+    color: $primary;
+}
+.accent-color {
+    color: $accent;
+}
+.warn-color {
+    color: $warn;
+}
 html {
     height: 100%;
     font-size: 16px;
@@ -79,12 +108,18 @@ app-root {
 .status-success{
     color:rgba($color: #80CBC4, $alpha: 0.83) ;
 }
+.status-success-bg{
+    background-color:rgba($color: #80CBC4, $alpha: 0.83) ;
+}
 .status-fail{
     color:rgba($color: #FF5252, $alpha: 0.83) ;
 }
+.status-fail-bg{
+    background-color:rgba($color: #FF5252, $alpha: 0.83) ;
+}
 
 .mat-sidenav-container {
-    background: #f5f5f5;
+    background: #ffffff;
     height: 100%;
     width: 100%;
 }
@@ -99,6 +134,9 @@ $columns:12;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+    .reverse{
+        flex-direction: row-reverse;
+    }
 }
 .flex-grid {
     @for $i from 1 through $columns {
@@ -148,7 +186,13 @@ $columns:12;
     justify-content: flex-start;
 }
 .align-center{
-    align-content: center;
+    align-items: center;
+}
+.align-end{
+    align-items: flex-end;
+}
+.align-start{
+    align-items: flex-start;
 }
 .justify-center{
     justify-content: center;
