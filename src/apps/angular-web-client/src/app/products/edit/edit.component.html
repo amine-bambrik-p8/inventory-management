@@ -1,4 +1,10 @@
 <div *ngIf="(selectedProduct$ | async) as selectedProduct" class="flex-grid nowrap h-100">
-    <workspace-product-entries-list [entries]="selectedProduct.entries" class="col-3"></workspace-product-entries-list>
-    <workspace-product-form (formSubmit)="onSubmit($event)" [categories]="categories$ | async" [suppliers]="suppliers$ | async" [product]="selectedProduct" class="fill-remaining-space m-1"></workspace-product-form>
+    <workspace-product-entries-list class="col-3" 
+        [product]="selectedProduct"
+        [editable]="true">
+    </workspace-product-entries-list>
+    <workspace-product-form class="fill-remaining-space m-1" 
+        (formSubmit)="onSubmit($event)" 
+        [product]="selectedProduct">
+    </workspace-product-form>
 </div>

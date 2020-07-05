@@ -1,4 +1,3 @@
 <div class="flex-grid nowrap h-100">
-    <workspace-product-entries-list [entries]="[]" class="col-3"></workspace-product-entries-list>
-    <workspace-product-form (formSubmit)="onSubmit($event)" [product]="{}" [categories]="categories$ | async" [suppliers]="suppliers$ | async" class="fill-remaining-space m-1"></workspace-product-form>
+    <workspace-product-form class="fill-remaining-space m-1" (formSubmit)="onSubmit($event)" [product]="{}"></workspace-product-form>
 </div>

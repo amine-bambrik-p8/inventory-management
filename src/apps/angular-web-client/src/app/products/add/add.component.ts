@@ -11,28 +11,17 @@ import { Observable } from 'rxjs';
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
-  categories$:Observable<ICategory[]> = this.categoriesFacade.allCategories$;
-  suppliers$:Observable<ISupplier[]> = this.suppliersFacade.allSuppliers$;
+  
   
   constructor(
     private productsFacade:ProductsFacade,
-    private categoriesFacade:CategoriesFacade,
-    private suppliersFacade:SuppliersFacade,
     private router:Router
     ) { }
 
   ngOnInit(): void {
-    this.loadData();
   }
 
-  async loadData(): Promise<void> {
-    try {
-      await this.categoriesFacade.loadCategories();
-      await this.suppliersFacade.loadSuppliers();
-    } catch (error) {
-      
-    }
-  }
+
 
   async onSubmit(product:IProduct): Promise<void>{
     try {
