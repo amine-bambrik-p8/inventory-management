@@ -12,7 +12,7 @@ export class OrderValuePipe implements PipeTransform {
     .entries
     .reduce(
       (currValue,orderEntry:IOrderEntry)=>{
-        const productEntry: IProductEntry = orderEntry.productEntry;
+        const productEntry: IProductEntry =  orderEntry.product.entry ;
         const price: number = productEntry.price * (1 - productEntry.discount);
         return currValue + orderEntry.quantity * price;
       }

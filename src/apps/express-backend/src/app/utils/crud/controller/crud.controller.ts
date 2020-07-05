@@ -1,5 +1,5 @@
 import { environment } from '../../../../environments/environment';
-import { Model,Document,Error } from 'mongoose';
+import { Model,Document } from 'mongoose';
 import { Request, Response, NextFunction} from "express";
 
 export class CRUDController{
@@ -48,8 +48,7 @@ export class CRUDController{
             if(filter){
                 const pagination={ page:0,...environment.pagination,...filter.pagination};
 
-                const query=filter.query;
-                const populate=filter.populate;
+                const {populate, ...query}=filter;
                 let queryObject = this.model.find({...query});
                 if(pagination){
                     queryObject = queryObject.skip(pagination.skip*pagination.page).limit(pagination.limit);
