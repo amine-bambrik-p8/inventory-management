@@ -1,10 +1,9 @@
 import { regex } from './../../../utils/regex.utils';
 import { environment } from '../../../../environments/environment';
-import { roles } from './role';
 import { Schema, model,Document} from 'mongoose';
 import * as jwt from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
-import { IUser } from '@workspace/interfaces';
+import { roles,IUser } from '@workspace/interfaces';
 import { makeSuffixes } from '../../../utils/utils/makeSuffixes';
 export interface IUserDocument extends Document,Omit<IUser,"_id">{
     jwtToken:string;
