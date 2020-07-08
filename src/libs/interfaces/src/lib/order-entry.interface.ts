@@ -1,9 +1,12 @@
-import { IProductEntry } from './product-entry.interface';
 import { IProduct } from './product.interface';
+import { IProductEntry } from '@workspace/interfaces';
 
+export interface IProductSnapshot extends Exclude<IProduct,"mainEntryId"|"entries"|"thumbnails"|"description"|"quantityAlert">{
+    entry:IProductEntry;
+}
 export interface IOrderEntry {
     readonly _id?: string
-    quantity: Number;
-    readonly productEntry?: IProductEntry;
-    productId:string;
+    quantity: number;
+    readonly product?:IProductSnapshot; 
+    productId?:string;
 }

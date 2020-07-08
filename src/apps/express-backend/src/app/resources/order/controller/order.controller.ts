@@ -1,5 +1,6 @@
+import { IProductDocument } from './../../product/model/product.model';
 import { Product } from '../../product/model/product.model';
-import { IOrder } from '@workspace/interfaces';
+import { IOrder, IProduct } from '@workspace/interfaces';
 import { Request, Response, NextFunction } from 'express';
 import { Order } from '../model/order.model';
 import { CRUDController } from '../../../utils/crud/controller/crud.controller';
@@ -17,11 +18,11 @@ export class OrderController extends CRUDController{
             session.startTransaction();
             order.entries = await Promise.all(
                 order.entries.map(async (orderEntry:any)=>{
-                    const product:any= await Product.findById(orderEntry.productId);
+                    const product:IProductDocument= await Product.findById(orderEntry.productId);
                     if(!product){
                         throw {status:404,message:"404 - Not Found"};
                     }
-                    const productEntry = product.entries.id(product.mainEntryId);
+                    const productEntry = (product.entries as any).id(product.mainEntryId);
                     if(!productEntry){
                         throw {status:404,message:"404 - Not Found"};
                     }
@@ -37,7 +38,8 @@ export class OrderController extends CRUDController{
                             "entries.$.quantityInfo.soldQuantity":orderEntry.quantity,
                         }
                     });
-                    orderEntry.productEntry=productEntry.toJSON();
+                    const {mainEntryId,entries,...productSnapshot} = {...(product.toJSON() as IProduct),entry:productEntry};
+                    orderEntry.product=productSnapshot;
                     delete orderEntry.productId;
                     return orderEntry;
                 })
@@ -51,7 +53,7 @@ export class OrderController extends CRUDController{
         }
         res.status(201);
         res.json({
-            data:result
+            data:result.pop()
         });
     }
 }

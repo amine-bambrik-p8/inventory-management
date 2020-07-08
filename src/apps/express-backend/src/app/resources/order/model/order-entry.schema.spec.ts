@@ -1,12 +1,14 @@
 import { ProductEntry } from '../../product/model/product-entry.schema';
 import { OrderEntry } from "./order-entry.schema";
-
+import { regex } from './../../../utils/regex.utils';
+import { Schema, model,Document} from 'mongoose';
+import { Product, IProductDocument } from '../../product/model/product.model';
 describe("OrderEntry schema",()=>{
     test("fields",()=>{
         const fields = OrderEntry.obj;
         const expectedFields: String[]= [
             "quantity",
-            "productEntry",
+            "product",
         ]
         const fieldsAsString = Object.keys(fields).sort().join(",");
         const expectedFieldsAsString = expectedFields.sort().join(",");
@@ -26,10 +28,12 @@ describe("OrderEntry schema",()=>{
             expect(result).toBeFalsy();
         })
     });
-    test("productEntry", () => {
-        const productEntry = OrderEntry.obj.productEntry;
-            expect(productEntry).toEqual({
-                type: ProductEntry,
+    test("product", () => {
+        const productSchema:IProductDocument = Product.schema.obj;
+        const {mainEntryId,entries,description,thumbnails,quantityAlert,...productSnapshot} = {...productSchema,entry:{type:ProductEntry,required:true}};
+        const product = OrderEntry.obj.product;
+            expect(product).toEqual({
+                type: productSnapshot,
                 required:true,
             });
     });
