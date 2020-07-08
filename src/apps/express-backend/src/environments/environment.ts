@@ -7,8 +7,7 @@ export const environment = {
     }
   },
   pagination:{
-    skip:10,
-    limit:10,
+    size:20
   },
   mongoose:{
     uri: "mongodb://localhost:27017/inventory-test",
@@ -20,10 +19,11 @@ export const environment = {
   },
   filestorage:{
     type:"disk",
-    dest:"/public/uploads/",
+    dest:"./public/uploads/",
     ext:[
-      "jpg",
-      "jpeg"
+      ".png",
+      ".jpg",
+      ".jpeg"
     ]
   }
 };
