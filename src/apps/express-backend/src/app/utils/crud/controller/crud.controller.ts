@@ -1,6 +1,7 @@
 import { environment } from '../../../../environments/environment';
-import { Model,Document,Error } from 'mongoose';
+import { Model,Document } from 'mongoose';
 import { Request, Response, NextFunction} from "express";
+import { IFilter } from '@workspace/interfaces';
 
 export class CRUDController{
     constructor(private model: Model<Document>){}
@@ -44,21 +45,21 @@ export class CRUDController{
     async readMany(req: Partial<Request>,res: Partial<Response>,next?: NextFunction){
         try {
             let mongooseDocuments:Document[];
-            const filter:any = req.query;
+            const filter:IFilter = req.query;
             if(filter){
-                const pagination={ page:0,...environment.pagination,...filter.pagination};
-
-                const query=filter.query;
-                const populate=filter.populate;
-                let queryObject = this.model.find({...query});
-                if(pagination){
-                    queryObject = queryObject.skip(pagination.skip*pagination.page).limit(pagination.limit);
-                }
-                if(populate){
-                    queryObject = queryObject.populate(populate);
-                }
+                const {sortDirection=1,page=0,sortBy,size=environment.pagination.size,search,...matchValues} = filter;
+                const pagination:any={...environment.pagination,size};
+                const query = (search) ? {
+                  _keys:new RegExp(`^${search.toUpperCase()}`),  
+                } : {};
+                let queryObject = this.model.find({...matchValues,...query});
+                if(pagination)
+                    queryObject = queryObject.skip(pagination.size*pagination.page).limit(pagination.size);
+                if(filter.sortBy)
+                    queryObject = queryObject.sort({
+                        [filter.sortBy]:filter.sortDirection
+                    })
                 mongooseDocuments = await queryObject.exec()
-
             }
             else{
                 mongooseDocuments = await this.model.find({});
