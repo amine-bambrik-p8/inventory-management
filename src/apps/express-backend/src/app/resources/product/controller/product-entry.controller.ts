@@ -36,7 +36,7 @@ export class ProductEntryController {
         }
         res.status(200);
         res.json({
-            data:(product.entries as any).id(product.mainEntryId),
+            data:product,
         });
     }
     async readMany(req:Partial<Request>,res:Partial<Response>,next?:NextFunction){
@@ -74,6 +74,7 @@ export class ProductEntryController {
                 },
             },{
                 new:true,
+                setDefaultsOnInsert:true
             });
             if(!product){
                 res.status(400);
@@ -116,7 +117,10 @@ export class ProductEntryController {
              });
              return;
         }
-        productEntry.remove();
+        if(product.mainEntryId && productEntry._id.toHexString() === (product.mainEntryId as any).toHexString()){
+            delete (product as any).mainEntryId;
+        }
+        await productEntry.remove();
         const result = await product.save();
         res.status(200);
         res.json({
@@ -143,7 +147,8 @@ export class ProductEntryController {
                 ...updateObj
             },
         },{
-            new:true,         
+            new:true,
+            setDefaultsOnInsert:true,      
         });
         if(!product){
             res.status(404);

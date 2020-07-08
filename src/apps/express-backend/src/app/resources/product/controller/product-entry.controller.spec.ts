@@ -194,7 +194,8 @@ describe("ProductEntry controller",()=>{
                 },
                 json(document){
                     expect(document).toHaveProperty("data");
-                    expect(document.data.toJSON()).toEqual(someValidProductDocument.entries[0]);
+
+                    expect(document.data.toJSON()).toEqual({...someValidProductDocument,mainEntryId:someValidProductDocument.entries[0]._id});
                     return this;
                 }
             }
@@ -249,7 +250,8 @@ describe("ProductEntry controller",()=>{
                     entries:someValidEntry,
                 }
             },{
-                new:true
+                new:true,
+                setDefaultsOnInsert: true,
             });
         });
         it("should return 201 and the created document",async()=>{
