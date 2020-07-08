@@ -2,6 +2,7 @@ import { regex } from './../../../utils/regex.utils';
 import { ProductEntry } from './product-entry.schema';
 import { Product } from "./product.model";
 import { Schema } from 'mongoose';
+import { units } from '@workspace/interfaces';
 
 describe("Product model",()=>{
     describe("schema",()=>{
@@ -16,7 +17,9 @@ describe("Product model",()=>{
                 "category",
                 "supplier",
                 'thumbnails',
+                "unit",
                 "description",
+                "_keys"
             ];
             const fieldsAsString = Object.keys(fields).sort().join(",");
             const expectedFieldsAsString = expectedFields.sort().join(",");
@@ -31,13 +34,21 @@ describe("Product model",()=>{
                     match:regex.alphanum,
             });
         });
+        test("unit", () => {
+            const unit = Product.schema.obj.unit;
+                expect(unit).toEqual({
+                    type:String,
+                    enum:units,
+                    default:"P"
+            });
+        });
         test("codebar", () => {
             const codebar = Product.schema.obj.codebar;
                 expect(codebar).toEqual({
                     type: String,
                     unique:true,
-                    maxlength:regex.codebar.ean8.validLength,
-                    match:regex.codebar.ean8.validChars,
+                    maxlength:regex.codebar.ean12.validLength,
+                    match:regex.codebar.ean12.validChars,
             });
         });
         test("mainEntryId", () => {

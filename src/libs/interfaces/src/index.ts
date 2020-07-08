@@ -1,3 +1,4 @@
+export { units, Unit } from './lib/unit.enum';
 export { OrderStatus } from './lib/order-status.enum';
 export { IAddress } from './lib/address.interface';
 export { IClient } from './lib/client.interface';

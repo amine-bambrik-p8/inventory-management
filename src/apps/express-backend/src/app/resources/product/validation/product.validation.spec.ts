@@ -1,5 +1,5 @@
 import { productValidation } from './product.validation';
-import { IProduct } from '@workspace/interfaces';
+import { IProduct, units } from '@workspace/interfaces';
 import * as faker from 'faker';
 import * as mongoose from 'mongoose';
 describe("Product validation",()=>{
@@ -14,9 +14,10 @@ describe("Product validation",()=>{
                 id:mongoose.Types.ObjectId().toHexString(),
             },
             codebar:faker.random.number({
-                min:Number.parseInt("1"+"0".repeat(7)),
-                max:Number.parseInt("9".repeat(8)),
+                min:Number.parseInt("1"+"0".repeat(11)),
+                max:Number.parseInt("9".repeat(12)),
             }).toString(),
+            unit:faker.random.arrayElement(units),
             quantityAlert:{
                 minQuantity:faker.random.number({
                     min:0,

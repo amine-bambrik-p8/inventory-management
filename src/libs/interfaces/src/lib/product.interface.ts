@@ -1,6 +1,6 @@
 import { IProductEntry } from './product-entry.interface';
-import { ICategory } from './category.interface';
-import { ISupplier } from './supplier.interface';
+import { Unit } from './unit.enum';
+
 
 export interface IProduct{
     readonly _id?:string;
@@ -20,6 +20,7 @@ export interface IProduct{
         id:string,
         name?:string,
     },
+    unit?:Unit,
     readonly thumbnails?: [{
         readonly _id?: string;
         path:string;

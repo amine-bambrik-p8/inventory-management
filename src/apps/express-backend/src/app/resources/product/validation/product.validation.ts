@@ -1,5 +1,5 @@
 import { regex } from './../../../utils/regex.utils';
-import { IProduct } from '@workspace/interfaces';
+import { IProduct, units } from '@workspace/interfaces';
 import * as Joi from '@hapi/joi';
 
 export const productValidation = Joi.object<IProduct>({
@@ -11,8 +11,8 @@ export const productValidation = Joi.object<IProduct>({
         name:Joi.string()
     }).required(),
     codebar:Joi.string()
-                .regex(regex.codebar.ean8.validChars)
-                .length(regex.codebar.ean8.validLength),
+                .regex(regex.codebar.ean12.validChars)
+                .length(regex.codebar.ean12.validLength),
     quantityAlert:Joi.object({
         minQuantity:Joi.number(),
         maxQuantity:Joi.number(),
@@ -25,6 +25,8 @@ export const productValidation = Joi.object<IProduct>({
         }
         return value;
     }),
+    unit:Joi.string()
+            .equal(...units),
     name:Joi.string()
             .regex(regex.alphanum)
             .required(),

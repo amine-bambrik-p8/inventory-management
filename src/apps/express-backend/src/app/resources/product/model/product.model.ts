@@ -1,19 +1,18 @@
 import { Supplier } from './../../supplier/model/supplier.model';
 import { Category } from './../../category/model/category.model';
 import { regex } from './../../../utils/regex.utils';
-import * as mongoose from "mongoose";
 import { Schema, model,Document} from 'mongoose';
 import { ProductEntry } from './product-entry.schema';
-import { IProduct } from '@workspace/interfaces';
+import { IProduct, units, Unit } from '@workspace/interfaces';
+import { makeSuffixes } from '../../../utils/utils/makeSuffixes';
 export interface IProductDocument extends Document,Omit<IProduct,"_id">{
-
 }
 const schema = new Schema({
     codebar: {
         type: String,
         unique:true,
-        maxlength:regex.codebar.ean8.validLength,
-        match:regex.codebar.ean8.validChars,
+        maxlength:regex.codebar.ean12.validLength,
+        match:regex.codebar.ean12.validChars,
     },
     name: {
         type: String,
@@ -23,6 +22,11 @@ const schema = new Schema({
     },
     mainEntryId: {
         type: Schema.Types.ObjectId,
+    },
+    unit:{
+        type:String,
+        enum:units,
+        default:Unit.P
     },
     quantityAlert:{
         type:{
@@ -86,12 +90,20 @@ const schema = new Schema({
     description: {
         type: String,
         maxlength:500,
+    },
+    _keys:{
+        type:[String]
     }
 },
 {
-
+    toJSON:{
+        transform(doc,ret){
+            delete ret._keys
+        }
+    }
 });
-schema.index({ codebar: 'text',name:'text',"category.name":'text',"supplier.name":'text' }, {name: 'Product index'});
+schema.index({ codebar: 'text'}, {name: 'Product index'});
+
 schema.pre("save",async function (){
     const product:IProductDocument = this as IProductDocument; 
     const categoryId:string = product.category.id;
@@ -116,5 +128,6 @@ schema.pre("save",async function (){
             id:supplierId,
         }
     }
+    (product as any)._keys =makeSuffixes([product.name])
 })
 export const Product = model<IProductDocument>("product",schema);
