@@ -39,7 +39,7 @@ describe("orders API",()=>{
     afterAll(()=>{
         return closeDatabase();
     })
-    beforeEach(async (done)=>{
+    beforeEach(async ()=>{
         someAdminValidUser = {
             firstName:"someFirstName",
             lastName:"someLastName",
@@ -65,42 +65,10 @@ describe("orders API",()=>{
         someAdminValidUserDocument = await User.create(someAdminValidUser);
         someInventoryValidUserDocument = await User.create(someInventoryValidUser);
         someCheckoutValidUserDocument = await User.create(someCheckoutValidUser);
-        done();
+        
     });
-    beforeEach(async (done)=>{
-        someOrders = [
-            {
-                entries:[
-                    {
-                        quantity:10,
-                        
-                        productEntry:{
-                            boughtPrice:23,
-                            price:15,
-                            quantityInfo:{
-                                checkedInQuantity:40,
-                                soldQuantity:5,
-                            },
-                        }
-                    }
-                ]
-            },
-            {
-                entries:[
-                    {
-                        quantity:15,
-                        productEntry:{
-                            boughtPrice:50,
-                            price:90,
-                            quantityInfo:{
-                                checkedInQuantity:400,
-                                soldQuantity:50,
-                            },
-                        }
-                    }
-                ]
-            },
-        ] as any;
+    beforeEach(async ()=>{
+        
         someCategories = [
             {
                 name:"someName",
@@ -161,6 +129,32 @@ describe("orders API",()=>{
                 }
             ],
         }
+        const {entries,...productSnapshot} = {...someProduct,entry:{
+            boughtPrice:23,
+            price:15,
+            quantityInfo:{
+                checkedInQuantity:40,
+                soldQuantity:5,
+            },
+        }}
+        someOrders = [
+            {
+                entries:[
+                    {
+                        quantity:10,
+                        product:productSnapshot
+                    }
+                ]
+            },
+            {
+                entries:[
+                    {
+                        quantity:15,
+                        product:productSnapshot
+                    }
+                ]
+            },
+        ];
         someProductDocument = await Product.create(someProduct);
         someProductDocument = await Product.findByIdAndUpdate(someProductDocument._id,{
             $set:{
@@ -168,7 +162,7 @@ describe("orders API",()=>{
             }
         });
         someOrdersDocument = await Order.create(someOrders);
-        done();
+        
     });
     beforeEach(async (done)=>{
         let loginRes =  await request(app).post("/sign-in").send({data:{username:someAdminValidUser.username,password:someAdminValidUser.password}});
