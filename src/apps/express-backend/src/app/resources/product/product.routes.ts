@@ -6,7 +6,7 @@ export const productRoutes: Route[]=[
     {
         controllerFunctionName:"addThumbnail",
         method:'POST',
-        path:"/:productId/upload-thumbnail/:id",
+        path:"/:productId/upload-thumbnail/",
     },
     {
         controllerFunctionName:"removeThumbnail",

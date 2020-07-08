@@ -7,7 +7,7 @@ export class ProductController extends CRUDController{
         super(Product);
     }
     async addThumbnail(req,res:Response,next:NextFunction){
-        const {file,params:{id}} = req;
+        const {file,params:{productId:id}} = req;
         try {
             const product = await Product.findByIdAndUpdate(id,{
                 $push:{
