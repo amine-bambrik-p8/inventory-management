@@ -28,7 +28,7 @@ describe("clients API",()=>{
     afterAll(()=>{
         return closeDatabase();
     })
-    beforeEach(async (done)=>{
+    beforeEach(async ()=>{
         someAdminValidUser = {
             firstName:"someFirstName",
             lastName:"someLastName",
@@ -53,9 +53,9 @@ describe("clients API",()=>{
         someAdminValidUserDocument = await User.create(someAdminValidUser);
         someInventoryValidUserDocument = await User.create(someInventoryValidUser);
         someCheckoutValidUserDocument = await User.create(someCheckoutValidUser);
-        done();
+        
     });
-    beforeEach(async (done)=>{
+    beforeEach(async ()=>{
         someClients = [
             {
                 firstName:"someFirstName",
@@ -81,16 +81,16 @@ describe("clients API",()=>{
             },
         ];
         someClientsDocument = await Client.create(someClients);
-        done();
+        
     });
-    beforeEach(async (done)=>{
+    beforeEach(async ()=>{
         let loginRes =  await request(app).post("/sign-in").send({data:{username:someAdminValidUser.username,password:someAdminValidUser.password}});
         adminToken = loginRes.body.data.token;
         loginRes = await request(app).post("/sign-in").send({data:{username:someInventoryValidUser.username,password:someInventoryValidUser.password}});
         inventoryToken = loginRes.body.data.token;
         loginRes = await request(app).post("/sign-in").send({data:{username:someCheckoutValidUser.username,password:someCheckoutValidUser.password}});
         checkoutToken = loginRes.body.data.token;
-        done()
+        
     });
     describe("GET /",()=>{
         it("should require authentication",async ()=>{

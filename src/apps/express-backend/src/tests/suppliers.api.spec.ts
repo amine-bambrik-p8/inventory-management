@@ -28,7 +28,7 @@ describe("suppliers API",()=>{
     afterAll(()=>{
         return closeDatabase();
     })
-    beforeEach(async (done)=>{
+    beforeEach(async ()=>{
         someAdminValidUser = {
             firstName:"someFirstName",
             lastName:"someLastName",
@@ -53,9 +53,9 @@ describe("suppliers API",()=>{
         someAdminValidUserDocument = await User.create(someAdminValidUser);
         someInventoryValidUserDocument = await User.create(someInventoryValidUser);
         someCheckoutValidUserDocument = await User.create(someCheckoutValidUser);
-        done();
+        
     });
-    beforeEach(async (done)=>{
+    beforeEach(async ()=>{
         someSuppliers = [
             {
                 contact:{
@@ -88,27 +88,27 @@ describe("suppliers API",()=>{
             },
         ];
         someSuppliersDocument = await Supplier.create(someSuppliers);
-        done();
+        
     });
-    beforeEach(async (done)=>{
+    beforeEach(async ()=>{
         let loginRes =  await request(app).post("/sign-in").send({data:{username:someAdminValidUser.username,password:someAdminValidUser.password}});
         adminToken = loginRes.body.data.token;
         loginRes = await request(app).post("/sign-in").send({data:{username:someInventoryValidUser.username,password:someInventoryValidUser.password}});
         inventoryToken = loginRes.body.data.token;
         loginRes = await request(app).post("/sign-in").send({data:{username:someCheckoutValidUser.username,password:someCheckoutValidUser.password}});
         checkoutToken = loginRes.body.data.token;
-        done()
+        
     });
     describe("GET /",()=>{
         it("should require authentication",async ()=>{
             const response = await request(app).get(uri);
             expect(response.status).toBe(401);
         });
-        it("should return suppliers when authenticated",async(done)=>{
+        it("should return suppliers when authenticated",async()=>{
             const response = await request(app).get(uri).set('Authorization',"Bearer "+adminToken);
             expect(response.status).toBe(200);
             expect(JSON.stringify(response.body.data)).toEqual(JSON.stringify(someSuppliersDocument.map((d)=>d.toJSON())));
-            done();
+            
         });
     });
     describe("GET /:id",()=>{

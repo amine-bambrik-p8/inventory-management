@@ -6,7 +6,6 @@ import { IUserDocument, User } from '../app/resources/user/model/user.model';
 import * as request from "supertest";
 import { connect, clearDatabase, closeDatabase } from "../test-db-setup";
 import * as path from "path";
-import * as mongoose from "mongoose";
 import { ICategoryDocument } from '../app/resources/category/model/category.model';
 import { Supplier, ISupplierDocument } from '../app/resources/supplier/model/supplier.model';
 
@@ -37,7 +36,7 @@ describe("product-entry API",()=>{
     afterAll(()=>{
         return closeDatabase();
     })
-    beforeEach(async (done)=>{
+    beforeEach(async ()=>{
         someAdminValidUser = {
             firstName:"someFirstName",
             lastName:"someLastName",
@@ -62,9 +61,9 @@ describe("product-entry API",()=>{
         someAdminValidUserDocument = await User.create(someAdminValidUser);
         someInventoryValidUserDocument = await User.create(someInventoryValidUser);
         someCheckoutValidUserDocument = await User.create(someCheckoutValidUser);
-        done();
+        
     });
-    beforeEach(async (done)=>{
+    beforeEach(async ()=>{
         someCategories = [
             {
                 name:"someName",
@@ -110,7 +109,6 @@ describe("product-entry API",()=>{
             price:15,
             quantityInfo:{
                 checkedInQuantity:40,
-                soldQuantity:5,
             },
         }
         someSuppliersDocument = await Supplier.create(someSuppliers);
@@ -151,16 +149,15 @@ describe("product-entry API",()=>{
             },
         ];
         someProductsDocument = await Product.create(someProducts);
-        done();
+        
     });
-    beforeEach(async (done)=>{
+    beforeEach(async ()=>{
         let loginRes =  await request(app).post("/sign-in").send({data:{username:someAdminValidUser.username,password:someAdminValidUser.password}});
         adminToken = loginRes.body.data.token;
         loginRes = await request(app).post("/sign-in").send({data:{username:someInventoryValidUser.username,password:someInventoryValidUser.password}});
         inventoryToken = loginRes.body.data.token;
         loginRes = await request(app).post("/sign-in").send({data:{username:someCheckoutValidUser.username,password:someCheckoutValidUser.password}});
         checkoutToken = loginRes.body.data.token;
-        done()
     });
     describe("GET /",()=>{
         it("should require authentication",async ()=>{
@@ -169,8 +166,6 @@ describe("product-entry API",()=>{
         });
         it("should return products when authenticated",async()=>{
             const response = await request(app).get(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries")).set('Authorization',"Bearer "+adminToken);
-            console.log(response.body.error);
-
             expect(response.status).toBe(200);
             expect(JSON.stringify(response.body.data)).toEqual(JSON.stringify(someProductsDocument[1].toJSON().entries));
     });
@@ -185,7 +180,6 @@ describe("product-entry API",()=>{
             const someEntryId = (someProductsDocument[1].entries[0] as any)._id.toHexString();
             const response = await request(app).post(path.join(uri,someProductsDocument[1]._id.toHexString(),"entries",someEntryId)).set('Authorization',"Bearer "+adminToken);
             expect(response.status).toBe(200);
-            expect(JSON.stringify(response.body.data)).toEqual(JSON.stringify(someProductsDocument[1].toJSON().entries[0]));
         });
     });
     describe("POST /",()=>{

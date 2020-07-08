@@ -36,7 +36,7 @@ describe("products API",()=>{
     afterAll(()=>{
         return closeDatabase();
     })
-    beforeEach(async (done)=>{
+    beforeEach(async ()=>{
         someAdminValidUser = {
             firstName:"someFirstName",
             lastName:"someLastName",
@@ -61,9 +61,9 @@ describe("products API",()=>{
         someAdminValidUserDocument = await User.create(someAdminValidUser);
         someInventoryValidUserDocument = await User.create(someInventoryValidUser);
         someCheckoutValidUserDocument = await User.create(someCheckoutValidUser);
-        done();
+        
     });
-    beforeEach(async (done)=>{
+    beforeEach(async ()=>{
         someCategories = [
             {
                 name:"someName",
@@ -123,7 +123,7 @@ describe("products API",()=>{
                 supplier:{
                     id:someSuppliersDocument[1]._id.toHexString(),
                 },
-                codebar:"8".repeat(8),
+                codebar:"8".repeat(12),
                 description:"somedescription",
                 quantityAlert:{
                     maxQuantity:50,
@@ -132,7 +132,7 @@ describe("products API",()=>{
             },
         ];
         someProductsDocument = await Product.create(someProducts);
-        done();
+        
     });
     beforeEach(async (done)=>{
         let loginRes =  await request(app).post("/sign-in").send({data:{username:someAdminValidUser.username,password:someAdminValidUser.password}});
