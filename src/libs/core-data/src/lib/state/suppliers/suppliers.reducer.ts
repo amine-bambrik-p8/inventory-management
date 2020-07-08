@@ -1,9 +1,10 @@
 import { SuppliersActions, SuppliersActionTypes } from './suppliers.actions';
 import { ISupplier } from '@workspace/interfaces';
 import { EntityAdapter,EntityState,createEntityAdapter } from '@ngrx/entity';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 export interface SuppliersState extends EntityState<ISupplier>{
-    
+    selectedSupplier:ISupplier;
 }
 
 const adapter: EntityAdapter<ISupplier> = createEntityAdapter<ISupplier>({
@@ -11,11 +12,13 @@ const adapter: EntityAdapter<ISupplier> = createEntityAdapter<ISupplier>({
 });
 
 export const initialState: SuppliersState =  adapter.getInitialState({
-    
+    selectedSupplier:null
 });
 
 export function suppliersReducers(state = initialState,action:SuppliersActions): SuppliersState{
     switch (action.type) {
+        case SuppliersActionTypes.SUPPLIER_READ:
+            return {...state,selectedSupplier:action.payload};
         case SuppliersActionTypes.SUPPLIERS_LOADED:
             return adapter.setAll(action.payload,state);
         case SuppliersActionTypes.SUPPLIER_CREATED:
@@ -33,9 +36,11 @@ export function suppliersReducers(state = initialState,action:SuppliersActions):
     }
 }
 
+const selectSuppliersState = createFeatureSelector<SuppliersState>('suppliers');
 const { selectIds , selectAll , selectEntities , selectTotal} = adapter.getSelectors();
 
-export const selectSuppliersIds = selectIds;
-export const selectAllSuppliers = selectAll;
-export const selectSuppliersEntities = selectEntities;
-export const selectSuppliersTotal = selectTotal;
+export const selectSuppliersIds = createSelector(selectSuppliersState,selectIds);
+export const selectAllSuppliers = createSelector(selectSuppliersState,selectAll);
+export const selectSuppliersEntities = createSelector(selectSuppliersState,selectEntities);
+export const selectSuppliersTotal = createSelector(selectSuppliersState,selectTotal);
+export const selectedSupplier = createSelector(selectSuppliersState,(state:SuppliersState)=>state.selectedSupplier);

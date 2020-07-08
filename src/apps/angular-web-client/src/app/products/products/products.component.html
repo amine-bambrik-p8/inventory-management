@@ -1,8 +1,7 @@
 
-
 <div class="container">
   <div class="search-bar">
-    <div class="flex-grid space-between ">
+    <div class="flex-grid nowrap space-between">
       <mat-form-field>
         <input matInput placeholder="Ex: Product Name">
         <mat-label>Search</mat-label>
@@ -17,11 +16,10 @@
       </mat-form-field>
     </div>
     <mat-divider></mat-divider>
-
   </div>
-  <div class="container  flex-grid nowrap ">
+  <div class="flex-grid fill-remaining-space nowrap">
     <!-- Orders Nav -->
-    <div class="side-nav">
+    <div class="side-nav ">
       <!-- Filters -->
       <div class="m-x-1">
         <mat-form-field class="w-100">
@@ -41,16 +39,18 @@
       <!-- Title -->
       <h3 class="line-title">Categories</h3>
       <!-- List -->
-        <div>
-            <button mat-button  class="category w-100">
+        <div >
+            <button mat-button *ngFor="let category of (categories$ |async)" class="category m-y-1 w-100">
                 <mat-icon>label</mat-icon>
-                Vegetables
+                {{category.name}}
             </button>
         </div>
     </div>
     <!-- Products -->
-    <div class="content flex-grid">
-            <workspace-product-grid-card class="col-2 m-1" *ngFor='let i of [1,2,2,3,3,4,5,1,1,1,1,1,1,1,1,1,11,1,1,11]'></workspace-product-grid-card>
+    <div class="content fill-remaining-space flex-grid">
+      <workspace-product-grid-card (click)="onView(product)" *ngFor="let product of ( products$ | async )" class="col-3 m-1" [product]="product"></workspace-product-grid-card>
+      <button mat-fab (click)="onAdd()"><mat-icon>add</mat-icon></button>
+
     </div>
   </div>
   

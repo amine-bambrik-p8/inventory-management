@@ -9,10 +9,11 @@ import { OrderInfoComponent } from './orders/order-info/order-info.component';
 import { SupplierGridCardComponent } from './suppliers/supplier-grid-card/supplier-grid-card.component';
 import { UserGridCardComponent } from './users/user-grid-card/user-grid-card.component';
 import { ClientGridCardComponent } from './clients/client-grid-card/client-grid-card.component';
+import { ProductEntryComponent } from './products/product-entry/product-entry.component';
 
 @NgModule({
   imports: [CommonModule,MaterialModule],
-  declarations: [CartTableComponent, ProductGridCardComponent, CalculatorComponent, OrderGridCardComponent, OrderInfoComponent,SupplierGridCardComponent, UserGridCardComponent, ClientGridCardComponent],
-  exports: [CartTableComponent,ProductGridCardComponent,CalculatorComponent,OrderGridCardComponent,OrderInfoComponent, SupplierGridCardComponent, UserGridCardComponent,ClientGridCardComponent]
+  declarations: [CartTableComponent, ProductGridCardComponent, CalculatorComponent, OrderGridCardComponent, OrderInfoComponent,SupplierGridCardComponent, UserGridCardComponent, ClientGridCardComponent, ProductEntryComponent],
+  exports: [CartTableComponent,ProductGridCardComponent,CalculatorComponent,OrderGridCardComponent,OrderInfoComponent, SupplierGridCardComponent, UserGridCardComponent,ClientGridCardComponent,ProductEntryComponent]
 })
 export class UiComponentsModule {}

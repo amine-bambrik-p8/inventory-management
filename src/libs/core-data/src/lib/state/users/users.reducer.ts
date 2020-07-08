@@ -4,7 +4,7 @@ import { EntityAdapter,EntityState,createEntityAdapter } from '@ngrx/entity';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface UsersState extends EntityState<IUser>{
-    
+    selectedUser:IUser;
 }
 
 const adapter: EntityAdapter<IUser> = createEntityAdapter<IUser>({
@@ -12,11 +12,13 @@ const adapter: EntityAdapter<IUser> = createEntityAdapter<IUser>({
 });
 
 export const initialState: UsersState =  adapter.getInitialState({
-    
+    selectedUser:null
 });
 
 export function usersReducers(state = initialState,action:UsersActions): UsersState{
     switch (action.type) {
+        case UsersActionTypes.USER_READ:
+            return {...state,selectedUser:action.payload};
         case UsersActionTypes.USERS_LOADED:
             return adapter.setAll(action.payload,state);
         case UsersActionTypes.USER_CREATED:
@@ -41,3 +43,4 @@ export const selectUsersIds = createSelector(selectUsersState,selectIds);
 export const selectAllUsers = createSelector(selectUsersState,selectAll);
 export const selectUsersEntities = createSelector(selectUsersState,selectEntities);
 export const selectUsersTotal = createSelector(selectUsersState,selectTotal);
+export const selectedUser = createSelector(selectUsersState,(state:UsersState)=>state.selectedUser);

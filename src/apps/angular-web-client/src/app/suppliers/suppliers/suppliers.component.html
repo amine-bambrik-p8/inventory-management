@@ -17,7 +17,7 @@
           <mat-divider></mat-divider>
     </div>
     <div class="content flex-grid">
-        <workspace-supplier-grid-card class="col-3 m-1" *ngFor='let i of [1,2,2,3,3,4,5,1,1,1,1,1,1,1,1,1,11,1,1,11]'></workspace-supplier-grid-card>
-
+        <workspace-supplier-grid-card (click)="onView(supplier)" *ngFor='let supplier of ( suppliers$ | async )' class="col-3 m-1" [supplier]="supplier"></workspace-supplier-grid-card>
+        <button mat-fab (click)="onAdd()"><mat-icon>add</mat-icon></button>
     </div>
 </div>

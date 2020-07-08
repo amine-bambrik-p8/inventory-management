@@ -1,5 +1,5 @@
 import { IClient } from '@workspace/interfaces';
-import { ClientsLoaded, ClientsActionTypes, ClientCreated, CreateClient, ClientUpdated, UpdateClient, DeleteClient, LoadClients } from './clients.actions';
+import { ClientsLoaded, ClientsActionTypes, ClientCreated, CreateClient, ClientUpdated, UpdateClient, DeleteClient, LoadClients, ReadClient, ClientRead } from './clients.actions';
 import { Observable } from 'rxjs';
 import { ClientsState } from './clients.reducer';
 import { ClientsService } from './../../clients/clients.service';
@@ -12,7 +12,7 @@ import { fetch, pessimisticUpdate } from '@nrwl/angular';
     providedIn:"root",
 })
 export class ClientsEffects {
-    @Effect()
+    //@Effect()
     loadClients$ = createEffect(()=>this.actions$.pipe(ofType(ClientsActionTypes.LOAD_CLIENTS),fetch({
         run:(action: LoadClients,state: ClientsState)=>{
             return this.clientsService
@@ -27,7 +27,7 @@ export class ClientsEffects {
             console.log(error);
         }
     })));
-    @Effect()
+    //@Effect()
     createClient$ = createEffect(()=>this.actions$.pipe(ofType(ClientsActionTypes.CREATE_CLIENT),pessimisticUpdate({
         run:(action: CreateClient,state: ClientsState)=>{
             return this.clientsService
@@ -42,11 +42,12 @@ export class ClientsEffects {
             console.log(error);
         }
     })));
-    @Effect()
+    //@Effect()
     updateClient$ = createEffect(()=>this.actions$.pipe(ofType(ClientsActionTypes.UPDATE_CLIENT),pessimisticUpdate({
         run:(action: UpdateClient,state: ClientsState)=>{
+            const {_id:id,...changes} = action.payload;
             return this.clientsService
-            .updateOne(action.payload._id,action.payload)
+            .updateOne(id,changes)
             .pipe(
                 map((client: IClient)=>{
                     return new ClientUpdated(client);
@@ -57,7 +58,7 @@ export class ClientsEffects {
             console.log(error);
         }
     })));
-    @Effect()
+    //@Effect()
     deleteClient$ = createEffect(()=>this.actions$.pipe(ofType(ClientsActionTypes.DELETE_CLIENT),pessimisticUpdate({
         run:(action: DeleteClient,state: ClientsState)=>{
             return this.clientsService
@@ -70,6 +71,21 @@ export class ClientsEffects {
         },
         onError(action: DeleteClient,error: any){
             console.log(error);
+        }
+    })));
+    //@Effect()
+    readClients$ = createEffect(()=>this.actions$.pipe(ofType(ClientsActionTypes.READ_CLIENT),fetch({
+        run:(action:ReadClient,state:ClientsState)=>{
+            return this.clientsService
+            .readOne(action.payload)
+            .pipe(
+                map((category:IClient)=>{
+                    return new ClientRead(category)
+                })
+            );
+        },
+        onError(action: ReadClient,error:any){
+            console.error(error);
         }
     })));
     constructor(

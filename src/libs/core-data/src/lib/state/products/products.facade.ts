@@ -1,14 +1,16 @@
-import { ProductsActionTypes, ProductsActions, UpdateProduct, CreateProduct, LoadProducts, DeleteProduct } from './products.actions';
+import { ProductsActionTypes, ProductsActions, UpdateProduct, CreateProduct, LoadProducts, DeleteProduct, ReadProduct } from './products.actions';
 import { Injectable } from "@angular/core";
-import { ProductsState, selectAllProducts } from './products.reducer';
+import { ProductsState, selectAllProducts, selectedProduct } from './products.reducer';
 import { Store, ActionsSubject, select } from '@ngrx/store';
 import { filter } from 'rxjs/operators';
+import { IProduct } from '@workspace/interfaces';
 
 @Injectable({
     providedIn:'root'
 })
 export class ProductsFacade{
     allProducts$ = this.store.pipe(select(selectAllProducts));
+    selectedProduct$ = this.store.pipe(select(selectedProduct));
     mutations$ = this.actions$
     .pipe(
       filter(action =>
@@ -18,20 +20,22 @@ export class ProductsFacade{
       )
     );
     constructor(private store: Store<ProductsState>,private actions$: ActionsSubject) {}
-    
-    loadProducts() {
+    readProduct(id:string):void{
+        this.store.dispatch(new ReadProduct(id));
+    }
+    loadProducts():void{
         this.store.dispatch(new LoadProducts());
     }
     
-    addProduct(item) {
+    addProduct(item:IProduct):void{
         this.store.dispatch(new CreateProduct(item));
     }
     
-    updateProduct(item) {
+    updateProduct(item:IProduct):void{
         this.store.dispatch(new UpdateProduct(item));
     }
     
-    deleteProduct(item) {
+    deleteProduct(item:IProduct):void{
         this.store.dispatch(new  DeleteProduct(item));
     }
 }

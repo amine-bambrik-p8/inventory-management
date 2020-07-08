@@ -1,14 +1,16 @@
-import { UsersActionTypes, UsersActions, UpdateUser, CreateUser, LoadUsers, DeleteUser } from './users.actions';
+import { UsersActionTypes, UsersActions, UpdateUser, CreateUser, LoadUsers, DeleteUser, ReadUser } from './users.actions';
 import { Injectable } from "@angular/core";
-import { UsersState, selectAllUsers } from './users.reducer';
+import { UsersState, selectAllUsers, selectedUser } from './users.reducer';
 import { Store, ActionsSubject, select } from '@ngrx/store';
 import { filter } from 'rxjs/operators';
+import { IUser } from '@workspace/interfaces';
 
 @Injectable({
     providedIn:'root'
 })
 export class UsersFacade{
     allUsers$ = this.store.pipe(select(selectAllUsers));
+    selectedUser$ = this.store.pipe(select(selectedUser));
     mutations$ = this.actions$
     .pipe(
       filter(action =>
@@ -18,20 +20,22 @@ export class UsersFacade{
       )
     );
     constructor(private store: Store<UsersState>,private actions$: ActionsSubject) {}
-    
+    readUser(id:string){
+        this.store.dispatch(new ReadUser(id));
+    }
     loadUsers() {
         this.store.dispatch(new LoadUsers());
     }
     
-    addUser(item) {
+    addUser(item:IUser) {
         this.store.dispatch(new CreateUser(item));
     }
     
-    updateUser(item) {
+    updateUser(item:IUser) {
         this.store.dispatch(new UpdateUser(item));
     }
     
-    deleteUser(item) {
+    deleteUser(item:IUser) {
         this.store.dispatch(new  DeleteUser(item));
     }
 }

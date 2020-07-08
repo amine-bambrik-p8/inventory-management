@@ -1,0 +1,26 @@
+
+.fields div:not(:last-child){
+    margin-bottom: 1em;
+}
+.fields span{
+    min-width: 10em;
+}
+.side-nav{
+    padding: 1em;
+}
+.content{
+    position: relative;
+    padding-top: 1em;
+}
+[mat-fab]{
+    position: absolute;
+    top:2em;
+    right:2em;
+}
+img {
+    background-color: rgba($color: #000000, $alpha: 0.26);
+}
+.fields > div:not(.fields){
+    display: flex;
+    justify-content: space-between;
+}

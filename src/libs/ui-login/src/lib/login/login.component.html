@@ -4,22 +4,22 @@
         <mat-card-title class="text-center">
             Login
         </mat-card-title>
+        <form [formGroup]="form" (submit)="login()">
         <mat-card-content>
-            <form>
                 <mat-form-field class="w-100">
                     <mat-label>Username</mat-label>
-                    <input matInput placeholder="Username">
+                    <input formControlName="username" matInput placeholder="Username">
                     <mat-icon matSuffix>account_circle</mat-icon>
                 </mat-form-field>
                 <mat-form-field class="w-100">
                     <mat-label>Password</mat-label>
-                    <input matInput type="password" placeholder="Password">
+                    <input formControlName="password" matInput type="password" placeholder="Password">
                     <mat-icon matSuffix>lock</mat-icon>
                 </mat-form-field>
-            </form>
-        </mat-card-content>
-        <mat-action-list  class="flex-grid justify-center">
-            <button mat-button class="col-12">Login</button>
-        </mat-action-list>
+            </mat-card-content>
+            <mat-action-list  class="flex-grid justify-center">
+                <button mat-button class="col-12">Login</button>
+            </mat-action-list>
+        </form>
     </mat-card>
 </div>

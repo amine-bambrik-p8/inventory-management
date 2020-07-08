@@ -1,7 +1,7 @@
 import { fetch, pessimisticUpdate } from '@nrwl/angular';
 import { SuppliersState } from './suppliers.reducer';
 import { SuppliersService } from './../../suppliers/suppliers.service';
-import { SuppliersLoaded, SuppliersActionTypes, LoadSuppliers, SupplierCreated, CreateSupplier, SupplierDeleted, DeleteSupplier, UpdateSupplier, SupplierUpdated } from './suppliers.actions';
+import { SuppliersLoaded, SuppliersActionTypes, LoadSuppliers, SupplierCreated, CreateSupplier, SupplierDeleted, DeleteSupplier, UpdateSupplier, SupplierUpdated, ReadSupplier, SupplierRead } from './suppliers.actions';
 import { Effect, Actions, ofType, createEffect } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { ISupplier } from '@workspace/interfaces';
@@ -11,7 +11,7 @@ import { Injectable } from '@angular/core';
     providedIn:"root",
 })
 export class SuppliersEffects {
-    @Effect()
+    //@Effect()
     loadSuppliers$ = createEffect(()=>this.actions$.pipe(ofType(SuppliersActionTypes.LOAD_SUPPLIERS),fetch({
         run:(action: LoadSuppliers,state: SuppliersState)=>{
             return this.suppliersService
@@ -26,7 +26,7 @@ export class SuppliersEffects {
             console.log(error);
         }
     })));
-    @Effect()
+    //@Effect()
     createSupplier$ = createEffect(()=>this.actions$.pipe(ofType(SuppliersActionTypes.CREATE_SUPPLIER),pessimisticUpdate({
         run:(action: CreateSupplier,state: SuppliersState)=>{
             return this.suppliersService
@@ -41,7 +41,7 @@ export class SuppliersEffects {
             console.log(error);
         }
     })));
-    @Effect()
+    //@Effect()
     deleteSupplier$ = createEffect(()=>this.actions$.pipe(ofType(SuppliersActionTypes.DELETE_SUPPLIER),pessimisticUpdate({
         run:(action: DeleteSupplier,state: SuppliersState)=>{
             return this.suppliersService
@@ -56,7 +56,7 @@ export class SuppliersEffects {
             console.log(error);
         }
     })));
-    @Effect()
+    //@Effect()
     updateSupplier$ = createEffect(()=>this.actions$.pipe(ofType(SuppliersActionTypes.UPDATE_SUPPLIER),pessimisticUpdate({
         run:(action: UpdateSupplier,state: SuppliersState)=>{
             const {_id:id,...changes} = action.payload;
@@ -70,6 +70,21 @@ export class SuppliersEffects {
         },
         onError(action: UpdateSupplier,error: any){
             console.log(error);
+        }
+    })));
+    //@Effect()
+    readSupplier$ = createEffect(()=>this.actions$.pipe(ofType(SuppliersActionTypes.READ_SUPPLIER),fetch({
+        run:(action:ReadSupplier,state:SuppliersState)=>{
+            return this.suppliersService
+            .readOne(action.payload)
+            .pipe(
+                map((category:ISupplier)=>{
+                    return new SupplierRead(category)
+                })
+            );
+        },
+        onError(action: ReadSupplier,error:any){
+            console.error(error);
         }
     })));
     constructor(

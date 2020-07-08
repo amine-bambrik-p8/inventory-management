@@ -1,1 +1,64 @@
-<p>view works!</p>
+<div class="flex-grid h-100 nowrap ">
+  <div class="side-nav">
+    <!-- Filters -->
+    <mat-form-field class="w-100">
+      <mat-label>Search</mat-label>
+      <input matInput placeholder="Ex: Client Name">
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <mat-label>Sort By</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let food of []" [value]="food.value">
+          {{food.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Title -->
+    <h3 class="line-title">Orders</h3>
+    <!-- List -->
+    <div>
+      <workspace-order-grid-card class="m-1"></workspace-order-grid-card>
+    </div>
+  </div>
+  <div class="content fill-remaining-space">
+    <button (click)="onEdit()" mat-fab><mat-icon>edit</mat-icon></button>
+    <div *ngIf="(client$ | async) as client" class="flex-grid justify-center">
+      <div class="flex-grid col-12 justify-center">
+        <img class="rounded col-4 m-1" src="assets/person_outline-24px.svg" alt="Client name">
+      </div>
+      <div class="fields col-6">
+        <div>
+          <b>Full Name:</b><span> {{client.firstName}} {{client.lastName}}</span>
+        </div>
+        <div class="fields" *ngLet="client.address as address">
+          <div>
+              <b>City: </b>
+              <span>
+                {{address.city}}
+              </span>
+          </div>
+          <div>
+            <b>Address: </b>
+            <span>
+              {{address.address}}
+            </span>
+          </div>
+          <div>
+            <b>Zip Code: </b>
+            <span>{{address.zip}}</span>
+          </div>
+        </div>
+        <div>
+          <b>Phone: </b>
+          <span>{{client.phoneNumber}}</span>
+        </div>
+        <div>
+          <b>Email: </b>
+          <span>{{client.email}}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

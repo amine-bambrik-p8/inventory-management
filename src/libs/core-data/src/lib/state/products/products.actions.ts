@@ -56,7 +56,7 @@ export class ProductDeleted implements Action{
 
 export class ReadProduct implements Action{
     public readonly type = ProductsActionTypes.READ_PRODUCT;
-    constructor(public payload: IProduct){}
+    constructor(public payload: string){}
 }
 
 export class ProductRead implements Action{

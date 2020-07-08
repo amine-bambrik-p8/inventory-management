@@ -1,6 +1,7 @@
+import { AuthModule } from '@workspace/auth';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@workspace/material';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
@@ -10,7 +11,9 @@ import { LoginComponent } from './login/login.component';
     CommonModule,
     FormsModule, 
     MaterialModule, 
-    RouterModule
+    RouterModule,
+    AuthModule,
+    ReactiveFormsModule
   ],
   declarations: [LoginComponent],
   exports:[LoginComponent]

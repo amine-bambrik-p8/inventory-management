@@ -1,3 +1,4 @@
+import { CommonModule as AppCommonModule } from '@workspace/common';
 import { MaterialModule } from '@workspace/material';
 import { UiComponentsModule } from '@workspace/ui-components';
 import { NgModule } from '@angular/core';
@@ -13,6 +14,8 @@ import { ViewComponent } from './view/view.component';
     CommonModule,
     OrdersRoutingModule,
     UiComponentsModule,
+    CommonModule,
+    AppCommonModule,
     MaterialModule
   ]
 })

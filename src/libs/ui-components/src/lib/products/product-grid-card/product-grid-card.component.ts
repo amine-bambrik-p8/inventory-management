@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { IProduct } from '@workspace/interfaces';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'workspace-product-grid-card',
@@ -6,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-grid-card.component.scss']
 })
 export class ProductGridCardComponent implements OnInit {
-
+  @Input()
+  product: IProduct;
   constructor() { }
 
   ngOnInit(): void {

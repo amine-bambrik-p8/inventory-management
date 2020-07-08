@@ -11,6 +11,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SuppliersEffects } from './suppliers/suppliers.effects';
+import { ProductsEffects } from './products/products.effects';
 
 
 
@@ -25,6 +26,7 @@ import { SuppliersEffects } from './suppliers/suppliers.effects';
       OrdersEffects,
       UsersEffects,
       SuppliersEffects,
+      ProductsEffects,
       UsersEffects,
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
