@@ -28,8 +28,10 @@ describe("User model", () => {
             "lastName",
             "password",
             "role",
-            "picture"
+            "picture",
+            "_keys"
         ]
+        
         const fieldsAsString = Object.keys(fields).sort().join(",");
         const expectedFieldsAsString = expectedFields.sort().join(",");
         expect(fieldsAsString).toBe(expectedFieldsAsString);

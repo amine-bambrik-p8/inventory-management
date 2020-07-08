@@ -10,5 +10,5 @@ export { IOrder } from './lib/order.interface';
 export { IProductEntry } from './lib/product-entry.interface';
 export { IProduct } from './lib/product.interface';
 export { ISupplier } from './lib/supplier.interface';
-export { Role } from "./lib/role.enum";
+export { roles,Role } from "./lib/role.enum";
 export { IUser } from "./lib/user.interface";

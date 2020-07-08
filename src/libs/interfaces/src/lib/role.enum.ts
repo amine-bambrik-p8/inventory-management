@@ -3,3 +3,5 @@ export enum Role {
     INVENTORY = "INVENTORY",
     CHECKOUT = "CHECKOUT",
 }
+
+export const roles = Object.keys(Role).map(key=>Role[key]);

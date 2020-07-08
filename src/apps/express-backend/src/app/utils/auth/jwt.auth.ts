@@ -59,7 +59,7 @@ import { Request, Response, NextFunction } from 'express';
          } catch (error) {
              return next(error);
          }
-         const user = await User.findById(payload._id).select("-password").lean().exec();
+         const user = await User.findById(payload._id).select("-password -_keys").lean().exec();
          if(!user){
             res.status(401);
             res.json({

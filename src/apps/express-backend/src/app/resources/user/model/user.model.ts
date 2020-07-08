@@ -5,6 +5,7 @@ import { Schema, model,Document} from 'mongoose';
 import * as jwt from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
 import { IUser } from '@workspace/interfaces';
+import { makeSuffixes } from '../../../utils/utils/makeSuffixes';
 export interface IUserDocument extends Document,Omit<IUser,"_id">{
     jwtToken:string;
     isVaidPassword:(password)=>Promise<Boolean>;
@@ -40,17 +41,29 @@ const schema = new Schema({
     },
     picture:{
         type:String,
+    },
+    _keys:{
+        type:[String]
     }
 },
 {
-    
-toJSON:{
-    transform(doc,ret){
-        delete ret.password;
+    toJSON:{
+        transform(doc,ret){
+            delete ret.password;
+            delete ret._keys;
+        },
+    },
+    toObject:{
+        transform(doc,ret){
+            delete ret.password;
+            delete ret._keys;
+        }
     }
-},
 });
-schema.index({username:"text",firstName:"text",lastName:"text"});
+schema.pre("save",async function (){
+    const user = this as any
+    user._keys =makeSuffixes([user.username,user.firstName,user.lastName])
+});
 schema.pre("save",async function(next){
 if(!this.isModified("password")){
     return next();
