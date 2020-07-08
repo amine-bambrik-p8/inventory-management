@@ -13,7 +13,8 @@ describe("Order model",()=>{
                 "orderStatus",
                 "address",
                 "client",
-                "entries"
+                "entries",
+                "_keys"
             ]
             const fieldsAsString = Object.keys(fields).sort().join(",");
             const expectedFieldsAsString = expectedFields.sort().join(",");

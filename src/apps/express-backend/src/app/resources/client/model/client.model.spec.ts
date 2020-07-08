@@ -14,6 +14,7 @@ describe("Client model",()=>{
                 "address",
                 "picture",
                 "dateOfSubscription",
+                "_keys"
             ]
             const fieldsAsString = Object.keys(fields).sort().join(",");
             const expectedFieldsAsString = expectedFields.sort().join(",");

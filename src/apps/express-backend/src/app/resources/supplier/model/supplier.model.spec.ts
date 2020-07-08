@@ -11,7 +11,8 @@ describe("Supplier model",()=>{
                 "name",
                 "contact",
                 "picture",
-                "address"
+                "address",
+                "_keys"
             ]
             const fieldsAsString = Object.keys(fields).sort().join(",");
             const expectedFieldsAsString = expectedFields.sort().join(",");

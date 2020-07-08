@@ -4,6 +4,7 @@ import { orderStatus } from './order-status';
 import { Schema, model,Document} from 'mongoose';
 import { IOrder,OrderStatus, } from '@workspace/interfaces';
 import { Client } from '../../client/model/client.model';
+import { makeSuffixes } from '../../../utils/utils/makeSuffixes';
 export interface IOrderDocument extends Document,Omit<IOrder,"_id">{
 
 }
@@ -45,10 +46,23 @@ const schema = new Schema({
                 maxlength:120
             }
         },
+    },
+    _keys:{
+        type:[String]
     }
 },
 {
-
+    toJSON:{
+        transform(doc,ret){
+            delete ret._keys;
+        },
+        virtuals:true
+    }
+});
+schema.pre("save",async function (){
+    const order = this as any
+    if(order.client)
+        (order as any)._keys =makeSuffixes([order.client.name]);
 });
 schema.index({"client.name":"text"},{name:"Order Index"});
 schema.pre("save",async function (){

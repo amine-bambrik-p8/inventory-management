@@ -2,6 +2,7 @@ import { regex } from './../../../utils/regex.utils';
 import { Address } from '../../common/address.schema';
 import { Schema, model,Document} from 'mongoose';
 import { IClient } from '@workspace/interfaces';
+import { makeSuffixes } from '../../../utils/utils/makeSuffixes';
 export interface IClientDocument extends Document,Omit<IClient,"_id">{
 
 }
@@ -42,10 +43,20 @@ const schema = new Schema({
         type: String,
         maxlength:2000,
         match:regex.uri,
+    },
+    _keys:{
+        type:[String]
     }
 },
 {
-
+    toJSON:{
+        transform(doc,ret){
+            delete ret._keys;
+        }
+    }
 });
-schema.index({firstName:"text",lastName:"text"},{name:"Client Index"});
+schema.pre("save",async function (){
+    const client = this as any
+    client._keys =makeSuffixes([client.firstName,client.lastName])
+});
 export const Client = model<IClientDocument>("client",schema);

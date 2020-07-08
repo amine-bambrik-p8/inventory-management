@@ -6,6 +6,7 @@ describe("Category model",()=>{
             const fields = Category.schema.obj;
             const expectedFields: String[]= [
                 "name",
+                "_keys"
             ]
             const fieldsAsString = Object.keys(fields).sort().join(",");
             const expectedFieldsAsString = expectedFields.sort().join(",");
