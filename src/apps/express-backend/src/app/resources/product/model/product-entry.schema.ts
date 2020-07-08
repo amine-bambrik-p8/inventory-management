@@ -1,5 +1,8 @@
-import { Schema, model} from 'mongoose';
+import { IProductEntry } from '@workspace/interfaces';
+import { Schema,Document} from 'mongoose';
+export interface IProductEntryDocument extends Document,Omit<IProductEntry,"_id">{
 
+}
 const schema = new Schema({
     dates:{
         type:{
@@ -44,7 +47,6 @@ const schema = new Schema({
             soldQuantity: {
                 type: Number,
                 default:0,
-                required:true,
                 validate:{
                     validator:(val)=>{
                         return val>0;
@@ -55,7 +57,9 @@ const schema = new Schema({
         required:true,
         validate:{
             validator:function (val){
-                return val.checkedInQuantity>val.soldQuantity;
+                if(val.checkedInQuantity && val.soldQuantity)
+                    return val.checkedInQuantity>val.soldQuantity;
+                return true;
             },
             message:"Checkedin quantity must be greater than sold quantity"
         }

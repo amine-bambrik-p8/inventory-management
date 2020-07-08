@@ -79,8 +79,6 @@ describe("ProductEntry schema",()=>{
                 soldQuantity:{
                     type:Number,
                     default:0,
-                    required:true,
-                   
                 },
                 checkedInQuantity:{
                     type:Number,
